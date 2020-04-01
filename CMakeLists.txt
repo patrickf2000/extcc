@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(extcc)
 
-include_directories(parser quik clang)
+include_directories(parser quik clang compiler)
 
 set(PARSER_SRC
 	parser/ast.cpp
@@ -37,14 +37,21 @@ set(COMPILER_SRC
 	compiler/utils.cpp
 )
 
+# Build all the frontend libraries
 add_library(parser ${PARSER_SRC})
 add_library(cparser ${C_SRC})
 add_library(qkparser ${QK_SRC})
 
+# Build the utilities
 add_executable(clex clang/test/c_lex_test.cpp)
 add_executable(cast clang/test/c_ast.cpp)
 add_executable(qklex quik/test/qk_lex_test.cpp)
 
+# Build the compilers
+add_executable(cc ${COMPILER_SRC})
+set_target_properties(cc PROPERTIES COMPILE_FLAGS "-DBUILD_CLANG")
+
+# Link everything
 target_link_libraries(qkparser parser)
 target_link_libraries(cparser parser)
 
@@ -52,3 +59,5 @@ target_link_libraries(clex cparser)
 target_link_libraries(qklex qkparser)
 
 target_link_libraries(cast cparser)
+
+target_link_libraries(cc cparser)

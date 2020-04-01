@@ -3,7 +3,6 @@
 #include <cstdlib>
 
 #include <ast.hh>
-#include <build.hh>
 #include <ltac/ltac.hh>
 #include <ltac/ltac_build.hh>
 
@@ -12,6 +11,10 @@
 
 #include "x64/asm_x64.hh"
 #include "arm7/asm_arm7.hh"
+
+#ifdef BUILD_CLANG
+#include <c_parser.hh>
+#endif
 
 Compiler::Compiler(Config c) {
 	config = c;
@@ -36,9 +39,14 @@ void Compiler::set_inputs(std::vector<std::string> inputs) {
 //Generates assembly
 void Compiler::assemble() {
 	for (int i = 0; i<src_files.size(); i++) {
-		auto lines = load_source(src_files[i].c_str());
-		AstNode *top = build_ast(lines, true, false);
-		
+#ifdef BUILD_CLANG
+		CParser parser(src_files[i]);
+		parser.parse();
+		AstNode *top = parser.getTree();
+#else
+#error Unknown Compiler
+#endif
+
 		int ptr_size = 8;
 		if (config.arch == CpuArch::Arm7)
 			ptr_size = 4;

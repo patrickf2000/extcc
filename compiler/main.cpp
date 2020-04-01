@@ -3,8 +3,6 @@
 #include <vector>
 #include <cstdlib>
 
-#include <cc_config.hh>
-
 #include "config.hh"
 #include "compiler.hh"
 
@@ -82,7 +80,7 @@ int main(int argc, char *argv[]) {
 }
 
 void version() {
-	std::cout << "Quikc Version " << VERSION << std::endl;
+	std::cout << "extcc Version 0.1" << std::endl;
 	std::cout << std::endl;
 	std::cout << "Quikc is the compiler for the Quik programming language." << std::endl;
 	std::cout << "The compiler and the parser library were written by Patrick Flynn." << std::endl;

@@ -47,6 +47,9 @@ add_executable(clex clang/test/c_lex_test.cpp)
 add_executable(cast clang/test/c_ast.cpp)
 add_executable(qklex quik/test/qk_lex_test.cpp)
 
+add_executable(ccasm parser/test/ltac_test.cpp)
+set_target_properties(ccasm PROPERTIES COMPILE_FLAGS "-DBUILD_CLANG")
+
 # Build the compilers
 add_executable(cc ${COMPILER_SRC})
 set_target_properties(cc PROPERTIES COMPILE_FLAGS "-DBUILD_CLANG")
@@ -59,5 +62,6 @@ target_link_libraries(clex cparser)
 target_link_libraries(qklex qkparser)
 
 target_link_libraries(cast cparser)
+target_link_libraries(ccasm cparser)
 
 target_link_libraries(cc cparser)

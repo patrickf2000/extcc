@@ -1,9 +1,7 @@
 #include "ltac_build.hh"
 #include "ltac.hh"
 
-#include <types.hh>
 #include <ast.hh>
-#include <parse.hh>
 
 //Returns the datatype of an ltac node
 DataType LTAC_Builder::determine_type(LtacNode *node) {
@@ -148,8 +146,9 @@ void LTAC_Builder::build_cmp(AstNode *node, bool is_loop) {
 	}
 	
 	if (l_type != r_type) {
-		Line ln;
-		syntax_error(ln, "You can only compare values of the same type.");
+		//TODO: We will need a syntax error system
+		/*Line ln;
+		syntax_error(ln, "You can only compare values of the same type.");*/
 	}
 	
 	//Set the comparison type

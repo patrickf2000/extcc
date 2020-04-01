@@ -6,6 +6,12 @@ include_directories(parser quik clang)
 set(PARSER_SRC
 	parser/ast.cpp
 	parser/lex.cpp
+	parser/ltac/ltac.cpp
+	parser/ltac/ltac_array.cpp
+	parser/ltac/ltac_build.cpp
+	parser/ltac/ltac_flow.cpp
+	parser/ltac/ltac_func.cpp
+	parser/ltac/ltac_vars.cpp
 )
 
 set(C_SRC
@@ -15,6 +21,20 @@ set(C_SRC
 
 set(QK_SRC
 	quik/qk_lex.cpp
+)
+
+set(COMPILER_SRC
+	compiler/arm7/arm7_funcs.cpp
+	compiler/arm7/asm_arm7.cpp
+	compiler/base/asm_base.cpp
+	compiler/x64/asm_x64.cpp
+	compiler/x64/x64_array.cpp
+	compiler/x64/x64_flow.cpp
+	compiler/x64/x64_funcs.cpp
+	compiler/x64/x64_vars.cpp
+	compiler/compiler.cpp
+	compiler/main.cpp
+	compiler/utils.cpp
 )
 
 add_library(parser ${PARSER_SRC})

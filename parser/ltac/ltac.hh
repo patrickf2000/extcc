@@ -4,7 +4,6 @@
 #include <string>
 
 #include <ast.hh>
-#include <types.hh>
 
 // This relates to the overall node types
 enum class LtacType {

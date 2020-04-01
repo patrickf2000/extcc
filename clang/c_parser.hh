@@ -16,4 +16,5 @@ private:
 	AstNode *currentTop;
 	
 	void buildExtern();
+	void buildFuncDec(AstFuncDec *fd);
 };

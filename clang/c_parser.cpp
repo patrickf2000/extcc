@@ -14,6 +14,23 @@ void CParser::parse() {
 		//Act upon what kind of type we have
 		switch (type) {
 			case CTokenType::Extern: buildExtern(); break;
+			
+			//Data type tokens- can be either function declarations or variables
+			case CTokenType::Void:
+			case CTokenType::Int: {
+				Token idToken = scan->getNext();
+				Token symToken = scan->getNext();
+				
+				//Function declaration
+				if (symToken.type == CTokenType::LeftParen) {
+					auto *fd = new AstFuncDec(idToken.id);
+					buildFuncDec(fd);
+				} else if (symToken.type == CTokenType::Assign) {
+					//TODO: Variable declaration
+				} else {
+					//TODO: Syntax error
+				}
+			} break;
 		}
 	}
 }
@@ -30,3 +47,9 @@ void CParser::buildExtern() {
 	//Set the information
 	fd->set_name(fName.id);
 }
+
+//Builds a function declaration
+void CParser::buildFuncDec(AstFuncDec *fd) {
+	top->children.push_back(fd);
+}
+

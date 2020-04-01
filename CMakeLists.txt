@@ -11,6 +11,7 @@ set(PARSER_SRC
 
 set(C_SRC
 	clang/c_lex.cpp	
+	clang/c_parser.cpp
 )
 
 set(QK_SRC
@@ -22,6 +23,7 @@ add_library(cparser ${C_SRC})
 add_library(qkparser ${QK_SRC})
 
 add_executable(clex clang/test/c_lex_test.cpp)
+add_executable(cast clang/test/c_ast.cpp)
 add_executable(qklex quik/test/qk_lex_test.cpp)
 
 target_link_libraries(qkparser parser)
@@ -29,3 +31,5 @@ target_link_libraries(cparser parser)
 
 target_link_libraries(clex cparser)
 target_link_libraries(qklex qkparser)
+
+target_link_libraries(cast cparser)

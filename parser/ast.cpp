@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "ast.hh"
-#include "types.hh"
 
 //Returns an AST type as a string (debugging purposes)
 std::string ast2str(AstType type) {

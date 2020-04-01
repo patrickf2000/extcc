@@ -6,7 +6,6 @@ include_directories(parser quik clang)
 set(PARSER_SRC
 	parser/ast.cpp
 	parser/lex.cpp
-	parser/parser.cpp
 )
 
 set(C_SRC

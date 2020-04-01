@@ -5,7 +5,49 @@
 #include <map>
 #include <sstream>
 
-#include "types.hh"
+//Data type information
+enum class DataType {
+	None,
+	Void,
+	Bool,
+	Byte,
+	UByte,
+	Short,
+	UShort,
+	Int,
+	UInt,
+	Long,
+	ULong,
+	Float,
+	Double,
+	Char,
+	Char16,
+	Char32,
+	Int64,
+	Int128,
+	Int256,
+	UInt64,
+	UInt128,
+	UInt256,
+	Float64,
+	Float128,
+	Float256,
+	Double128,
+	Double256,
+	Matrix,
+	Str
+};
+
+//Conditional operator information
+enum class CondOp {
+	None,
+	Equals,
+	NotEquals,
+	Greater,
+	GreaterEq,
+	Less,
+	LessEq
+};
 
 //Denotes the types of our nodes so we can upcast
 enum class AstType {
@@ -122,6 +164,7 @@ public:
 
 	std::vector<Var> args;
 	bool is_global = false;
+	DataType rtype = DataType::Void;
 };
 
 //Extern function declarations

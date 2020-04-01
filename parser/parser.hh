@@ -7,7 +7,6 @@
 
 class Parser {
 public:
-	explicit Parser(std::string in);
 	AstNode *getTree() { return top; }
 	virtual void parse() {}
 protected:

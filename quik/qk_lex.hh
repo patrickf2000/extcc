@@ -3,6 +3,8 @@
 #include <lex.hh>
 
 enum QkTokenType {
+	None,
+	
 	Func,
 	FuncCall,
 	End,
@@ -22,9 +24,13 @@ enum QkTokenType {
 
 class QkScanner : public Scanner {
 public:
-	explicit QkScanner(std::string in) : Scanner(in) {}
+	explicit QkScanner(std::string in) : Scanner(in) {
+		initSeparators();
+		initKeywords();
+		initTokens();
+	}
 protected:
-	void initSeparators();
-	void initKeywords();
-	void initTokens();
+	void initSeparators() override;
+	void initKeywords() override;
+	void initTokens() override;
 };

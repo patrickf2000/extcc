@@ -2,9 +2,12 @@
 
 //Tell the scanner about our separators
 void QkScanner::initSeparators() {
-	separators.push_back('\n');
 	separators.push_back('(');
 	separators.push_back(')');
+	
+	whitespace.push_back('\n');
+	whitespace.push_back('\t');
+	whitespace.push_back(' ');
 }
 
 //Tell the scanner about our keywords

@@ -14,6 +14,8 @@ class Scanner {
 public:
 	explicit Scanner(std::string in);
 	Token getNext();
+	bool isSeparator(char c);
+	bool isWhitespace(char c);
 	void close();
 protected:
 	virtual void initSeparators() {}
@@ -21,6 +23,7 @@ protected:
 	virtual void initTokens() {}
 
 	std::vector<char> separators;
+	std::vector<char> whitespace;
 	std::vector<std::string> keywords;
 	std::map<std::string, int> tokens;
 	
@@ -32,4 +35,10 @@ protected:
 private:
 	std::string path = "";
 	std::ifstream reader;
+	
+	//Control stuff
+	std::string current = "";
+	bool ret_next = false;
+	bool in_quote = false;
+	Token tNext;
 };

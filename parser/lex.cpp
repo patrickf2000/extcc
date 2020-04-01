@@ -74,7 +74,12 @@ Token Scanner::getNext() {
 		tNext.id = s;
 	}
 	
-	next.type = tokens[current];
+	if (tokens.find(current) == tokens.end()) {
+		next.type = idToken;
+	} else {
+		next.type = tokens[current];
+	}
+	
 	next.id = current;
 	current = "";
 	

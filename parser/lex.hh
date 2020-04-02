@@ -16,6 +16,7 @@ public:
 	Token getNext();
 	bool isSeparator(char c);
 	bool isWhitespace(char c);
+	bool isInt();
 	void close();
 protected:
 	virtual void initSeparators() {}

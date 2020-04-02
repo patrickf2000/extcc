@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cctype>
 
 #include "lex.hh"
 
@@ -74,7 +75,9 @@ Token Scanner::getNext() {
 		tNext.id = s;
 	}
 	
-	if (tokens.find(current) == tokens.end()) {
+	if (isInt()) {
+		next.type = intToken;
+	} else if (tokens.find(current) == tokens.end()) {
 		next.type = idToken;
 	} else {
 		next.type = tokens[current];
@@ -100,6 +103,15 @@ bool Scanner::isWhitespace(char c) {
 		if (c == w) return true;
 	}
 	return false;
+}
+
+//Checks to see if the current buffer is an integer
+bool Scanner::isInt() {
+	for (char c : current) {
+		if (!isdigit(c))
+			return false;
+	}
+	return true;
 }
 
 //Close the scanner

@@ -18,6 +18,7 @@ public:
 	void parse();
 private:
 	std::stack<AstNode *> topNodes;
+	bool add_ret = false;
 	
 	DataType token2type(int token);
 	void buildExtern();

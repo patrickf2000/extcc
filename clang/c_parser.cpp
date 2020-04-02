@@ -25,6 +25,7 @@ void CParser::parse() {
 				//Function declaration
 				if (symToken.type == CTokenType::LeftParen) {
 					auto *fd = new AstFuncDec(idToken.id);
+					fd->rtype = token2type(type);
 					buildFuncDec(fd);
 				//Variable declaration
 				} else if (symToken.type == CTokenType::Assign) {
@@ -37,7 +38,15 @@ void CParser::parse() {
 			} break;
 			
 			//If we have a right-facing curly brace, adjust the top node
-			case CTokenType::RightCBrace: topNodes.pop(); break;
+			case CTokenType::RightCBrace: {
+				if (add_ret && topNodes.size() == 2) {
+					auto ret = new AstReturn;
+					topNodes.top()->children.push_back(ret);
+					add_ret = false;
+				}
+				
+				topNodes.pop(); 
+			} break;
 		}
 	}
 }
@@ -92,6 +101,11 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 	
 	//The new current top is the function declaration
 	topNodes.push(fd);
+	
+	//If its a void function, we need to make sure a return
+	// statement is added at the end
+	if (fd->rtype == DataType::Void)
+		add_ret = true;
 }
 
 //Builds a variable declaration

@@ -37,6 +37,22 @@ void CParser::parse() {
 				}
 			} break;
 			
+			//ID tokens
+			case CTokenType::Id: {
+				Token next = scan->getNext();
+				
+				//Function call
+				if (next.type == CTokenType::LeftParen) {
+					auto *fc = new AstFuncCall(t.id);
+					buildFuncCall(fc);
+				//Variable assignment
+				} else if (next.type == CTokenType::Assign) {
+				
+				} else {
+					//TODO: Syntax error
+				}
+			} break;
+			
 			//Return
 			case CTokenType::Return: buildReturn(); break;
 			
@@ -111,6 +127,12 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 		add_ret = true;
 }
 
+//Builds a function call
+void CParser::buildFuncCall(AstFuncCall *fc) {
+	topNodes.top()->children.push_back(fc);
+	addChildren(fc, CTokenType::RightParen);
+}
+
 //Builds a return statement
 void CParser::buildReturn() {
 	auto ret = new AstReturn;
@@ -126,16 +148,23 @@ void CParser::buildVarDec(AstVarDec *vd) {
 
 //Scans the source until we have a semicolon, and creates
 // nodes in the process
-void CParser::addChildren(AstNode *parent) {
+void CParser::addChildren(AstNode *parent, int stop) {
 	Token next = scan->getNext();
 	
-	while (next.type != CTokenType::SemiColon) {
+	while (next.type != stop) {
 		switch (next.type) {
 			//Integers
 			case CTokenType::No: {
 				int i = std::stoi(next.id);
 				auto *ai = new AstInt(i);
 				parent->children.push_back(ai);
+			} break;
+			
+			//Strings
+			case CTokenType::String: {
+				auto *str = new AstString;
+				str->set_val(next.id);
+				parent->children.push_back(str);
 			} break;
 			
 			//Other variables

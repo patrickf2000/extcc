@@ -23,7 +23,8 @@ private:
 	DataType token2type(int token);
 	void buildExtern();
 	void buildFuncDec(AstFuncDec *fd);
+	void buildFuncCall(AstFuncCall *fc);
 	void buildReturn();
 	void buildVarDec(AstVarDec *vd);
-	void addChildren(AstNode *parent);
+	void addChildren(AstNode *parent, int stop = CTokenType::SemiColon);
 };

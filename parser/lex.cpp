@@ -43,20 +43,32 @@ Token Scanner::getNext() {
 	while (!reader.eof()) {
 		reader.get(c);
 		
-		if (isWhitespace(c)) {
-			if (current == "")
-				continue;
-			break;
-		} else if (isSeparator(c)) {
-			sym = c;
+		if (c == '\"' && !in_quote) {
+			in_quote = true;
+			continue;
+		} else if (c == '\"' && in_quote) {
+			in_quote = false;
 			
-			if (current != "") {
-				ret_next = true;
+			next.type = strToken;
+			next.id = current;
+			current = "";
+			return next;
+		} else if (!in_quote) {
+			if (isWhitespace(c)) {
+				if (current == "")
+					continue;
+				break;
+			} else if (isSeparator(c)) {
+				sym = c;
+				
+				if (current != "") {
+					ret_next = true;
+					break;
+				}
+				
+				current += c;
 				break;
 			}
-			
-			current += c;
-			break;
 		}
 		
 		current += c;

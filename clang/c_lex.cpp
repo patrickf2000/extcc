@@ -26,6 +26,7 @@ void CScanner::initKeywords() {
 	keywords.push_back("unsigned");
 	keywords.push_back("signed");
 	keywords.push_back("extern");
+	keywords.push_back("return");
 }
 
 //Match everything with a token
@@ -40,6 +41,7 @@ void CScanner::initTokens() {
 	tokens["unsigned"] = CTokenType::Unsigned;
 	tokens["signed"] = CTokenType::Signed;
 	tokens["extern"] = CTokenType::Extern;
+	tokens["return"] = CTokenType::Return;
 	
 	//Symbols
 	tokens["("] = CTokenType::LeftParen;

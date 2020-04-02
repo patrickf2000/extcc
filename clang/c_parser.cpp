@@ -37,6 +37,9 @@ void CParser::parse() {
 				}
 			} break;
 			
+			//Return
+			case CTokenType::Return: buildReturn(); break;
+			
 			//If we have a right-facing curly brace, adjust the top node
 			case CTokenType::RightCBrace: {
 				if (add_ret && topNodes.size() == 2) {
@@ -108,9 +111,22 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 		add_ret = true;
 }
 
+//Builds a return statement
+void CParser::buildReturn() {
+	auto ret = new AstReturn;
+	topNodes.top()->children.push_back(ret);
+	addChildren(ret);
+}
+
 //Builds a variable declaration
 void CParser::buildVarDec(AstVarDec *vd) {
 	topNodes.top()->children.push_back(vd);
+	addChildren(vd);
+}
+
+//Scans the source until we have a semicolon, and creates
+// nodes in the process
+void CParser::addChildren(AstNode *parent) {
 	Token next = scan->getNext();
 	
 	while (next.type != CTokenType::SemiColon) {
@@ -119,13 +135,13 @@ void CParser::buildVarDec(AstVarDec *vd) {
 			case CTokenType::No: {
 				int i = std::stoi(next.id);
 				auto *ai = new AstInt(i);
-				vd->children.push_back(ai);
+				parent->children.push_back(ai);
 			} break;
 			
 			//Other variables
 			case CTokenType::Id: {
 				auto *id = new AstID(next.id);
-				vd->children.push_back(id);
+				parent->children.push_back(id);
 			} break;
 			
 			//TODO: Add the rest
@@ -134,5 +150,6 @@ void CParser::buildVarDec(AstVarDec *vd) {
 		next = scan->getNext();
 	}
 }
+
 
 

@@ -18,6 +18,9 @@ enum CTokenType {
 	//Function-related stuff
 	Extern,
 	
+	//Keywords
+	Return,
+	
 	//Literals
 	Id,
 	String,

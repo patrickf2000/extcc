@@ -23,5 +23,7 @@ private:
 	DataType token2type(int token);
 	void buildExtern();
 	void buildFuncDec(AstFuncDec *fd);
+	void buildReturn();
 	void buildVarDec(AstVarDec *vd);
+	void addChildren(AstNode *parent);
 };

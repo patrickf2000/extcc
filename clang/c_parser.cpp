@@ -26,8 +26,11 @@ void CParser::parse() {
 				if (symToken.type == CTokenType::LeftParen) {
 					auto *fd = new AstFuncDec(idToken.id);
 					buildFuncDec(fd);
+				//Variable declaration
 				} else if (symToken.type == CTokenType::Assign) {
-					//TODO: Variable declaration
+					auto *vd = new AstVarDec(idToken.id);
+					vd->set_type(token2type(type));
+					buildVarDec(vd);
 				} else {
 					//TODO: Syntax error
 				}
@@ -37,6 +40,20 @@ void CParser::parse() {
 			case CTokenType::RightCBrace: topNodes.pop(); break;
 		}
 	}
+}
+
+//Converts a token type to a datatype
+DataType CParser::token2type(int token) {
+	switch (token) {
+		case CTokenType::Void: return DataType::Void;
+		case CTokenType::Char: return DataType::Char;
+		case CTokenType::Short: return DataType::Short;
+		case CTokenType::Int: return DataType::Int;
+		case CTokenType::Float: return DataType::Float;
+		case CTokenType::Double: return DataType::Double;
+	}
+
+	return DataType::None;
 }
 
 //Build an external function
@@ -76,4 +93,32 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 	//The new current top is the function declaration
 	topNodes.push(fd);
 }
+
+//Builds a variable declaration
+void CParser::buildVarDec(AstVarDec *vd) {
+	topNodes.top()->children.push_back(vd);
+	Token next = scan->getNext();
+	
+	while (next.type != CTokenType::SemiColon) {
+		switch (next.type) {
+			//Integers
+			case CTokenType::No: {
+				int i = std::stoi(next.id);
+				auto *ai = new AstInt(i);
+				vd->children.push_back(ai);
+			} break;
+			
+			//Other variables
+			case CTokenType::Id: {
+				auto *id = new AstID(next.id);
+				vd->children.push_back(id);
+			} break;
+			
+			//TODO: Add the rest
+		}
+		
+		next = scan->getNext();
+	}
+}
+
 

@@ -19,6 +19,8 @@ public:
 private:
 	std::stack<AstNode *> topNodes;
 	
+	DataType token2type(int token);
 	void buildExtern();
 	void buildFuncDec(AstFuncDec *fd);
+	void buildVarDec(AstVarDec *vd);
 };

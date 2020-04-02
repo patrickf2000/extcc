@@ -1,9 +1,10 @@
+#include <iostream>
+
 #include "c_parser.hh"
 #include "c_lex.hh"
 
 //The main parse function
 void CParser::parse() {
-	currentTop = top;
 	int type = 0;
 	
 	//Call the scanner and loop until we go through the file
@@ -31,6 +32,9 @@ void CParser::parse() {
 					//TODO: Syntax error
 				}
 			} break;
+			
+			//If we have a right-facing curly brace, adjust the top node
+			case CTokenType::RightCBrace: topNodes.pop(); break;
 		}
 	}
 }
@@ -51,5 +55,25 @@ void CParser::buildExtern() {
 //Builds a function declaration
 void CParser::buildFuncDec(AstFuncDec *fd) {
 	top->children.push_back(fd);
+	
+	//Make sure the next token is a parentheses
+	//TODO: Add support for arguments
+	Token next = scan->getNext();
+	
+	if (next.type != CTokenType::RightParen) {
+		//TODO: Syntax error
+		std::cout << "Syntax error: Expected \')\'" << std::endl;
+	}
+	
+	//The next token should be a curly brace
+	next = scan->getNext();
+	
+	if (next.type != CTokenType::LeftCBrace) {
+		//TODO: Syntax error
+		std::cout << "Syntax error: Expected \'{\'" << std::endl;
+	}
+	
+	//The new current top is the function declaration
+	topNodes.push(fd);
 }
 

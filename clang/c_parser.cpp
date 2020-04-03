@@ -130,13 +130,31 @@ void CParser::buildExtern() {
 void CParser::buildFuncDec(AstFuncDec *fd) {
 	top->children.push_back(fd);
 	
-	//Make sure the next token is a parentheses
-	//TODO: Add support for arguments
+	//Parse the arguments
 	Token next = scan->getNext();
+	Var v;
+	v.is_param = true;
 	
-	if (next.type != CTokenType::RightParen) {
-		syntax->addError("Syntax error: Expected \')\'");
+	while (next.type != CTokenType::RightParen) {
+		next = scan->getNext();
+	
+		switch (next.type) {
+			case CTokenType::Void:
+			case CTokenType::Char:
+			case CTokenType::Short:
+			case CTokenType::Int:
+			case CTokenType::Float:
+			case CTokenType::Double: v.type = token2type(next.type); break;
+			
+			case CTokenType::Id: v.name = next.id; break;
+			
+			case CTokenType::Comma: fd->args.push_back(v); break;
+			
+			//TODO: Add memory reference/pointers
+		}
 	}
+	
+	fd->args.push_back(v);
 	
 	//The next token should be a curly brace
 	next = scan->getNext();

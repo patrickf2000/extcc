@@ -20,6 +20,7 @@ enum CTokenType {
 	
 	//Keywords
 	Return,
+	If,
 	
 	//Literals
 	Id,

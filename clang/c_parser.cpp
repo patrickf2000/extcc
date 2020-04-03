@@ -16,6 +16,9 @@ void CParser::parse() {
 		switch (type) {
 			case CTokenType::Extern: buildExtern(); break;
 			
+			//Conditional tokens
+			case CTokenType::If: buildIf(); break;
+			
 			//Data type tokens- can be either function declarations or variables
 			case CTokenType::Void:
 			case CTokenType::Int: {
@@ -146,6 +149,11 @@ void CParser::buildVarDec(AstVarDec *vd) {
 	addChildren(vd);
 }
 
+//Builds an If statement
+void CParser::buildIf() {
+	
+}
+
 //Scans the source until we have a semicolon, and creates
 // nodes in the process
 void CParser::addChildren(AstNode *parent, int stop) {
@@ -182,6 +190,5 @@ void CParser::addChildren(AstNode *parent, int stop) {
 		next = scan->getNext();
 	}
 }
-
 
 

@@ -76,6 +76,7 @@ enum class AstType {
 	While,
 	Loop,
 	ForEach,
+	For,
 	
 	//Variable stuff
 	VarDec,
@@ -257,6 +258,12 @@ public:
 class AstWhile : public AstCond {
 public:
 	AstWhile() { type = AstType::While; }
+};
+
+//The for keyword
+class AstFor : public AstCond {
+public:
+	AstFor() { type = AstType::For; }
 };
 
 //The loop keyword

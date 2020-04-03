@@ -47,6 +47,7 @@ std::string ast2str(AstType type) {
 		case AstType::While: return "While";
 		case AstType::Loop: return "Loop";
 		case AstType::ForEach: return "ForEach";
+		case AstType::For: return "For";
 		
 		case AstType::Add: return "OP: +";
 		case AstType::Sub: return "OP: -";
@@ -160,7 +161,8 @@ void print_tree(AstNode *node, int indent, bool nl) {
 		}
 		std::cout << ">";
 			
-	} else if (node->type == AstType::If || node->type == AstType::Elif || node->type == AstType::While) {
+	} else if (node->type == AstType::If || node->type == AstType::Elif 
+		|| node->type == AstType::While || node->type == AstType::For) {
 		AstCond *cond = dynamic_cast<AstCond *>(node);
 		std::cout << " <" << op2str(cond->get_op()) << "> [{" << std::endl;
 		print_tree(cond->lval, indent+4, true);

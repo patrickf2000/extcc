@@ -71,14 +71,15 @@ void CParser::parse() {
 					add_ret = false;
 				}
 				
+				auto last_type = topNodes.top()->type;
+				
 				//Add nodes that need to be at the end of the block
-				while (blockEnds.size() > 0) {
+				if (last_type == AstType::For) {
 					auto node = blockEnds.top();
 					blockEnds.pop();
 					topNodes.top()->children.push_back(node);
 				}
 				
-				auto last_type = topNodes.top()->type;
 				topNodes.pop();
 				
 				//Determine if an endif is necessary
@@ -209,15 +210,15 @@ void CParser::buildCond(CondType type) {
 	//Start constructing the AST node
 	AstCond *cond = new AstIf;
 	if (type == CondType::Elif) cond = new AstElif;
-	else if (type == CondType::While
-		|| type == CondType::For) cond = new AstWhile;
+	else if (type == CondType::While) cond = new AstWhile;
+	else if (type == CondType::For) cond = new AstFor;
 	
 	//Scan and build
 	Token lval;
 	if (type == CondType::For)
 		lval = next;
 	else
-		scan->getNext();
+		lval = scan->getNext();
 	
 	cond->lval = buildNode(lval);
 	

@@ -93,7 +93,8 @@ void LTAC_Builder::assemble(AstNode *top) {
 			} break;
 			
 			//Loops
-			case AstType::While: build_while(node); break;
+			case AstType::While: 
+			case AstType::For: build_while(node); break;
 			case AstType::Loop: build_loop(node); break;
 		}
 	}

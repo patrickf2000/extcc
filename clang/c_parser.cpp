@@ -35,7 +35,7 @@ void CParser::parse() {
 				} else if (symToken.type == CTokenType::Assign) {
 					auto *vd = new AstVarDec(idToken.id);
 					vd->set_type(token2type(type));
-					buildVarDec(vd);
+					buildVarAssign(vd);
 				} else {
 					//TODO: Syntax error
 				}
@@ -51,7 +51,8 @@ void CParser::parse() {
 					buildFuncCall(fc);
 				//Variable assignment
 				} else if (next.type == CTokenType::Assign) {
-				
+					auto *va = new AstVarAssign(t.id);
+					buildVarAssign(va);
 				} else {
 					//TODO: Syntax error
 				}
@@ -156,9 +157,31 @@ void CParser::buildReturn() {
 }
 
 //Builds a variable declaration
-void CParser::buildVarDec(AstVarDec *vd) {
+void CParser::buildVarAssign(AstVarDec *vd) {
 	topNodes.top()->children.push_back(vd);
-	addChildren(vd);
+	std::vector<AstNode *> nodes;
+	
+	//Get all tokens until the semi-colon
+	Token next = scan->getNext();
+	
+	while (next.type != CTokenType::SemiColon) {
+		nodes.push_back(buildNode(next));
+		next = scan->getNext();
+	}
+	
+	//See if we have a math expression
+	if (nodes.size() == 1) {
+		vd->children.push_back(nodes.at(0));
+	} if (nodes.size() == 0) {
+		syntax->addError("Invalid syntax when assigning a variable.");
+	} else {
+		auto math = new AstMath;
+		vd->children.push_back(math);
+		
+		for (auto child : nodes) {
+			math->children.push_back(child);
+		}
+	}
 }
 
 //Builds an If statement
@@ -280,6 +303,13 @@ AstNode *CParser::buildNode(Token t) {
 			auto *id = new AstID(t.id);
 			return id;
 		} break;
+		
+		//Operators
+		case CTokenType::Plus: return new AstNode(AstType::Add);
+		case CTokenType::Minus: return new AstNode(AstType::Sub);
+		case CTokenType::Mul: return new AstNode(AstType::Mul);
+		case CTokenType::Div: return new AstNode(AstType::Div);
+		case CTokenType::Mod: return new AstNode(AstType::Mod);
 		
 		//TODO: Add the rest
 	}

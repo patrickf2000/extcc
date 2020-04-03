@@ -34,12 +34,18 @@ enum CTokenType {
 	Greater,
 	Less,
 	
+	//Math operators
+	Plus,
+	Minus,
+	Mul,		//Also used for pointers
+	Div,
+	Mod,
+	
 	//Symbols
 	LeftParen,
 	RightParen,
 	LeftCBrace,
 	RightCBrace,
-	Mul,
 	SemiColon,
 	Assign,
 	Comma

@@ -12,6 +12,10 @@ void CScanner::initSeparators() {
 	separators.push_back(',');
 	separators.push_back('>');
 	separators.push_back('<');
+	separators.push_back('+');
+	separators.push_back('-');
+	separators.push_back('/');
+	separators.push_back('%');
 	
 	whitespace.push_back('\n');
 	whitespace.push_back('\t');
@@ -61,6 +65,10 @@ void CScanner::initTokens() {
 	tokens[","] = CTokenType::Comma;
 	tokens[">"] = CTokenType::Greater;
 	tokens["<"] = CTokenType::Less;
+	tokens["+"] = CTokenType::Plus;
+	tokens["-"] = CTokenType::Minus;
+	tokens["/"] = CTokenType::Div;
+	tokens["%"] = CTokenType::Mod;
 	
 	//Constant/literal tokens
 	idToken = CTokenType::Id;

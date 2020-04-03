@@ -7,6 +7,13 @@
 
 #include <c_lex.hh>
 
+enum class CondType {
+	If,
+	Elif,
+	While,
+	DoWhile
+};
+
 class CParser : public Parser {
 public:
 	explicit CParser(std::string in) {
@@ -27,7 +34,7 @@ private:
 	void buildFuncCall(AstFuncCall *fc);
 	void buildReturn();
 	void buildVarAssign(AstVarDec *vd);
-	void buildIf(bool elif);
+	void buildCond(CondType type);
 	void buildElse();
 	void addChildren(AstNode *parent, int stop = CTokenType::SemiColon);
 	AstNode *buildNode(Token t);

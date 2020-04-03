@@ -37,6 +37,7 @@ void CScanner::initKeywords() {
 	keywords.push_back("return");
 	keywords.push_back("if");
 	keywords.push_back("else");
+	keywords.push_back("while");
 }
 
 //Match everything with a token
@@ -54,6 +55,7 @@ void CScanner::initTokens() {
 	tokens["return"] = CTokenType::Return;
 	tokens["if"] = CTokenType::If;
 	tokens["else"] = CTokenType::Else;
+	tokens["while"] = CTokenType::While;
 	
 	//Symbols
 	tokens["("] = CTokenType::LeftParen;

@@ -22,6 +22,7 @@ enum CTokenType {
 	Return,
 	If,
 	Else,
+	While,
 	
 	//Literals
 	Id,

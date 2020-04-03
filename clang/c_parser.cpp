@@ -17,8 +17,9 @@ void CParser::parse() {
 			case CTokenType::Extern: buildExtern(); break;
 			
 			//Conditional tokens
-			case CTokenType::If: buildIf(false); break;
+			case CTokenType::If: buildCond(CondType::If); break;
 			case CTokenType::Else: buildElse(); break;
+			case CTokenType::While: buildCond(CondType::While); break;
 			
 			//Data type tokens- can be either function declarations or variables
 			case CTokenType::Void:
@@ -185,7 +186,7 @@ void CParser::buildVarAssign(AstVarDec *vd) {
 }
 
 //Builds an If statement
-void CParser::buildIf(bool elif) {
+void CParser::buildCond(CondType type) {
 	Token next = scan->getNext();
 	
 	if (next.type != CTokenType::LeftParen) {
@@ -194,7 +195,8 @@ void CParser::buildIf(bool elif) {
 	
 	//Start constructing the AST node
 	AstCond *cond = new AstIf;
-	if (elif) cond = new AstElif;
+	if (type == CondType::Elif) cond = new AstElif;
+	else if (type == CondType::While) cond = new AstWhile;
 	
 	//Scan and build
 	Token lval = scan->getNext();
@@ -233,7 +235,7 @@ void CParser::buildIf(bool elif) {
 	cond->rval = buildNode(rval);
 
 	//Add to the tree and update the stack
-	if (elif)
+	if (type == CondType::Elif)
 		topNodes.top()->children.pop_back();
 	
 	topNodes.top()->children.push_back(cond);
@@ -247,7 +249,7 @@ void CParser::buildElse() {
 	Token next = scan->getNext();
 	
 	if (next.type == CTokenType::If) {
-		buildIf(true);
+		buildCond(CondType::Elif);
 		return;
 	} else if (next.type != CTokenType::LeftCBrace) {
 		syntax->addError("Expected curly brace after else");

@@ -42,6 +42,7 @@ Token Scanner::getNext() {
 	//Get characters until we have a token
 	while (!reader.eof()) {
 		reader.get(c);
+		current_ln += c;
 		
 		if (c == '\"' && !in_quote) {
 			in_quote = true;
@@ -55,6 +56,11 @@ Token Scanner::getNext() {
 			return next;
 		} else if (!in_quote) {
 			if (isWhitespace(c)) {
+				if (c == '\n') {
+					current_ln = "";
+					++ln_no;
+				}
+				
 				if (current == "")
 					continue;
 				break;

@@ -18,6 +18,14 @@ public:
 	bool isWhitespace(char c);
 	bool isInt();
 	void close();
+	
+	int getLnNo() { 
+		return ln_no;
+	
+	}
+	std::string getCurrentLn() {
+		return current_ln;
+	}
 protected:
 	virtual void initSeparators() {}
 	virtual void initKeywords() {}
@@ -42,4 +50,8 @@ private:
 	bool ret_next = false;
 	bool in_quote = false;
 	Token tNext;
+	
+	//Position information
+	int ln_no = 1;
+	std::string current_ln = "";
 };

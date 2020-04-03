@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include <lex.hh>
+
 struct CompileMsg {
 	std::string msg;
 	std::string original;
@@ -11,7 +13,9 @@ struct CompileMsg {
 
 class Syntax {
 public:
-	Syntax() {}
+	Syntax(Scanner *s) {
+		scan = s;
+	}
 	
 	//Adds an error message
 	void addError(std::string msg);
@@ -25,6 +29,7 @@ public:
 	void displayWarnings();
 	void displayErrors();
 private:
+	Scanner *scan;
 	std::vector<CompileMsg> warnings;
 	std::vector<CompileMsg> errors;
 };

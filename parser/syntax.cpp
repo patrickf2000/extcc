@@ -7,8 +7,8 @@
 void Syntax::addError(std::string msg) {
 	CompileMsg cm;
 	cm.msg = msg;
-	cm.original = "";
-	cm.ln_no = -1;
+	cm.original = scan->getCurrentLn();
+	cm.ln_no = scan->getLnNo();
 	
 	errors.push_back(cm);
 }
@@ -22,8 +22,8 @@ void Syntax::addError(CompileMsg msg) {
 void Syntax::addWarning(std::string msg) {
 	CompileMsg cm;
 	cm.msg = msg;
-	cm.original = "";
-	cm.ln_no = -1;
+	cm.original = scan->getCurrentLn();
+	cm.ln_no = scan->getLnNo();
 	
 	warnings.push_back(cm);
 }

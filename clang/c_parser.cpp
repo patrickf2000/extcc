@@ -109,16 +109,14 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 	Token next = scan->getNext();
 	
 	if (next.type != CTokenType::RightParen) {
-		//TODO: Syntax error
-		std::cout << "Syntax error: Expected \')\'" << std::endl;
+		syntax->addError("Syntax error: Expected \')\'");
 	}
 	
 	//The next token should be a curly brace
 	next = scan->getNext();
 	
 	if (next.type != CTokenType::LeftCBrace) {
-		//TODO: Syntax error
-		std::cout << "Syntax error: Expected \'{\'" << std::endl;
+		syntax->addError("Syntax error: Expected \'{\'");
 	}
 	
 	//The new current top is the function declaration

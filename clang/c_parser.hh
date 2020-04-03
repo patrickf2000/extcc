@@ -12,6 +12,7 @@ public:
 	explicit CParser(std::string in) {
 		top = new AstScope;
 		scan = new CScanner(in);
+		syntax = new Syntax;
 		
 		topNodes.push(top);
 	}

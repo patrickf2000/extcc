@@ -42,6 +42,7 @@ void Compiler::assemble() {
 #ifdef BUILD_CLANG
 		CParser parser(src_files[i]);
 		parser.parse();
+		parser.runSyntax();
 		AstNode *top = parser.getTree();
 #else
 #error Unknown Compiler

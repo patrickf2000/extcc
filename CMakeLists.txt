@@ -6,6 +6,7 @@ include_directories(parser quik clang compiler)
 set(PARSER_SRC
 	parser/ast.cpp
 	parser/lex.cpp
+	parser/syntax.cpp
 	parser/ltac/ltac.cpp
 	parser/ltac/ltac_array.cpp
 	parser/ltac/ltac_build.cpp

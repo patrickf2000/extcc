@@ -116,6 +116,7 @@ LtacNode *LTAC_Builder::convert_ast_var(AstNode *val) {
 			auto l_id = new LtacVar;
 			l_id->pos = v2.stack_pos;
 			l_id->d_type = v2.type;
+			l_id->is_ref = id->is_ref;
 			lval = l_id;
 		} break;
 		

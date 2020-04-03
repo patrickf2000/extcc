@@ -245,7 +245,11 @@ void print_tree(AstNode *node, int indent, bool nl) {
 	} else if (node->type == AstType::Float) {
 		std::cout << " " << dynamic_cast<AstFloat *>(node)->get_val();
 	} else if (node->type == AstType::Id) {
-		std::cout << " " << dynamic_cast<AstID *>(node)->get_name();
+		auto id = dynamic_cast<AstID *>(node);
+		std::cout << " ";
+		if (id->is_ref) std::cout << "&";
+		
+		std::cout << id->get_name();
 	} else if (node->type == AstType::Str) {
 		std::cout << " " << dynamic_cast<AstString *>(node)->get_val();
 	}

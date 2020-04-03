@@ -146,6 +146,7 @@ public:
 	DataType d_type;
 	
 	int rvar = -1;
+	bool is_ref = false;
 };
 
 //Function calls

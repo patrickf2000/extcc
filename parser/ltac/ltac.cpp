@@ -73,10 +73,13 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 			auto var = static_cast<LtacVar *>(code_ln);
 			std::string v_str = "";
 			
+			if (var->is_ref)
+				v_str = "&";
+			
 			if (var->rvar == -1) {
-				v_str = "[bp+" + std::to_string(var->pos) + "]";
+				v_str += "[bp+" + std::to_string(var->pos) + "]";
 			} else {
-				v_str = "r" + std::to_string(var->rvar);
+				v_str += "r" + std::to_string(var->rvar);
 			}
 			
 			if (child) {

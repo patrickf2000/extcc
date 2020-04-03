@@ -18,6 +18,7 @@ void CParser::parse() {
 			
 			//Conditional tokens
 			case CTokenType::If: buildIf(false); break;
+			case CTokenType::Else: buildElse(); break;
 			
 			//Data type tokens- can be either function declarations or variables
 			case CTokenType::Void:
@@ -68,13 +69,16 @@ void CParser::parse() {
 				}
 				
 				auto last_type = topNodes.top()->type;
-				topNodes.pop(); 
+				topNodes.pop();
+				
+				auto endif = new AstNode(AstType::EndIf);
 				
 				switch (last_type) {
-					case AstType::If:
+					case AstType::If: {
+						topNodes.top()->children.push_back(endif);
+					} break;
 					case AstType::Elif:
 					case AstType::Else: {
-						auto endif = new AstNode(AstType::EndIf);
 						topNodes.top()->children.push_back(endif);
 					} break;
 				}
@@ -206,8 +210,32 @@ void CParser::buildIf(bool elif) {
 	cond->rval = buildNode(rval);
 
 	//Add to the tree and update the stack
+	if (elif)
+		topNodes.top()->children.pop_back();
+	
 	topNodes.top()->children.push_back(cond);
 	topNodes.push(cond);
+	
+	//TODO: Final syntax check
+}
+
+//Builds an else statement
+void CParser::buildElse() {
+	Token next = scan->getNext();
+	
+	if (next.type == CTokenType::If) {
+		buildIf(true);
+		return;
+	} else if (next.type != CTokenType::LeftCBrace) {
+		syntax->addError("Expected curly brace after else");
+		return;
+	}
+	
+	topNodes.top()->children.pop_back();
+	
+	auto e = new AstElse;
+	topNodes.top()->children.push_back(e);
+	topNodes.push(e);
 }
 
 //Scans the source until we have a semicolon, and creates

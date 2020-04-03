@@ -9,6 +9,7 @@ void CScanner::initSeparators() {
 	separators.push_back('*');
 	separators.push_back(';');
 	separators.push_back('=');
+	separators.push_back(',');
 	
 	whitespace.push_back('\n');
 	whitespace.push_back('\t');
@@ -51,6 +52,7 @@ void CScanner::initTokens() {
 	tokens["*"] = CTokenType::Mul;
 	tokens[";"] = CTokenType::SemiColon;
 	tokens["="] = CTokenType::Assign;
+	tokens[","] = CTokenType::Comma;
 	
 	//Constant/literal tokens
 	idToken = CTokenType::Id;

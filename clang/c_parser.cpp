@@ -173,6 +173,9 @@ void CParser::addChildren(AstNode *parent, int stop) {
 				parent->children.push_back(id);
 			} break;
 			
+			//TODO: Remove this
+			case CTokenType::Comma: break;
+			
 			//TODO: Add the rest
 		}
 		

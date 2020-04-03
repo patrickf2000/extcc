@@ -35,7 +35,8 @@ enum CTokenType {
 	RightCBrace,
 	Mul,
 	SemiColon,
-	Assign
+	Assign,
+	Comma
 };
 
 class CScanner : public Scanner {

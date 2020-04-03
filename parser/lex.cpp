@@ -13,7 +13,11 @@ Scanner::Scanner(std::string in) {
 	
 	reader = std::ifstream(path.c_str());
 	if (!reader.is_open()) {
-		//TODO: Die
+		std::cout << "Error: Unable to open input file!" << std::endl;
+		std::cout << "Path: " << path << std::endl;
+		std::cout << std::endl;
+		std::cout << "Please make sure the file exists and you have permission to read." << std::endl;
+		std::exit(2);
 	}
 }
 

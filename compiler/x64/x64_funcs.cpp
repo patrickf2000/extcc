@@ -148,6 +148,12 @@ void Asm_x64::build_func_call(LtacNode *node) {
 					
 					writer << "\tcvtss2sd xmm0, DWORD PTR [rbp-";
 					writer << std::to_string(var->pos) + "]" << std::endl;
+				} else if (var->is_ref) {
+					writer << "\tlea " << call_regs[call_index] << ", ";
+					writer << "[rbp-" << std::to_string(var->pos) << "]";
+					
+					writer << std::endl;
+					++call_index;
 				} else {
 					std::string instr = "mov";
 					std::string prefix = "DWORD PTR";

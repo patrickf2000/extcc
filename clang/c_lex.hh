@@ -29,6 +29,10 @@ enum CTokenType {
 	No,
 	FloatL,
 	
+	//Conditional Operators
+	Greater,
+	Less,
+	
 	//Symbols
 	LeftParen,
 	RightParen,

@@ -27,6 +27,7 @@ private:
 	void buildFuncCall(AstFuncCall *fc);
 	void buildReturn();
 	void buildVarDec(AstVarDec *vd);
-	void buildIf();
+	void buildIf(bool elif);
 	void addChildren(AstNode *parent, int stop = CTokenType::SemiColon);
+	AstNode *buildNode(Token t);
 };

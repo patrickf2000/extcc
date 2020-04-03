@@ -43,6 +43,9 @@ void Syntax::displayWarnings() {
 
 //Display error messages
 void Syntax::displayErrors() {
+	if (errors.size() == 0)
+		return;
+
 	for (auto msg : errors) {
 		std::cout << "[Error] " << msg.msg << std::endl;
 		std::cout << "[" << msg.ln_no << "] " << msg.original << std::endl;

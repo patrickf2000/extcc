@@ -17,7 +17,7 @@ void CParser::parse() {
 			case CTokenType::Extern: buildExtern(); break;
 			
 			//Conditional tokens
-			case CTokenType::If: buildIf(); break;
+			case CTokenType::If: buildIf(false); break;
 			
 			//Data type tokens- can be either function declarations or variables
 			case CTokenType::Void:
@@ -67,7 +67,17 @@ void CParser::parse() {
 					add_ret = false;
 				}
 				
+				auto last_type = topNodes.top()->type;
 				topNodes.pop(); 
+				
+				switch (last_type) {
+					case AstType::If:
+					case AstType::Elif:
+					case AstType::Else: {
+						auto endif = new AstNode(AstType::EndIf);
+						topNodes.top()->children.push_back(endif);
+					} break;
+				}
 			} break;
 		}
 	}
@@ -148,8 +158,56 @@ void CParser::buildVarDec(AstVarDec *vd) {
 }
 
 //Builds an If statement
-void CParser::buildIf() {
+void CParser::buildIf(bool elif) {
+	Token next = scan->getNext();
 	
+	if (next.type != CTokenType::LeftParen) {
+		syntax->addError("Expected \'(\' in conditional statement.");
+	}
+	
+	//Start constructing the AST node
+	AstCond *cond = new AstIf;
+	if (elif) cond = new AstElif;
+	
+	//Scan and build
+	Token lval = scan->getNext();
+	cond->lval = buildNode(lval);
+	
+	Token op = scan->getNext();
+	Token rval = scan->getNext();
+	
+	if (op.type == CTokenType::Assign) {
+		if (rval.type == CTokenType::Assign) {
+			cond->set_op(CondOp::Equals);
+			rval = scan->getNext();
+		} else {
+			syntax->addError("Assignment invalid in a conditional.");
+		}
+	} else if (op.type == CTokenType::Greater) {
+		if (rval.type == CTokenType::Assign) {
+			cond->set_op(CondOp::GreaterEq);
+			rval = scan->getNext();
+		} else {
+			cond->set_op(CondOp::Greater);
+		}
+	} else if (op.type == CTokenType::Less) {
+		if (rval.type == CTokenType::Assign) {
+			cond->set_op(CondOp::LessEq);
+			rval = scan->getNext();
+		} else {
+			cond->set_op(CondOp::Less);
+		}
+		
+	//TODO: Add not equals
+	} else {
+		syntax->addError("Unknown conditional operator");
+	}
+	
+	cond->rval = buildNode(rval);
+
+	//Add to the tree and update the stack
+	topNodes.top()->children.push_back(cond);
+	topNodes.push(cond);
 }
 
 //Scans the source until we have a semicolon, and creates
@@ -158,35 +216,48 @@ void CParser::addChildren(AstNode *parent, int stop) {
 	Token next = scan->getNext();
 	
 	while (next.type != stop) {
-		switch (next.type) {
-			//Integers
-			case CTokenType::No: {
-				int i = std::stoi(next.id);
-				auto *ai = new AstInt(i);
-				parent->children.push_back(ai);
-			} break;
-			
-			//Strings
-			case CTokenType::String: {
-				auto *str = new AstString;
-				str->set_val(next.id);
-				parent->children.push_back(str);
-			} break;
-			
-			//Other variables
-			case CTokenType::Id: {
-				auto *id = new AstID(next.id);
-				parent->children.push_back(id);
-			} break;
-			
-			//TODO: Remove this
+		switch (next.type) {			
+			//TODO: Fix this
 			case CTokenType::Comma: break;
 			
-			//TODO: Add the rest
+			default: {
+				auto node = buildNode(next);
+				parent->children.push_back(node);
+			}
 		}
 		
 		next = scan->getNext();
 	}
 }
+
+//Builds a single node based on a token
+AstNode *CParser::buildNode(Token t) {
+	switch (t.type) {
+		//Integers
+		case CTokenType::No: {
+			int i = std::stoi(t.id);
+			auto *ai = new AstInt(i);
+			return ai;
+		} break;
+		
+		//Strings
+		case CTokenType::String: {
+			auto *str = new AstString;
+			str->set_val(t.id);
+			return str;
+		} break;
+		
+		//Other variables
+		case CTokenType::Id: {
+			auto *id = new AstID(t.id);
+			return id;
+		} break;
+		
+		//TODO: Add the rest
+	}
+	
+	return new AstNode;
+}
+
 
 

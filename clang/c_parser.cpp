@@ -304,6 +304,15 @@ AstNode *CParser::buildNode(Token t) {
 			return id;
 		} break;
 		
+		//Memory reference
+		case CTokenType::Amp: {
+			Token next = scan->getNext();
+			
+			auto *id = new AstID(next.id);
+			id->is_ref = true;
+			return id;
+		} break;
+		
 		//Operators
 		case CTokenType::Plus: return new AstNode(AstType::Add);
 		case CTokenType::Minus: return new AstNode(AstType::Sub);

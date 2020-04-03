@@ -316,6 +316,8 @@ public:
 		type = AstType::Id;
 		name = n;
 	}
+	
+	bool is_ref = false;	//Memory reference?
 };
 
 //The Integer type

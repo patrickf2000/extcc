@@ -38,6 +38,7 @@ void CScanner::initKeywords() {
 	keywords.push_back("if");
 	keywords.push_back("else");
 	keywords.push_back("while");
+	keywords.push_back("for");
 }
 
 //Match everything with a token
@@ -56,6 +57,7 @@ void CScanner::initTokens() {
 	tokens["if"] = CTokenType::If;
 	tokens["else"] = CTokenType::Else;
 	tokens["while"] = CTokenType::While;
+	tokens["for"] = CTokenType::For;
 	
 	//Symbols
 	tokens["("] = CTokenType::LeftParen;

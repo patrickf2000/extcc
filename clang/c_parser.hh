@@ -11,7 +11,8 @@ enum class CondType {
 	If,
 	Elif,
 	While,
-	DoWhile
+	DoWhile,
+	For
 };
 
 class CParser : public Parser {
@@ -26,6 +27,7 @@ public:
 	void parse();
 private:
 	std::stack<AstNode *> topNodes;
+	std::stack<AstNode *> blockEnds;
 	bool add_ret = false;
 	
 	DataType token2type(int token);
@@ -33,9 +35,10 @@ private:
 	void buildFuncDec(AstFuncDec *fd);
 	void buildFuncCall(AstFuncCall *fc);
 	void buildReturn();
-	void buildVarAssign(AstVarDec *vd);
+	void buildVarAssign(AstVarDec *vd, int stop = CTokenType::SemiColon, bool add_end = false);
 	void buildCond(CondType type);
 	void buildElse();
+	void buildFor();
 	void addChildren(AstNode *parent, int stop = CTokenType::SemiColon);
 	AstNode *buildNode(Token t);
 };

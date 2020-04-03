@@ -20,6 +20,7 @@ void CParser::parse() {
 			case CTokenType::If: buildCond(CondType::If); break;
 			case CTokenType::Else: buildElse(); break;
 			case CTokenType::While: buildCond(CondType::While); break;
+			case CTokenType::For: buildFor(); break;
 			
 			//Data type tokens- can be either function declarations or variables
 			case CTokenType::Void:
@@ -70,9 +71,17 @@ void CParser::parse() {
 					add_ret = false;
 				}
 				
+				//Add nodes that need to be at the end of the block
+				while (blockEnds.size() > 0) {
+					auto node = blockEnds.top();
+					blockEnds.pop();
+					topNodes.top()->children.push_back(node);
+				}
+				
 				auto last_type = topNodes.top()->type;
 				topNodes.pop();
 				
+				//Determine if an endif is necessary
 				auto endif = new AstNode(AstType::EndIf);
 				
 				switch (last_type) {
@@ -158,14 +167,18 @@ void CParser::buildReturn() {
 }
 
 //Builds a variable declaration
-void CParser::buildVarAssign(AstVarDec *vd) {
-	topNodes.top()->children.push_back(vd);
+void CParser::buildVarAssign(AstVarDec *vd, int stop, bool add_end) {
 	std::vector<AstNode *> nodes;
+	
+	if (add_end)
+		blockEnds.push(vd);
+	else
+		topNodes.top()->children.push_back(vd);
 	
 	//Get all tokens until the semi-colon
 	Token next = scan->getNext();
 	
-	while (next.type != CTokenType::SemiColon) {
+	while (next.type != stop) {
 		nodes.push_back(buildNode(next));
 		next = scan->getNext();
 	}
@@ -189,17 +202,23 @@ void CParser::buildVarAssign(AstVarDec *vd) {
 void CParser::buildCond(CondType type) {
 	Token next = scan->getNext();
 	
-	if (next.type != CTokenType::LeftParen) {
+	if (next.type != CTokenType::LeftParen && type != CondType::For) {
 		syntax->addError("Expected \'(\' in conditional statement.");
 	}
 	
 	//Start constructing the AST node
 	AstCond *cond = new AstIf;
 	if (type == CondType::Elif) cond = new AstElif;
-	else if (type == CondType::While) cond = new AstWhile;
+	else if (type == CondType::While
+		|| type == CondType::For) cond = new AstWhile;
 	
 	//Scan and build
-	Token lval = scan->getNext();
+	Token lval;
+	if (type == CondType::For)
+		lval = next;
+	else
+		scan->getNext();
+	
 	cond->lval = buildNode(lval);
 	
 	Token op = scan->getNext();
@@ -261,6 +280,72 @@ void CParser::buildElse() {
 	auto e = new AstElse;
 	topNodes.top()->children.push_back(e);
 	topNodes.push(e);
+}
+
+//Builds a for loop
+void CParser::buildFor() {
+	Token next = scan->getNext();
+	
+	if (next.type != CTokenType::LeftParen)
+		syntax->addError("Expected token");
+		
+	//Build the first part
+	next = scan->getNext();
+	
+	switch (next.type) {
+		//We are resetting another variable
+		case CTokenType::Id: {
+			Token id = scan->getNext();
+			next = scan->getNext();
+			
+			if (next.type == CTokenType::Assign) {
+				auto *va = new AstVarAssign(id.id);
+				buildVarAssign(va);
+			} else {
+				syntax->addError("Invalid for-loop syntax.");
+			}
+		} break;
+		
+		//We are declaring a new variable
+		case CTokenType::Char:
+		case CTokenType::Short:
+		case CTokenType::Int:
+		case CTokenType::Float:
+		case CTokenType::Double: {
+			int type = next.type;
+			Token id = scan->getNext();
+			next = scan->getNext();
+			
+			if (next.type == CTokenType::Assign) {
+				auto *vd = new AstVarDec(id.id);
+				vd->set_type(token2type(type));
+				buildVarAssign(vd);
+			} else {
+				syntax->addError("Invalid for-loop syntax.");
+			}
+		} break;
+		
+		//We have a syntax error
+		default: syntax->addError("Invalid for-loop syntax.");
+	}
+	
+	//Build the second part
+	buildCond(CondType::For);
+	
+	next = scan->getNext();
+	if (next.type != CTokenType::SemiColon)
+		syntax->addError("Invalid for-loop syntax.");
+	
+	//Build the final part	
+	Token id = scan->getNext();
+	next = scan->getNext();
+	
+	if (next.type == CTokenType::Assign) {
+		auto *va = new AstVarAssign(id.id);
+		buildVarAssign(va, CTokenType::RightParen, true);
+	} else {
+		syntax->addError("Expected variable expression.");
+	}
 }
 
 //Scans the source until we have a semicolon, and creates

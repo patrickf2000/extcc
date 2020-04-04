@@ -48,6 +48,8 @@ enum CTokenType {
 	RightParen,
 	LeftCBrace,
 	RightCBrace,
+	LBracket,
+	RBracket,
 	SemiColon,
 	Assign,
 	Comma,

@@ -36,6 +36,7 @@ private:
 	void buildFuncCall(AstFuncCall *fc);
 	void buildReturn();
 	void buildVarAssign(AstVarDec *vd, int stop = CTokenType::SemiColon, bool add_end = false);
+	void buildArrayDec(AstArrayDec *arr);
 	void buildCond(CondType type);
 	void buildElse();
 	void buildFor();

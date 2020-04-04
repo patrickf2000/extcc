@@ -33,13 +33,22 @@ void CParser::parse() {
 					auto *fd = new AstFuncDec(idToken.id);
 					fd->rtype = token2type(type);
 					buildFuncDec(fd);
+					
 				//Variable declaration
 				} else if (symToken.type == CTokenType::Assign) {
 					auto *vd = new AstVarDec(idToken.id);
 					vd->set_type(token2type(type));
 					buildVarAssign(vd);
+					
+				//Array declaration
+				} else if (symToken.type == CTokenType::LBracket) {
+					auto *arr = new AstArrayDec;
+					arr->set_type(token2type(type));
+					buildArrayDec(arr);
+					
+				//Syntax error
 				} else {
-					//TODO: Syntax error
+					//TODO: Rest in peace
 				}
 			} break;
 			
@@ -215,6 +224,66 @@ void CParser::buildVarAssign(AstVarDec *vd, int stop, bool add_end) {
 			math->children.push_back(child);
 		}
 	}
+}
+
+//Builds an array declaration
+void CParser::buildArrayDec(AstArrayDec *arr) {
+	topNodes.top()->children.push_back(arr);
+	
+	//Set the size
+	Token next = scan->getNext();
+	
+	if (next.type != CTokenType::No) {
+		syntax->addError("Invalid array size.");
+		return;
+	}
+		
+	int size = std::stoi(next.id);
+	arr->set_size(size);
+	
+	//Syntax check
+	next = scan->getNext();
+	
+	if (next.type != CTokenType::RBracket) {
+		syntax->addError("Invalid array syntax.");
+		return;
+	}
+	
+	//Build the rest of the declaration
+	next = scan->getNext();
+	
+	if (next.type == CTokenType::SemiColon) {
+		for (int i = 0; i<size; i++) {
+			auto i = new AstInt(0);
+			arr->children.push_back(i);
+		}
+		
+		return;
+	}
+	
+	//Do some more syntax check
+	if (next.type != CTokenType::Assign)
+		syntax->addError("Invalid array syntax.");
+		
+	next = scan->getNext();
+	
+	if (next.type != CTokenType::LeftCBrace)
+		syntax->addError("Invalid array syntax.");
+		
+	//Load the elements
+	next = scan->getNext();
+	
+	while (next.type != CTokenType::RightCBrace) {
+		if (next.type != CTokenType::Comma)
+			arr->children.push_back(buildNode(next));
+		next = scan->getNext();
+	}
+	
+	//Final syntax check
+	next = scan->getNext();
+	
+	if (next.type != CTokenType::SemiColon)
+		syntax->addError("Expected terminating token.");
 }
 
 //Builds an If statement

@@ -141,11 +141,13 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 	
 	//Parse the arguments
 	Token next = scan->getNext();
+	int argc = 0;
 	Var v;
 	v.is_param = true;
 	
 	while (next.type != CTokenType::RightParen) {
 		next = scan->getNext();
+		++argc;
 	
 		switch (next.type) {
 			case CTokenType::Void:
@@ -163,7 +165,8 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 		}
 	}
 	
-	fd->args.push_back(v);
+	if (argc > 1)
+		fd->args.push_back(v);
 	
 	//The next token should be a curly brace
 	next = scan->getNext();

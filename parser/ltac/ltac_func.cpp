@@ -60,13 +60,18 @@ LtacFunc *LTAC_Builder::build_func(AstNode *node, bool is_extern) {
 	
 	//Add the arguments
 	for (auto v : fd->args) {
-		inc_stack(v.type);
+		if (v.is_ptr)
+			stack_pos += 8;
+		else
+			inc_stack(v.type);
+			
 		v.stack_pos = stack_pos;
 		vars[v.name] = v;
 		
 		auto var = new LtacVar;
 		var->pos = stack_pos;
 		var->d_type = v.type;
+		var->is_ptr = v.is_ptr;
 		
 		l_fd->children.push_back(var);
 	}

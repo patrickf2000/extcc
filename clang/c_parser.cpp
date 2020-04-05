@@ -41,6 +41,13 @@ void CParser::parse() {
 					vd->set_type(token2type(type));
 					buildVarAssign(vd);
 					
+					Var v;
+					v.name = vd->get_name();
+					v.type = vd->get_type();
+					v.is_array = false;
+					v.is_param = false;
+					vars[v.name] = v;
+					
 				//Array declaration
 				} else if (symToken.type == CTokenType::LBracket) {
 					auto *arr = new AstArrayDec;
@@ -71,6 +78,8 @@ void CParser::parse() {
 				//Variable assignment
 				} else if (next.type == CTokenType::Assign) {
 					auto *va = new AstVarAssign(t.id);
+					Var v = vars[va->get_name()];
+					va->set_type(v.type);
 					buildVarAssign(va);
 				} else {
 					//TODO: Syntax error
@@ -250,8 +259,20 @@ void CParser::buildVarAssign(AstVarDec *vd, int stop, bool add_end) {
 		auto math = new AstMath;
 		vd->children.push_back(math);
 		
+		bool is_float = false;
+		if (vd->get_type() == DataType::Float 
+			|| vd->get_type() == DataType::Double) {
+			is_float = true;
+		}
+		
 		for (auto child : nodes) {
-			math->children.push_back(child);
+			if (child->type == AstType::Int && is_float) {
+				auto *i = static_cast<AstInt *>(child);
+				auto *f = new AstFloat((float)i->get_val());
+				math->children.push_back(f);
+			} else {
+				math->children.push_back(child);
+			}
 		}
 	}
 }

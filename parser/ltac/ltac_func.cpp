@@ -117,6 +117,7 @@ LtacFuncCall *LTAC_Builder::build_func_call(AstNode *node) {
 				var->pos = v.stack_pos;
 				var->d_type = v.type;
 				var->is_ref = id->is_ref;
+				var->is_ptr = v.is_ptr;
 				l_fc->children.push_back(var);
 				
 				if (overload) {

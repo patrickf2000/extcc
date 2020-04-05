@@ -166,6 +166,14 @@ void Asm_x64::build_func_call(LtacNode *node) {
 					writer << std::endl;
 					++call_index;
 					
+				//Pointer variables
+				} else if (var->is_ptr) {
+					writer << "\tmov " << call_regs[call_index] << ", ";
+					writer << "QWORD PTR [rbp-" << std::to_string(var->pos);
+					writer << "]" << std::endl;
+					
+					++call_index;
+					
 				//Other variables- usually integers
 				} else {
 					std::string instr = "mov";

@@ -29,4 +29,6 @@ int main() {
 	y = goUp(y);
 	
 	printf("X: %d | Y: %d\n", x, y);
+	
+	return 0;
 }

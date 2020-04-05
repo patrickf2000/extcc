@@ -87,8 +87,22 @@ void CParser::parse() {
 					add_ret = false;
 				}
 				
-				if (topNodes.size() == 2)
+				//If we are at the end of a function, do a few things
+				if (topNodes.size() == 2) {
 					vars.clear();
+					auto last = topNodes.top()->children[topNodes.top()->children.size()-1]->type;
+					
+					if (last != AstType::Return) {
+						auto *fd = static_cast<AstFuncDec *>(topNodes.top());
+						if (fd->rtype != DataType::Void) {
+							std::string error = "Fatal: Missing return value at function: ";
+							error += fd->get_name();
+							
+							syntax->addError(error);
+							return;
+						}
+					}
+				}
 				
 				auto last_type = topNodes.top()->type;
 				

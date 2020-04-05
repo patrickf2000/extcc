@@ -27,6 +27,7 @@ enum class ltac {
 	Int,
 	Byte,
 	Float,
+	Double,
 	String,
 	
 	MathOp,
@@ -194,6 +195,16 @@ public:
 	
 	float val = 0;
 	int i_val = 0;
+	std::string name = "";
+};
+
+//Double-precision floats
+class LtacDouble : public LtacNode {
+public:
+	explicit LtacDouble() { type = ltac::Double; }
+	
+	double val;
+	std::string i_val = "";
 	std::string name = "";
 };
 

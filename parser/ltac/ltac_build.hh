@@ -36,6 +36,7 @@ protected:
 	//Utility stuff
 	LtacNode *build_string(AstNode *node);
 	LtacNode *build_float(AstNode *node);
+	LtacNode *build_double(AstNode *node);
 	void inc_stack(DataType type);
 	
 	//Comparisons
@@ -64,6 +65,10 @@ private:
 	//Float stuff
 	int flt_count = 0;
 	std::map<float, std::string> dec_flt;
+	
+	//Double stuff
+	int dbl_count = 0;
+	std::map<double, std::string> dec_dbl;
 	
 	//Label stuff
 	int lbl_count = 0;

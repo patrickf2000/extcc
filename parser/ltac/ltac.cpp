@@ -102,6 +102,11 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 			content += lf->name;
 		} break;
 		
+		case ltac::Double: {
+			auto ld = static_cast<LtacDouble *>(code_ln);
+			content += ld->name;
+		} break;
+		
 		case ltac::String: {
 			auto lstr = static_cast<LtacString *>(code_ln);
 			content += lstr->name;
@@ -208,6 +213,14 @@ std::string ltac2str(LtacFile *file) {
 				content += "\t" + lf->name + ": word ";
 				content += std::to_string(lf->val) + "\t#";
 				content+= std::to_string(lf->i_val) + "\n";
+			} break;
+			
+			//Doubles
+			case ltac::Double: {
+				auto ld = static_cast<LtacDouble *>(code_ln);
+				content += "\t" + ld->name + ": quad ";
+				content += std::to_string(ld->val) + "\t#";
+				content+= ld->i_val + "\n";
 			} break;
 		
 			//Strings

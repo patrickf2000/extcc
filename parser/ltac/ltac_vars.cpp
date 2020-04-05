@@ -103,6 +103,11 @@ LtacNode *LTAC_Builder::convert_ast_var(AstNode *val) {
 			lval = build_float(val);
 		} break;
 		
+		//Double
+		case AstType::Double: {
+			lval = build_double(val);
+		} break;
+		
 		//Strings
 		case AstType::Str: {
 			lval = build_string(val);

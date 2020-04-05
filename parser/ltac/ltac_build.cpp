@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #include "ltac_build.hh"
 
 //Creates an LTAC file
@@ -144,6 +146,27 @@ LtacNode *LTAC_Builder::build_float(AstNode *node) {
 	
 	file->data->children.push_back(l_flt);
 	return l_flt;
+}
+
+LtacNode *LTAC_Builder::build_double(AstNode *node) {
+	auto dbl = static_cast<AstDouble *>(node);
+	auto l_dbl = new LtacDouble;
+	double val = dbl->get_val();
+	
+	std::string name = "DBL_" + std::to_string(dbl_count);
+	++dbl_count;
+	
+	l_dbl->name = name;
+	l_dbl->val = val;
+	
+	char buf[64];
+	sprintf(buf, "%lu", *(uint64_t*)&val);
+	l_dbl->i_val = std::string(buf);
+	
+	dec_dbl[val] = l_dbl->name;
+	
+	file->data->children.push_back(l_dbl);
+	return l_dbl;
 }
 
 //Increments the stack based on a datatype

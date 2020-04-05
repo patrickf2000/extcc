@@ -200,6 +200,29 @@ void Asm_x64::build_func_call(LtacNode *node) {
 				}
 			} break;
 			
+			//Array access
+			case ltac::ArrayAcc: {
+				build_array_acc(arg);
+				auto type = static_cast<LtacVar *>(arg)->d_type;
+			
+				switch (type) {
+					//Ints
+					case DataType::Int: {
+						writer << "\tmov " << call_regs32[call_index];
+						writer << ", ebx" << std::endl;
+						++call_index;
+					} break;
+					
+					//Floats and Doubles
+					case DataType::Float: 
+					case DataType::Double: {
+						writer << "\tmovss " << call_flt_regs[call_index_flt];
+						writer << ", xmm1" << std::endl;
+						++call_index_flt;
+					} break;
+				}
+			} break;
+			
 			//TODO: Add the rest
 		}
 	}

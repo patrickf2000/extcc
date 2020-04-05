@@ -135,6 +135,14 @@ LtacFuncCall *LTAC_Builder::build_func_call(AstNode *node) {
 				}
 			} break;
 			
+			//Push an array access
+			case AstType::ArrayAccess: {
+				auto arr = build_array_acc(arg);
+				l_fc->children.push_back(arr);
+				
+				if (overload) fn_name += "_STR";
+			} break;
+			
 			//TODO: Add the rest
 		}
 	}

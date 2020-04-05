@@ -220,6 +220,7 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 			case CTokenType::Comma: {
 				fd->args.push_back(v);
 				vars[v.name] = v;
+				v.is_ptr = false;
 			} break;
 			
 			case CTokenType::Mul: v.is_ptr = true; break;

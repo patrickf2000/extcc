@@ -25,7 +25,8 @@ void CParser::parse() {
 			//Data type tokens- can be either function declarations or variables
 			case CTokenType::Void:
 			case CTokenType::Int:
-			case CTokenType::Float: {
+			case CTokenType::Float: 
+			case CTokenType::Double: {
 				Token idToken = scan->getNext();
 				Token symToken = scan->getNext();
 				
@@ -241,12 +242,18 @@ void CParser::buildVarAssign(AstVarDec *vd, int stop, bool add_end) {
 		blockEnds.push(vd);
 	else
 		topNodes.top()->children.push_back(vd);
+		
+	//Check to see if we need to convert float literals
+	// to double-precision numbers
+	bool float2dbl = false;
+	if (vd->get_type() == DataType::Double)
+		float2dbl = true;
 	
 	//Get all tokens until the semi-colon
 	Token next = scan->getNext();
 	
 	while (next.type != stop) {
-		nodes.push_back(buildNode(next));
+		nodes.push_back(buildNode(next, float2dbl));
 		next = scan->getNext();
 	}
 	
@@ -508,7 +515,7 @@ void CParser::addChildren(AstNode *parent, int stop) {
 }
 
 //Builds a single node based on a token
-AstNode *CParser::buildNode(Token t) {
+AstNode *CParser::buildNode(Token t, bool float2dbl) {
 	switch (t.type) {
 		//Integers
 		case CTokenType::No: {
@@ -519,9 +526,15 @@ AstNode *CParser::buildNode(Token t) {
 		
 		//Floats
 		case CTokenType::FloatL: {
-			float f = std::stod(t.id);
-			auto *af = new AstFloat(f);
-			return af;
+			if (float2dbl) {
+				double f = std::stod(t.id);
+				auto *ad = new AstDouble(f);
+				return ad;
+			} else {
+				float f = std::stod(t.id);
+				auto *af = new AstFloat(f);
+				return af;
+			}
 		} break;
 		
 		//Strings

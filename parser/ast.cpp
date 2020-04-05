@@ -39,6 +39,8 @@ std::string ast2str(AstType type) {
 		case AstType::Float64: return "Float64";
 		case AstType::Float128: return "Float128";
 		case AstType::Float256: return "Float256";
+		
+		case AstType::Double: return "Double";
 				
 		case AstType::If: return "If";
 		case AstType::Elif: return "Elif";
@@ -83,6 +85,8 @@ std::string type2str(DataType type) {
 		case DataType::Float64: return "Float64";
 		case DataType::Float128: return "Float128";
 		case DataType::Float256: return "Float256";
+		
+		case DataType::Double: return "Double";
 	}
 	
 	return "NONE";
@@ -246,6 +250,8 @@ void print_tree(AstNode *node, int indent, bool nl) {
 		std::cout << " " << static_cast<AstBool *>(node)->get_val();
 	} else if (node->type == AstType::Float) {
 		std::cout << " " << dynamic_cast<AstFloat *>(node)->get_val();
+	} else if (node->type == AstType::Double) {
+		std::cout << " " << dynamic_cast<AstDouble *>(node)->get_val();
 	} else if (node->type == AstType::Id) {
 		auto id = dynamic_cast<AstID *>(node);
 		std::cout << " ";

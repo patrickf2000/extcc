@@ -22,6 +22,7 @@ void float_array() {
 
 int main() {
 	int_array();
+	float_array();
 
 	return 0;
 }

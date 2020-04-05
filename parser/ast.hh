@@ -95,6 +95,7 @@ enum class AstType {
 	Float80,
 	Float128,
 	Float256,
+	Double,
 	Str,
 	ArrayDec,
 	ArrayAccess,
@@ -406,6 +407,21 @@ public:
 	void set_val(float n) { no = n; }
 protected:
 	float no = 0;
+};
+
+//The double type
+class AstDouble : public AstNode {
+public:
+	explicit AstDouble() { type = AstType::Double; }
+	explicit AstDouble(double n) {
+		type = AstType::Double;
+		no = n;
+	}
+	
+	double get_val() { return no; }
+	void set_val(double n) { no = n; }
+protected:
+	double no = 0;
 };
 
 //The int-64 type

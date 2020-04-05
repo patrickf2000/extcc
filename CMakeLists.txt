@@ -3,6 +3,8 @@ project(extcc)
 
 include_directories(parser quik clang compiler)
 
+add_compile_options(-std=c++14 -g)
+
 set(PARSER_SRC
 	parser/ast.cpp
 	parser/lex.cpp

@@ -162,12 +162,24 @@ void Asm_x64::build_int_math(LtacVar *var, LtacNode *src) {
 				writer << "\tmov eax, " << var_regs[id->rvar] << std::endl;
 			}
 		} break;
+		
+		//A function call
+		case ltac::FuncCall: {
+			build_func_call(first);
+		} break;
 	}
 	
 	//Build the other parts
 	for (auto node : math->children) {
 		auto math_op = static_cast<LtacMathOp *>(node);
 		bool is_mod = false;
+		
+		//See if we have a function call
+		if (math_op->operand->type == ltac::FuncCall) {
+			writer << "\tpush rax" << std::endl;
+			build_func_call(math_op->operand);
+			writer << "\tpop rbx" << std::endl;
+		}
 		
 		//Build the operator
 		switch (math_op->op) {
@@ -197,6 +209,10 @@ void Asm_x64::build_int_math(LtacVar *var, LtacNode *src) {
 				writer << "DWORD PTR ";
 				writer << "[rbp-" << std::to_string(id->pos) << "]";
 				writer << std::endl;
+			} break;
+			
+			case ltac::FuncCall: {
+				writer << "ebx" << std::endl;
 			} break;
 		}
 		

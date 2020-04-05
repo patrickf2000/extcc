@@ -92,6 +92,15 @@ void Asm_x64::build_var(LtacNode *node) {
 					writer << var->pos << "], xmm0" << std::endl;
 				} break;
 				
+				//Doubles
+				case DataType::Double: {
+					writer << "\tmovsd xmm0, [rbp-" << var2->pos;
+					writer << "]" << std::endl;
+					
+					writer << "\tmovsd [rbp-";
+					writer << var->pos << "], xmm0" << std::endl;
+				} break;
+				
 				//128-bit vector types
 				case DataType::Int128:
 				case DataType::Float128: {

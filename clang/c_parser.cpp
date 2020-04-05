@@ -85,12 +85,29 @@ void CParser::parse() {
 				if (next.type == CTokenType::LeftParen) {
 					auto *fc = new AstFuncCall(t.id);
 					buildFuncCall(fc);
+					
 				//Variable assignment
 				} else if (next.type == CTokenType::Assign) {
 					auto *va = new AstVarAssign(t.id);
 					Var v = vars[va->get_name()];
 					va->set_type(v.type);
 					buildVarAssign(va);
+					
+				//Array assignment
+				} else if (next.type == CTokenType::LBracket) {
+					auto *arr = new AstArrayAssign;
+					
+					next = scan->getNext();
+					arr->index = buildNode(next);
+					
+					next = scan->getNext();
+					next = scan->getNext();
+				
+					Var v = vars[t.id];
+					arr->set_name(t.id);
+					arr->set_type(v.type);
+					buildVarAssign(arr);
+					
 				} else {
 					//TODO: Syntax error
 				}

@@ -29,6 +29,14 @@ void CParser::parse() {
 			case CTokenType::Double: {
 				Token idToken = scan->getNext();
 				Token symToken = scan->getNext();
+				bool ptr = false;
+				
+				//See if we have a pointer
+				if (idToken.type == CTokenType::Mul) {
+					ptr = true;
+					idToken = symToken;
+					symToken = scan->getNext();
+				}
 				
 				//Function declaration
 				if (symToken.type == CTokenType::LeftParen) {
@@ -39,6 +47,7 @@ void CParser::parse() {
 				//Variable declaration
 				} else if (symToken.type == CTokenType::Assign) {
 					auto *vd = new AstVarDec(idToken.id);
+					vd->is_ptr = ptr;
 					vd->set_type(token2type(type));
 					buildVarAssign(vd);
 					

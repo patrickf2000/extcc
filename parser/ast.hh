@@ -296,6 +296,8 @@ public:
 	
 	DataType get_type() { return dtype; }
 	void set_type(DataType t) { dtype = t; }
+	
+	bool is_ptr = false;
 protected:
 	DataType dtype;
 };

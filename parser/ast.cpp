@@ -153,7 +153,9 @@ void print_tree(AstNode *node, int indent, bool nl) {
 		
 	} else if (node->type == AstType::VarDec || node->type == AstType::VarAssign) {
 		AstVarDec *vd = dynamic_cast<AstVarDec *>(node);
-		std::cout << " [" << vd->get_name() << "] ("
+		std::cout << " ";
+		if (vd->is_ptr) std::cout << " *";
+		std::cout << "[" << vd->get_name() << "] ("
 			<< type2str(vd->get_type()) << ")";
 			
 	} else if (node->type == AstType::MultiVarAssign) {

@@ -217,7 +217,10 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 			
 			case CTokenType::Id: v.name = next.id; break;
 			
-			case CTokenType::Comma: fd->args.push_back(v); break;
+			case CTokenType::Comma: {
+				fd->args.push_back(v);
+				vars[v.name] = v;
+			} break;
 			
 			case CTokenType::Mul: v.is_ptr = true; break;
 		}

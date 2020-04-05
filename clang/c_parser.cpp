@@ -495,6 +495,13 @@ AstNode *CParser::buildNode(Token t) {
 			return ai;
 		} break;
 		
+		//Floats
+		case CTokenType::FloatL: {
+			float f = std::stod(t.id);
+			auto *af = new AstFloat(f);
+			return af;
+		} break;
+		
 		//Strings
 		case CTokenType::String: {
 			auto *str = new AstString;

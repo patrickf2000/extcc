@@ -103,7 +103,9 @@ Token Scanner::getNext() {
 		tNext.id = s;
 	}
 	
-	if (isInt()) {
+	if (isFloat()) {
+		next.type = fltToken;
+	} else if (isInt()) {
 		next.type = intToken;
 	} else if (tokens.find(current) == tokens.end()) {
 		next.type = idToken;
@@ -144,6 +146,26 @@ bool Scanner::isInt() {
 		if (!isdigit(c))
 			return false;
 	}
+	return true;
+}
+
+//Checks to see if the current buffer is an float
+bool Scanner::isFloat() {
+	int point_c = 0;
+	
+	for (char c : current) {
+		if (c == '.') {
+			++point_c;
+			continue;
+		}
+		
+		if (!isdigit(c))
+			return false;
+	}
+	
+	if (point_c != 1)
+		return false;
+		
 	return true;
 }
 

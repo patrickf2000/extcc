@@ -19,6 +19,7 @@ public:
 	bool isSeparator(char c);
 	bool isWhitespace(char c);
 	bool isInt();
+	bool isFloat();
 	void close();
 	
 	int getLnNo() { 

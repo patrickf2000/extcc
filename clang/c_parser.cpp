@@ -156,9 +156,6 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 	v.is_param = true;
 	
 	while (next.type != CTokenType::RightParen) {
-		next = scan->getNext();
-		++argc;
-	
 		switch (next.type) {
 			case CTokenType::Void:
 			case CTokenType::Char:
@@ -173,6 +170,9 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 			
 			//TODO: Add memory reference/pointers
 		}
+		
+		next = scan->getNext();
+		++argc;
 	}
 	
 	if (argc > 1)

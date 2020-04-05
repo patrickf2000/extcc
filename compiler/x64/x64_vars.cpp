@@ -39,6 +39,17 @@ void Asm_x64::build_var(LtacNode *node) {
 			writer << var->pos << "], xmm0" << std::endl;
 		} break;
 		
+		//Doubles
+		case ltac::Double: {
+			auto ld = static_cast<LtacDouble *>(src);
+			
+			writer << "\tmovsd xmm0, QWORD PTR ";
+			writer << ld->name << "[rip]" << std::endl;
+			
+			writer << "\tmovsd QWORD PTR [rbp-";
+			writer << var->pos << "], xmm0" << std::endl;
+		} break;
+		
 		//Strings
 		case ltac::String: {
 			writer << "\tmov QWORD PTR [rbp-";

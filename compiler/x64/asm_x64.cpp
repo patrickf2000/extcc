@@ -23,6 +23,13 @@ void Asm_x64::build_data(LtacDataSec *data) {
 				writer << "\t" << lf->name << ": .long ";
 				writer << std::to_string(lf->i_val) << std::endl;
 			} break;
+			
+			//Doubles
+			case ltac::Double: {
+				auto ld = static_cast<LtacDouble *>(ln);
+				writer << "\t" << ld->name << ": .quad ";
+				writer << ld->i_val << std::endl;
+			} break;
 		
 			//Strings
 			case ltac::String: {

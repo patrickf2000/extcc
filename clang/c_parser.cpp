@@ -227,7 +227,7 @@ void CParser::buildVarAssign(AstVarDec *vd, int stop, bool add_end) {
 	//See if we have a math expression
 	if (nodes.size() == 1) {
 		vd->children.push_back(nodes.at(0));
-	} if (nodes.size() == 0) {
+	} else if (nodes.size() == 0) {
 		syntax->addError("Invalid syntax when assigning a variable.");
 	} else {
 		auto math = new AstMath;

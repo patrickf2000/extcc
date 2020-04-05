@@ -195,9 +195,11 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 }
 
 //Builds a function call
-void CParser::buildFuncCall(AstFuncCall *fc) {
-	topNodes.top()->children.push_back(fc);
+void CParser::buildFuncCall(AstFuncCall *fc, bool add_top) {
 	addChildren(fc, CTokenType::RightParen);
+	
+	if (add_top)
+		topNodes.top()->children.push_back(fc);
 }
 
 //Builds a return statement
@@ -490,25 +492,33 @@ AstNode *CParser::buildNode(Token t) {
 		case CTokenType::Id: {
 			Token next = scan->getNext();
 			
-			if (next.type != CTokenType::LBracket) {
-				scan->unget(next);
-				auto *id = new AstID(t.id);
-				return id;
+			//Array access
+			if (next.type == CTokenType::LBracket) {
+				Var v = vars[t.id];
+				auto *acc = new AstArrayAcc(t.id);
+				acc->set_type(v.type);
+				
+				next = scan->getNext();
+				acc->children.push_back(buildNode(next));
+				
+				next = scan->getNext();
+				
+				if (next.type != CTokenType::RBracket)
+					syntax->addError("Invalid array access syntax.");
+				
+				return acc;
+				
+			//Function call
+			} else if (next.type == CTokenType::LeftParen) {
+				auto *fd = new AstFuncCall(t.id);
+				buildFuncCall(fd, false);
+				return fd;
 			}
 			
-			Var v = vars[t.id];
-			auto *acc = new AstArrayAcc(t.id);
-			acc->set_type(v.type);
-			
-			next = scan->getNext();
-			acc->children.push_back(buildNode(next));
-			
-			next = scan->getNext();
-			
-			if (next.type != CTokenType::RBracket)
-				syntax->addError("Invalid array access syntax.");
-			
-			return acc;
+			//Variable
+			scan->unget(next);
+			auto *id = new AstID(t.id);
+			return id;
 		} break;
 		
 		//Memory reference

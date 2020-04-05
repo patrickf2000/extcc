@@ -39,7 +39,7 @@ private:
 	DataType token2type(int token);
 	void buildExtern();
 	void buildFuncDec(AstFuncDec *fd);
-	void buildFuncCall(AstFuncCall *fc);
+	void buildFuncCall(AstFuncCall *fc, bool add_top = true);
 	void buildReturn();
 	void buildVarAssign(AstVarDec *vd, int stop = CTokenType::SemiColon, bool add_end = false);
 	void buildArrayDec(AstArrayDec *arr);

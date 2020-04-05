@@ -146,6 +146,15 @@ void Asm_x64::build_array_set(LtacNode *node) {
 	auto src = arr->children[0];
 	
 	switch (src->type) {
+		//Integers
+		case ltac::Int: {
+			auto *li = static_cast<LtacInt *>(src);
+			
+			writer << "\tmov DWORD PTR [r9], ";
+			writer << std::to_string(li->val) << std::endl;
+			writer << std::endl;
+		} break;
+	
 		//Other variables
 		case ltac::Var: {
 			auto *var = static_cast<LtacVar *>(src);

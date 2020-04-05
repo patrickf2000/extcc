@@ -24,7 +24,8 @@ void CParser::parse() {
 			
 			//Data type tokens- can be either function declarations or variables
 			case CTokenType::Void:
-			case CTokenType::Int: {
+			case CTokenType::Int:
+			case CTokenType::Float: {
 				Token idToken = scan->getNext();
 				Token symToken = scan->getNext();
 				

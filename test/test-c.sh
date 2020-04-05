@@ -13,18 +13,19 @@ do
 	echo "$entry2"
 	
 	gcc $entry -o /tmp/ctest/$entry2
-	expected=`/tmp/ctest/$entry2`
-
 	$B_PATH/cc $entry -o $B_PATH/out.bin
-	actual=`$B_PATH/out.bin`
+	
+	diff <(/tmp/ctest/$entry2) <($B_PATH/out.bin)
 
-	if [[ $expected == $actual ]] ;then
+	if [[ $? == 0 ]] ;then
 		echo "Pass"
 	else
 		echo "Fail"
 		echo ""
-		echo "Expected: $expected"
-		echo "Actual: $actual"
+		echo "Expected: "
+		echo "`/tmp/ctest/$entry2`"
+		echo "Actual:"
+		echo "`$B_PATH/out.bin`"
 		exit 1
 	fi
 	

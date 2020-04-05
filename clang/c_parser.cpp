@@ -43,8 +43,15 @@ void CParser::parse() {
 				//Array declaration
 				} else if (symToken.type == CTokenType::LBracket) {
 					auto *arr = new AstArrayDec;
+					arr->set_name(idToken.id);
 					arr->set_type(token2type(type));
 					buildArrayDec(arr);
+					
+					Var v;
+					v.type = token2type(type);
+					v.name = idToken.id;
+					v.is_array = true;
+					vars[idToken.id] = v;
 					
 				//Syntax error
 				} else {
@@ -79,6 +86,9 @@ void CParser::parse() {
 					topNodes.top()->children.push_back(ret);
 					add_ret = false;
 				}
+				
+				if (topNodes.size() == 2)
+					vars.clear();
 				
 				auto last_type = topNodes.top()->type;
 				
@@ -486,7 +496,9 @@ AstNode *CParser::buildNode(Token t) {
 				return id;
 			}
 			
+			Var v = vars[t.id];
 			auto *acc = new AstArrayAcc(t.id);
+			acc->set_type(v.type);
 			
 			next = scan->getNext();
 			acc->children.push_back(buildNode(next));

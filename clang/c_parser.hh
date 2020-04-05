@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stack>
+#include <map>
+#include <string>
 
 #include <parser.hh>
 #include <ast.hh>
@@ -30,6 +32,10 @@ private:
 	std::stack<AstNode *> blockEnds;
 	bool add_ret = false;
 	
+	//Holds declared variables
+	std::map<std::string, Var> vars;
+	
+	//Functions
 	DataType token2type(int token);
 	void buildExtern();
 	void buildFuncDec(AstFuncDec *fd);

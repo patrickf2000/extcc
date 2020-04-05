@@ -219,7 +219,7 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 			
 			case CTokenType::Comma: fd->args.push_back(v); break;
 			
-			//TODO: Add memory reference/pointers
+			case CTokenType::Mul: v.is_ptr = true; break;
 		}
 		
 		next = scan->getNext();

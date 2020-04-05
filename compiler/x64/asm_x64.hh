@@ -20,7 +20,7 @@ protected:
 	void build_ret(LtacNode *node);
 	
 	void build_var(LtacNode *node);
-	void build_int_math(LtacVar *var, LtacNode *src);
+	void build_int_math(LtacVar *var, LtacNode *src, bool store=true);
 	void build_float_math(LtacVar *var, LtacNode *src);
 	void build_vector_math(LtacVar *var, LtacNode *src);
 	

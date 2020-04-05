@@ -165,6 +165,16 @@ void Asm_x64::build_array_set(LtacNode *node) {
 			writer << std::endl;
 		} break;
 		
+		//Math expressions
+		case ltac::Math: {
+			if (arr->d_type == DataType::Int) {
+				build_int_math(arr, src, false);
+			}
+			
+			writer << "\tmov DWORD PTR [r9], eax" << std::endl;
+			writer << std::endl;
+		} break;
+		
 		//TODO: Add the rest
 	}
 }

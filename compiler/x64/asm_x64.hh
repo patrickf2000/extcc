@@ -26,6 +26,7 @@ protected:
 	
 	void build_array(LtacNode *node);
 	void build_array_acc(LtacNode *node);
+	void build_array_set(LtacNode *node);
 	
 	void build_icmp(LtacNode *node);
 	void build_jmp(LtacNode *node);

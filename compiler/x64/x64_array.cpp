@@ -98,3 +98,41 @@ void Asm_x64::build_array_acc(LtacNode *node) {
 		} break;
 	}
 }
+
+#include <iostream>
+
+//Build an array-set statement
+void Asm_x64::build_array_set(LtacNode *node) {
+	auto *arr = static_cast<LtacArraySet *>(node);
+	
+	int pos = arr->stack_pos;
+	int size = arr->type_size;
+	
+	switch (arr->index->type) {
+		//Access by integer
+		case ltac::Int: {
+		
+		} break;
+		
+		//Access by variable
+		case ltac::Var: {
+			auto *var = static_cast<LtacVar *>(arr->index);
+			
+			writer << "\tmov eax, [rbp-";
+			writer << std::to_string(var->pos) << "]" << std::endl;
+			
+			writer << "\tcdqe" << std::endl;
+			writer << "\tlea rdx, [0+rbx*4]" << std::endl;
+			writer << "\tmov r9, QWORD PTR [rbp-" << std::to_string(pos);
+			writer << "]" << std::endl;
+			writer << "\tadd r9, rdx" << std::endl;
+			writer << std::endl;
+			
+			build_var(node);
+			
+			writer << "\tmov DWORD PTR [r9], eax" << std::endl;
+			writer << std::endl;
+		} break;
+	}
+}
+

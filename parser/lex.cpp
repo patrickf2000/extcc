@@ -23,6 +23,12 @@ Scanner::Scanner(std::string in) {
 
 //Get's the next token
 Token Scanner::getNext() {
+	if (stored.size() > 0) {
+		auto t = stored.top();
+		stored.pop();
+		return t;
+	}
+
 	if (ret_next) {
 		ret_next = false;
 		return tNext;
@@ -109,6 +115,11 @@ Token Scanner::getNext() {
 	current = "";
 	
 	return next;
+}
+
+//Returns a token to be returned by nextToken
+void Scanner::unget(Token t) {
+	stored.push(t);
 }
 
 //Check to see if we have a separator

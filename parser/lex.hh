@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <fstream>
+#include <stack>
 
 struct Token {
 	int type;
@@ -14,6 +15,7 @@ class Scanner {
 public:
 	explicit Scanner(std::string in);
 	Token getNext();
+	void unget(Token t);
 	bool isSeparator(char c);
 	bool isWhitespace(char c);
 	bool isInt();
@@ -50,6 +52,7 @@ private:
 	bool ret_next = false;
 	bool in_quote = false;
 	Token tNext;
+	std::stack<Token> stored;
 	
 	//Position information
 	int ln_no = 1;

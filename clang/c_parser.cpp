@@ -478,8 +478,25 @@ AstNode *CParser::buildNode(Token t) {
 		
 		//Other variables
 		case CTokenType::Id: {
-			auto *id = new AstID(t.id);
-			return id;
+			Token next = scan->getNext();
+			
+			if (next.type != CTokenType::LBracket) {
+				scan->unget(next);
+				auto *id = new AstID(t.id);
+				return id;
+			}
+			
+			auto *acc = new AstArrayAcc(t.id);
+			
+			next = scan->getNext();
+			acc->children.push_back(buildNode(next));
+			
+			next = scan->getNext();
+			
+			if (next.type != CTokenType::RBracket)
+				syntax->addError("Invalid array access syntax.");
+			
+			return acc;
 		} break;
 		
 		//Memory reference

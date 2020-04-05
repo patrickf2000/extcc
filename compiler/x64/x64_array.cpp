@@ -4,7 +4,7 @@
 void Asm_x64::build_array(LtacNode *node) {
 	auto array = static_cast<LtacArray *>(node);
 	
-	int pos = array->stack_pos;
+	int pos = array->pos;
 	int size = array->type_size;
 	
 	for (auto child : array->children) {
@@ -42,19 +42,21 @@ void Asm_x64::build_array_acc(LtacNode *node) {
 	auto acc = static_cast<LtacArrayAcc *>(node);
 	auto child = acc->children[0];
 	
-	int pos = acc->stack_pos;
+	int pos = acc->pos;
 	int size = acc->type_size;
 	
 	switch (child->type) {
 		//Integer index
 		case ltac::Int: {
 			auto li = static_cast<LtacInt *>(child);
-			int offset = pos - (size * li->val);
+			int offset = (size * li->val);
 			
 			switch (acc->d_type) {
 				//Integer arrays
 				case DataType::Int: {
-					writer << "\tmov ebx, [rbp-" << offset;
+					writer << "\tmov rbx, [rbp-" << pos;
+					writer << "]" << std::endl;
+					writer << "\tmov ebx, [rbx+" << offset;
 					writer << "]" << std::endl;
 				} break;
 				
@@ -75,12 +77,24 @@ void Asm_x64::build_array_acc(LtacNode *node) {
 				case DataType::Int: 
 				case DataType::Int128:
 				case DataType::Int256: {
-					writer << "\tmov eax, DWORD PTR [rbp-" << lv->pos;
-					writer << "]" << std::endl;
-					writer << "\tcdqe" << std::endl;
-					
-					writer << "\tmov ebx, DWORD PTR [rbp-" << pos << "+rax*";
-					writer << size << "]" << std::endl;
+					if (acc->is_ptr) {
+						writer << "\tmov eax, DWORD PTR [rbp-" << lv->pos;
+						writer << "]" << std::endl;
+						writer << "\tcdqe" << std::endl;
+						
+						writer << "\tlea rdx, [0+rax*4]" << std::endl;
+						writer << "\tmov rax, QWORD PTR [rbp-" << pos;
+						writer << "]" << std::endl;
+						writer << "\tadd rax, rdx" << std::endl;
+						writer << "\tmov ebx, [rax]" << std::endl;
+					} else {
+						writer << "\tmov eax, DWORD PTR [rbp-" << lv->pos;
+						writer << "]" << std::endl;
+						writer << "\tcdqe" << std::endl;
+						
+						writer << "\tmov ebx, DWORD PTR [rbp-" << pos << "+rax*";
+						writer << size << "]" << std::endl;
+					}
 				} break;
 				
 				//Float arrays
@@ -99,40 +113,50 @@ void Asm_x64::build_array_acc(LtacNode *node) {
 	}
 }
 
-#include <iostream>
-
 //Build an array-set statement
 void Asm_x64::build_array_set(LtacNode *node) {
 	auto *arr = static_cast<LtacArraySet *>(node);
 	
-	int pos = arr->stack_pos;
+	int pos = arr->pos;
 	int size = arr->type_size;
 	
 	switch (arr->index->type) {
-		//Access by integer
+		//Set by integer
 		case ltac::Int: {
 		
 		} break;
 		
-		//Access by variable
+		//Set by variable
 		case ltac::Var: {
 			auto *var = static_cast<LtacVar *>(arr->index);
 			
-			writer << "\tmov eax, [rbp-";
+			writer << "\tmov eax, DWORD PTR [rbp-";
 			writer << std::to_string(var->pos) << "]" << std::endl;
 			
 			writer << "\tcdqe" << std::endl;
-			writer << "\tlea rdx, [0+rbx*4]" << std::endl;
+			writer << "\tlea rdx, [0+rax*4]" << std::endl;
 			writer << "\tmov r9, QWORD PTR [rbp-" << std::to_string(pos);
 			writer << "]" << std::endl;
 			writer << "\tadd r9, rdx" << std::endl;
 			writer << std::endl;
+		} break;
+	}
+	
+	//Build the operands
+	auto src = arr->children[0];
+	
+	switch (src->type) {
+		//Other variables
+		case ltac::Var: {
+			auto *var = static_cast<LtacVar *>(src);
 			
-			build_var(node);
-			
+			writer << "\tmov eax, [rbp-" << std::to_string(var->pos);
+			writer << "]" << std::endl;
 			writer << "\tmov DWORD PTR [r9], eax" << std::endl;
 			writer << std::endl;
 		} break;
+		
+		//TODO: Add the rest
 	}
 }
 

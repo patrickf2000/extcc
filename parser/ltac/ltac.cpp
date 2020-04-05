@@ -177,7 +177,7 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 		
 		case ltac::Array: {
 			auto array = static_cast<LtacArray *>(code_ln);
-			content += "\t[bp+" + std::to_string(array->stack_pos) + "] * ";
+			content += "\t[bp+" + std::to_string(array->pos) + "] * ";
 			content += std::to_string(array->size) + "\n";
 			
 			for (auto node : array->children) {
@@ -189,7 +189,11 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 		
 		case ltac::ArrayAcc: {
 			auto acc = static_cast<LtacArrayAcc *>(code_ln);
-			content += "[bp+" + std::to_string(acc->stack_pos) + "+";
+			std::string t_str = "";
+			
+			if (acc->is_ptr)
+				t_str = "*";
+			content += t_str + "[bp+" + std::to_string(acc->pos) + "+";
 			
 			auto child = acc->children[0];
 			content += code2str(child, true);
@@ -198,7 +202,11 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 		
 		case ltac::ArraySet: {
 			auto acc = static_cast<LtacArraySet *>(code_ln);
-			content += "\tmov [bp+" + std::to_string(acc->stack_pos) + "+";
+			std::string t_str = "";
+			
+			if (acc->is_ptr)
+				t_str = "*";
+			content += "\tmov " + t_str + "[bp+" + std::to_string(acc->pos) + "+";
 			
 			content += code2str(acc->index, true);
 			content += "] ";

@@ -123,6 +123,7 @@ struct Var {
 	DataType type;
 	bool is_array;
 	bool is_param;
+	bool is_ptr;
 	
 	//Needed for the assembler
 	int stack_pos;

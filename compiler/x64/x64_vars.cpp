@@ -412,7 +412,7 @@ void Asm_x64::build_vector_math(LtacVar *var, LtacNode *src) {
 				auto acc = static_cast<LtacArrayAcc *>(math_op->operand);
 				auto child = acc->children[0];
 				
-				int pos = acc->stack_pos;
+				int pos = acc->pos;
 				int size = acc->type_size;
 				
 				switch (child->type) {

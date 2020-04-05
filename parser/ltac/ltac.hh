@@ -148,6 +148,7 @@ public:
 	
 	int rvar = -1;
 	bool is_ref = false;
+	bool is_ptr = false;
 };
 
 //Function calls

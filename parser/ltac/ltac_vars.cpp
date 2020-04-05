@@ -15,7 +15,12 @@ void LTAC_Builder::build_var_dec(AstNode *node) {
 		v.is_array = true;	
 	}
 	
-	inc_stack(v.type);
+	if (vd->is_ptr) {
+		stack_pos += 8;
+		v.is_array = true;
+	} else {
+		inc_stack(v.type);
+	}
 	
 	v.stack_pos = stack_pos;
 	vars[v.name] = v;
@@ -37,6 +42,7 @@ void LTAC_Builder::build_var_assign(AstNode *node) {
 	auto var = new LtacVar;
 	var->pos = v.stack_pos;
 	var->d_type = v.type;
+	var->is_ptr = v.is_array;
 	
 	//Build the assigned value
 	auto val = va->children[0];

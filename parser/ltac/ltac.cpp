@@ -75,6 +75,8 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 			
 			if (var->is_ref)
 				v_str = "&";
+			else if (var->is_ptr)
+				v_str = "*";
 			
 			if (var->rvar == -1) {
 				v_str += "[bp+" + std::to_string(var->pos) + "]";

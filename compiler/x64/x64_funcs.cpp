@@ -148,6 +148,12 @@ void Asm_x64::build_func_call(LtacNode *node) {
 					
 					writer << "\tcvtss2sd xmm0, DWORD PTR [rbp-";
 					writer << std::to_string(var->pos) + "]" << std::endl;
+				} else if (var->d_type == DataType::Double) {
+					std::string reg = call_flt_regs[call_index_flt];
+					++call_index_flt;
+					
+					writer << "\tmovsd xmm0, QWORD PTR [rbp-";
+					writer << std::to_string(var->pos) + "]" << std::endl;
 				} else if (var->is_ref) {
 					writer << "\tlea " << call_regs[call_index] << ", ";
 					writer << "[rbp-" << std::to_string(var->pos) << "]";

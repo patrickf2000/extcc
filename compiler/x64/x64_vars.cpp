@@ -139,8 +139,13 @@ void Asm_x64::build_var(LtacNode *node) {
 		case ltac::FuncCall: {
 			build_func_call(src);
 			
-			writer << "\tmov DWORD PTR [rbp-";
-			writer << var->pos << "], eax" << std::endl;
+			if (var->is_ptr) {
+				writer << "\tmov QWORD PTR [rbp-";
+				writer << var->pos << "], rax" << std::endl;
+			} else {
+				writer << "\tmov DWORD PTR [rbp-";
+				writer << var->pos << "], eax" << std::endl;
+			}
 		} break;
 		
 		//Array access

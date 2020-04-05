@@ -66,3 +66,45 @@ LtacArrayAcc *LTAC_Builder::build_array_acc(AstNode *node) {
 	
 	return acc;
 }
+
+//Builds an array set statement
+void LTAC_Builder::build_array_set(AstNode *node) {
+	auto ast_set = static_cast<AstArrayAssign *>(node);
+	auto set = new LtacArraySet;
+	
+	Var v = vars[ast_set->get_name()];
+	set->stack_pos = v.stack_pos;
+	set->type_size = 4;
+	set->d_type = v.type;
+	
+	auto index = ast_set->index;
+	
+	switch (index->type) {
+		//Integer being used for index
+		case AstType::Int: {
+			auto i = static_cast<AstInt *>(index);
+			auto li = new LtacInt(i->get_val());
+			
+			set->index = li;
+		} break;
+		
+		//Variable being used for index
+		case AstType::Id: {
+			auto id = static_cast<AstID *>(index);
+			auto lv = new LtacVar;
+			auto v2 = vars[id->get_name()];
+			
+			lv->pos = v2.stack_pos;
+			lv->d_type = v2.type;
+			set->index = lv;
+		} break;
+	}
+	
+	//Build the assigned value
+	auto val = ast_set->children[0];
+	auto lval = convert_ast_var(val);
+	set->children.push_back(lval);
+	
+	file->code->children.push_back(set);
+}
+

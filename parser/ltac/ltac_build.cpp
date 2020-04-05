@@ -62,6 +62,7 @@ void LTAC_Builder::assemble(AstNode *top) {
 			
 			//Arrays
 			case AstType::ArrayDec: build_array_dec(node); break;
+			case AstType::ArrayAssign: build_array_set(node); break;
 			
 			//Comparisons
 			case AstType::If: 

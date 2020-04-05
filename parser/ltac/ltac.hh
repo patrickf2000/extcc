@@ -23,6 +23,7 @@ enum class ltac {
 	Var,
 	Array,
 	ArrayAcc,
+	ArraySet,
 	
 	Int,
 	Byte,
@@ -238,6 +239,14 @@ public:
 class LtacArrayAcc : public LtacArray {
 public:
 	explicit LtacArrayAcc() { type = ltac::ArrayAcc; }
+};
+
+//Array set
+class LtacArraySet : public LtacArray {
+public:
+	explicit LtacArraySet() { type = ltac::ArraySet; }
+	
+	LtacNode *index;
 };
 
 //Math operations

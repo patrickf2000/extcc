@@ -195,6 +195,17 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 			content += code2str(child, true);
 			content += "]";
 		} break;
+		
+		case ltac::ArraySet: {
+			auto acc = static_cast<LtacArraySet *>(code_ln);
+			content += "\tmov [bp+" + std::to_string(acc->stack_pos) + "+";
+			
+			content += code2str(acc->index, true);
+			content += "] ";
+			
+			content += code2str(acc->children[0], true);
+			content += "\n";
+		} break;
 	}
 	
 	return content;

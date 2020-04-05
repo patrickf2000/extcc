@@ -32,6 +32,7 @@ protected:
 	//Array stuff
 	void build_array_dec(AstNode *node);
 	LtacArrayAcc *build_array_acc(AstNode *node);
+	void build_array_set(AstNode *node);
 	
 	//Utility stuff
 	LtacNode *build_string(AstNode *node);

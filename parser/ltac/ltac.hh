@@ -145,13 +145,18 @@ public:
 	bool is_extern = false;
 };
 
+//A node with a datatype
+class LtacTypeNode : public LtacNode {
+public:
+	DataType d_type = DataType::Void;
+};
+
 //Variable assignment/declaration/operation
-class LtacVar : public LtacNode {
+class LtacVar : public LtacTypeNode {
 public:
 	explicit LtacVar() { type = ltac::Var; }
 	int pos = 0;
 	int size = 0;
-	DataType d_type;
 	
 	int rvar = -1;
 	bool is_ref = false;
@@ -173,10 +178,9 @@ public:
 };
 
 //Function returns
-class LtacRet : public LtacNode {
+class LtacRet : public LtacTypeNode {
 public:
 	explicit LtacRet() { type = ltac::Ret; }
-	DataType d_type = DataType::Void;
 };
 
 //Integers

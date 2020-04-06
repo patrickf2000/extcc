@@ -264,8 +264,10 @@ void Asm_x64::build_func_call(LtacNode *node) {
 void Asm_x64::build_ret(LtacNode *node) {
 	writer << std::endl;
 	int ret_index = 0;
+	
+	auto *ret = static_cast<LtacRet *>(node);
 
-	for (auto val : node->children) {
+	for (auto val : ret->children) {
 		auto reg = ret_regs32[ret_index];
 		++ret_index;
 	
@@ -289,7 +291,11 @@ void Asm_x64::build_ret(LtacNode *node) {
 			
 			//Math expressions
 			case ltac::Math: {
-			
+				switch (ret->d_type) {
+					case DataType::Int: build_int_math(ret, val, false); break;
+					
+					//TODO: Add the rest
+				}
 			} break;
 			
 			//TODO: Add the rest

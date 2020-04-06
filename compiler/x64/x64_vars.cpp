@@ -188,7 +188,7 @@ void Asm_x64::build_var(LtacNode *node) {
 }
 
 //Builds integer math expressions
-void Asm_x64::build_int_math(LtacVar *var, LtacNode *src, bool store) {
+void Asm_x64::build_int_math(LtacTypeNode *var, LtacNode *src, bool store) {
 	auto math = static_cast<LtacMath *>(src);
 	
 	//Build the first value
@@ -275,11 +275,16 @@ void Asm_x64::build_int_math(LtacVar *var, LtacNode *src, bool store) {
 		return;
 		
 	//Save the result back to the variable
-	if (var->rvar == -1) {
-		writer << "\tmov DWORD PTR [rbp-" << std::to_string(var->pos);
+	if (var->type != ltac::Var)
+		return;
+		
+	auto var2 = static_cast<LtacVar *>(var);
+	
+	if (var2->rvar == -1) {
+		writer << "\tmov DWORD PTR [rbp-" << std::to_string(var2->pos);
 		writer << "], eax" << std::endl << std::endl;
 	} else {
-		writer << "\tmov " << var_regs[var->rvar] << ", eax" << std::endl;
+		writer << "\tmov " << var_regs[var2->rvar] << ", eax" << std::endl;
 		writer << std::endl;
 	}
 }

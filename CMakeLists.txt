@@ -18,8 +18,11 @@ set(PARSER_SRC
 )
 
 set(C_SRC
+	clang/c_flow.cpp
+	clang/c_func.cpp
 	clang/c_lex.cpp	
 	clang/c_parser.cpp
+	clang/c_var.cpp
 )
 
 set(QK_SRC

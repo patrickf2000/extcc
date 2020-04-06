@@ -34,6 +34,10 @@ protected:
 	LtacArrayAcc *build_array_acc(AstNode *node);
 	void build_array_set(AstNode *node);
 	
+	//Structure stuff
+	void build_struct(AstNode *node);
+	void build_struct_dec(AstNode *node);
+	
 	//Utility stuff
 	LtacNode *build_string(AstNode *node);
 	LtacNode *build_float(AstNode *node);
@@ -54,6 +58,7 @@ private:
 	int stack_pos = 0;
 	int ptr_size = 8;
 	std::map<std::string, Var> vars;
+	std::map<std::string, AstStructDec *> structs;
 	
 	//Register variable
 	bool enable_rvar = false;

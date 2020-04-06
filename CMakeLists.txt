@@ -14,6 +14,7 @@ set(PARSER_SRC
 	parser/ltac/ltac_build.cpp
 	parser/ltac/ltac_flow.cpp
 	parser/ltac/ltac_func.cpp
+	parser/ltac/ltac_struct.cpp
 	parser/ltac/ltac_vars.cpp
 )
 

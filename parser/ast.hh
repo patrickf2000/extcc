@@ -124,11 +124,14 @@ struct Var {
 	bool is_array;
 	bool is_param;
 	bool is_ptr;
-	bool is_struct;
 	
 	//Needed for the assembler
 	int stack_pos;
 	int size;
+	
+	//Structure stuff
+	bool is_struct;
+	std::string struct_name;
 	
 	//Used by the parser
 	int scope_level;

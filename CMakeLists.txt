@@ -22,6 +22,7 @@ set(C_SRC
 	clang/c_func.cpp
 	clang/c_lex.cpp	
 	clang/c_parser.cpp
+	clang/c_struct.cpp
 	clang/c_var.cpp
 )
 

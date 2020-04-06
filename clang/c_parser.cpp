@@ -117,6 +117,7 @@ void CParser::parse() {
 					if (next.type != CTokenType::String) {
 						scan->getNext();
 						scan->getNext();
+						scan->getNext();
 					}
 					
 				// Syntax error
@@ -127,6 +128,24 @@ void CParser::parse() {
 			
 			//Return
 			case CTokenType::Return: buildReturn(); break;
+			
+			//Structures
+			case CTokenType::Struct: {
+				Token idToken = scan->getNext();
+				Token symToken = scan->getNext();
+				
+				//Structure declaration
+				if (symToken.type == CTokenType::LeftCBrace) {
+					buildStruct(idToken.id);
+					
+				//Structure variable
+				} else if (symToken.type == CTokenType::Id) {
+				
+				//Syntax error
+				} else {
+					syntax->fatalError("Invalid struct syntax.");
+				}
+			} break;
 			
 			//If we have a right-facing curly brace, adjust the top node
 			case CTokenType::RightCBrace: {

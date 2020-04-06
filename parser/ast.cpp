@@ -242,7 +242,14 @@ void print_tree(AstNode *node, int indent, bool nl) {
 		
 	} else if (node->type == AstType::StructDec) {
 		AstStructDec *strd = static_cast<AstStructDec *>(node);
-		std::cout << " {" << strd->get_name() << "}";
+		std::cout << " (" << strd->get_name() << ") {";
+		
+		for (auto v : strd->fields) {
+			std::cout << type2str(v.type) << " ";
+			if (v.is_ptr) std::cout << "*";
+			std::cout << v.name << ", ";
+		}
+		std::cout << "}";
 		
 	} else if (node->type == AstType::Struct || node->type == AstType::StructAcc
 			|| node->type == AstType::StructMod) {

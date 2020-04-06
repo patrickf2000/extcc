@@ -19,6 +19,7 @@ void CScanner::initSeparators() {
 	separators.push_back('&');
 	separators.push_back('[');
 	separators.push_back(']');
+	separators.push_back('.');
 	
 	whitespace.push_back('\n');
 	whitespace.push_back('\t');
@@ -41,6 +42,7 @@ void CScanner::initKeywords() {
 	keywords.push_back("else");
 	keywords.push_back("while");
 	keywords.push_back("for");
+	keywords.push_back("struct");
 }
 
 //Match everything with a token
@@ -60,6 +62,7 @@ void CScanner::initTokens() {
 	tokens["else"] = CTokenType::Else;
 	tokens["while"] = CTokenType::While;
 	tokens["for"] = CTokenType::For;
+	tokens["struct"] = CTokenType::Struct;
 	
 	//Symbols
 	tokens["("] = CTokenType::LeftParen;
@@ -79,6 +82,7 @@ void CScanner::initTokens() {
 	tokens["&"] = CTokenType::Amp;
 	tokens["["] = CTokenType::LBracket;
 	tokens["]"] = CTokenType::RBracket;
+	tokens["."] = CTokenType::Struct;
 	
 	//Constant/literal tokens
 	idToken = CTokenType::Id;

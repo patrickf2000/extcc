@@ -52,6 +52,9 @@ private:
 	void buildVarAssign(AstVarDec *vd, int stop = CTokenType::SemiColon, bool add_end = false);
 	void buildArrayDec(AstArrayDec *arr);
 	
+	//Structure stuff
+	void buildStruct(std::string name);
+	
 	//Flow control
 	void buildCond(CondType type);
 	void buildElse();

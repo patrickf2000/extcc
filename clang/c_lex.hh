@@ -24,6 +24,7 @@ enum CTokenType {
 	Else,
 	While,
 	For,
+	Struct,
 	
 	//Literals
 	Id,
@@ -53,7 +54,8 @@ enum CTokenType {
 	SemiColon,
 	Assign,
 	Comma,
-	Amp
+	Amp,
+	Dot
 };
 
 class CScanner : public Scanner {

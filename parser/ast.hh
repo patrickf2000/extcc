@@ -208,6 +208,8 @@ public:
 		type = AstType::StructDec;
 		name = n;
 	}
+	
+	std::vector<Var> fields;
 };
 
 //A struct variable

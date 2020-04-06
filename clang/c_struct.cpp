@@ -9,6 +9,7 @@ void CParser::buildStruct(std::string name) {
 	
 	Token next = scan->getNext();
 	Var v;
+	v.is_ptr = false;
 	
 	while (next.type != CTokenType::RightCBrace) {
 		switch (next.type) {

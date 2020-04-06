@@ -6,12 +6,16 @@ void CParser::buildVarDec(int type, Token id, bool is_ptr) {
 	auto *vd = new AstVarDec(id.id);
 	vd->set_type(token2type(type));
 	vd->is_ptr = is_ptr;
+	
+	if (vars.find(vd->get_name()) != vars.end())
+		syntax->fatalError("Variable previously declared in scope.");
 				
 	Var v;
 	v.name = vd->get_name();
 	v.type = vd->get_type();
 	v.is_array = false;
 	v.is_param = false;
+	v.scope_level = scope_level;
 	vars[v.name] = v;
 	
 	buildVarAssign(vd);

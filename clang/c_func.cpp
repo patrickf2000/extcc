@@ -17,6 +17,7 @@ void CParser::buildExtern() {
 //Builds a function declaration
 void CParser::buildFuncDec(AstFuncDec *fd) {
 	top->children.push_back(fd);
+	++scope_level;
 	
 	//Parse the arguments
 	Token next = scan->getNext();
@@ -37,6 +38,7 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 			
 			case CTokenType::Comma: {
 				fd->args.push_back(v);
+				v.scope_level = scope_level;
 				vars[v.name] = v;
 				v.is_ptr = false;
 			} break;

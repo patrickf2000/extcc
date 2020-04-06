@@ -34,6 +34,7 @@ private:
 	
 	//Holds declared variables
 	std::map<std::string, Var> vars;
+	int scope_level = 1;
 	
 	//Functions
 	DataType token2type(int token);

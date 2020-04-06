@@ -3,6 +3,7 @@
 
 //Builds an If statement
 void CParser::buildCond(CondType type) {
+	++scope_level;
 	Token next = scan->getNext();
 	
 	if (next.type != CTokenType::LeftParen && type != CondType::For) {
@@ -68,6 +69,7 @@ void CParser::buildCond(CondType type) {
 
 //Builds an else statement
 void CParser::buildElse() {
+	++scope_level;
 	Token next = scan->getNext();
 	
 	if (next.type == CTokenType::If) {
@@ -87,6 +89,7 @@ void CParser::buildElse() {
 
 //Builds a for loop
 void CParser::buildFor() {
+	++scope_level;
 	Token next = scan->getNext();
 	
 	if (next.type != CTokenType::LeftParen)

@@ -128,6 +128,9 @@ struct Var {
 	//Needed for the assembler
 	int stack_pos;
 	int size;
+	
+	//Used by the parser
+	int scope_level;
 };
 
 //The base of all our nodes

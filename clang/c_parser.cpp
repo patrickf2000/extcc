@@ -57,6 +57,7 @@ void CParser::parse() {
 					v.type = token2type(type);
 					v.name = idToken.id;
 					v.is_array = true;
+					v.scope_level = scope_level;
 					vars[idToken.id] = v;
 					
 				//Syntax error
@@ -157,6 +158,7 @@ void CParser::parse() {
 				}
 				
 				topNodes.pop();
+				--scope_level;
 				
 				//Determine if an endif is necessary
 				auto endif = new AstNode(AstType::EndIf);
@@ -169,6 +171,13 @@ void CParser::parse() {
 					case AstType::Else: {
 						topNodes.top()->children.push_back(endif);
 					} break;
+				}
+				
+				//Update the scope
+				for (auto const& var : vars) {
+					if (var.second.scope_level >= scope_level) {
+						vars.erase(var.first);
+					}
 				}
 			} break;
 		}

@@ -72,28 +72,33 @@ void Asm_x64::build_func(LtacNode *node) {
 	for (auto a : fd->children) {
 		auto arg = static_cast<LtacVar *>(a);
 		
-		switch (arg->d_type) {
-			//Integers
-			case DataType::Int: {
-				writer << "\tmov DWORD PTR ";
-				if (pic) {
-					writer << "-" << arg->pos << "[rbp], ";
-				} else {
-					writer <<"[rbp-" << arg->pos << "], ";
-				}
-				writer << call_regs32[call_index] << std::endl;
-			} break;
-			
-			//Strings
-			case DataType::Str: {
-				writer << "\tmov QWORD PTR ";
-				if (pic) {
-					writer << "-" << arg->pos << "[rbp], ";
-				} else {
-					writer <<"[rbp-" << arg->pos << "], ";
-				}
-				writer << call_regs[call_index] << std::endl;
-			} break;
+		if (arg->is_ptr) {
+			writer << "\tmov QWORD PTR [rbp-" << arg->pos;
+			writer << "], " << call_regs[call_index] << std::endl;
+		} else {
+			switch (arg->d_type) {
+				//Integers
+				case DataType::Int: {
+					writer << "\tmov DWORD PTR ";
+					if (pic) {
+						writer << "-" << arg->pos << "[rbp], ";
+					} else {
+						writer <<"[rbp-" << arg->pos << "], ";
+					}
+					writer << call_regs32[call_index] << std::endl;
+				} break;
+				
+				//Strings
+				case DataType::Str: {
+					writer << "\tmov QWORD PTR ";
+					if (pic) {
+						writer << "-" << arg->pos << "[rbp], ";
+					} else {
+						writer <<"[rbp-" << arg->pos << "], ";
+					}
+					writer << call_regs[call_index] << std::endl;
+				} break;
+			}
 		}
 		
 		++call_index;

@@ -72,26 +72,29 @@ void Asm_x64::build_array_acc(LtacNode *node) {
 		case ltac::Var: {
 			auto lv = static_cast<LtacVar *>(child);
 			
+			if (acc->is_ptr) {
+				writer << "\tmov eax, DWORD PTR [rbp-" << lv->pos;
+				writer << "]" << std::endl;
+				writer << "\tcdqe" << std::endl;
+				
+				writer << "\tlea rdx, [0+rax*4]" << std::endl;
+				writer << "\tmov rax, QWORD PTR [rbp-" << pos;
+				writer << "]" << std::endl;
+				writer << "\tadd rax, rdx" << std::endl;
+			} else {
+				writer << "\tmov eax, DWORD PTR [rbp-" << lv->pos;
+				writer << "]" << std::endl;
+				writer << "\tcdqe" << std::endl;
+			}
+			
 			switch (acc->d_type) {
 				//Integer arrays
 				case DataType::Int: 
 				case DataType::Int128:
 				case DataType::Int256: {
 					if (acc->is_ptr) {
-						writer << "\tmov eax, DWORD PTR [rbp-" << lv->pos;
-						writer << "]" << std::endl;
-						writer << "\tcdqe" << std::endl;
-						
-						writer << "\tlea rdx, [0+rax*4]" << std::endl;
-						writer << "\tmov rax, QWORD PTR [rbp-" << pos;
-						writer << "]" << std::endl;
-						writer << "\tadd rax, rdx" << std::endl;
 						writer << "\tmov ebx, [rax]" << std::endl;
 					} else {
-						writer << "\tmov eax, DWORD PTR [rbp-" << lv->pos;
-						writer << "]" << std::endl;
-						writer << "\tcdqe" << std::endl;
-						
 						writer << "\tmov ebx, DWORD PTR [rbp-" << pos << "+rax*";
 						writer << size << "]" << std::endl;
 					}
@@ -101,12 +104,12 @@ void Asm_x64::build_array_acc(LtacNode *node) {
 				case DataType::Float: 
 				case DataType::Float128:
 				case DataType::Float256: {
-					writer << "\tmov eax, DWORD PTR [rbp-" << lv->pos;
-					writer << "]" << std::endl;
-					writer << "\tcdqe" << std::endl;
-					
-					writer << "\tmovss xmm1, DWORD PTR [rbp-" << pos << "+rax*";
-					writer << size << "]" << std::endl;
+					if (acc->is_ptr) {
+						writer << "\tmovss xmm1, DWORD PTR [rax]" << std::endl;
+					} else {
+						writer << "\tmovss xmm1, DWORD PTR [rbp-" << pos << "+rax*";
+						writer << size << "]" << std::endl;
+					}
 				} break;
 			}
 		} break;

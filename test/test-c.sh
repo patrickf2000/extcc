@@ -1,14 +1,8 @@
 #!/bin/bash
 
-echo "Testing C..."
-echo ""
-
-if [ ! -d /tmp/ctest ] ; then
-	mkdir -p /tmp/ctest
-fi
-
-for entry in "./clang"/*.c
-do
+function run_test() {
+	entry=$1
+	
 	entry2=`basename $entry`
 	echo "$entry2"
 	
@@ -43,6 +37,28 @@ do
 	fi
 	
 	echo ""
+}
+
+echo "Testing C..."
+echo ""
+
+if [ ! -d /tmp/ctest ] ; then
+	mkdir -p /tmp/ctest
+fi
+
+echo "Running feature tests...."
+echo "====================================="
+for entry in "./clang/feature"/*.c
+do
+	run_test $entry
+done
+
+echo ""
+echo "Running mini-tests..."
+echo "====================================="
+for entry in "./clang"/*.c
+do
+	run_test $entry
 done
 
 echo "Done"

@@ -80,6 +80,10 @@ void CParser::parse() {
 					auto *fc = new AstFuncCall(t.id);
 					buildFuncCall(fc);
 					
+				//Structure modification
+				} else if (next.type == CTokenType::Dot) {
+					buildStructMod(t.id);
+					
 				//Variable assignment
 				} else if (next.type == CTokenType::Assign) {
 					auto *va = new AstVarAssign(t.id);
@@ -122,7 +126,7 @@ void CParser::parse() {
 					
 				// Syntax error
 				} else {
-					syntax->fatalError("Invalid syntax");
+					syntax->fatalError("Invalid redefinition syntax");
 				}
 			} break;
 			

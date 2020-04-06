@@ -204,39 +204,6 @@ public:
 	DataType d_type = DataType::Void;
 };
 
-//Structure declarations
-class AstStructDec : public AstAttrNode {
-public:
-	explicit AstStructDec() { type = AstType::StructDec; }
-	explicit AstStructDec(std::string n) {
-		type = AstType::StructDec;
-		name = n;
-	}
-	
-	std::vector<Var> fields;
-};
-
-//A struct variable
-class AstStruct : public AstNode {
-public:
-	explicit AstStruct() { type = AstType::Struct; }
-	
-	std::string str_name = "";		//Refers to the structure being used
-	std::string var_name = "";		//The name of our structure variable
-};
-
-//A struct access
-class AstStructAcc : public AstStruct {
-public:
-	explicit AstStructAcc() { type = AstType::StructAcc; }
-};
-
-//A struct modification
-class AstStructMod : public AstStruct {
-public:
-	explicit AstStructMod() { type = AstType::StructMod; }
-};
-
 //The base class for conditionals
 class AstCond : public AstNode {
 public:
@@ -321,6 +288,42 @@ public:
 		type = AstType::VarAssign;
 		name = n;
 	}
+};
+
+//Structure declarations
+class AstStructDec : public AstAttrNode {
+public:
+	explicit AstStructDec() { type = AstType::StructDec; }
+	explicit AstStructDec(std::string n) {
+		type = AstType::StructDec;
+		name = n;
+	}
+	
+	std::vector<Var> fields;
+};
+
+//A struct variable
+class AstStruct : public AstNode {
+public:
+	explicit AstStruct() { type = AstType::Struct; }
+	
+	std::string str_name = "";		//Refers to the structure being used
+	std::string var_name = "";		//The name of our structure variable
+};
+
+//A struct access
+class AstStructAcc : public AstStruct {
+public:
+	explicit AstStructAcc() { type = AstType::StructAcc; }
+};
+
+//A struct modification
+class AstStructMod : public AstVarAssign {
+public:
+	explicit AstStructMod() { type = AstType::StructMod; }
+	
+	std::string str_name = "";		//Refers to the structure being used
+	std::string var_name = "";		//The name of our structure variable
 };
 
 //Represents a math operation

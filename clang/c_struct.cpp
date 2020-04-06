@@ -55,3 +55,27 @@ void CParser::buildStructVar(std::string name, std::string vname) {
 		syntax->fatalError("Expected terminator.");
 }
 
+//Builds a structure modification
+void CParser::buildStructMod(std::string name) {
+	//Get the variable name we are referencing and make sure its an ID
+	Token next = scan->getNext();
+	
+	if (next.type != CTokenType::Id)
+		syntax->fatalError("Invalid structure modification syntax.");
+
+	//Create the modification
+	auto *smod = new AstStructMod;
+	smod->str_name = name;
+	smod->var_name = next.id;
+	
+	//The next token should be the assignment operator
+	next = scan->getNext();
+	
+	if (next.type != CTokenType::Assign)
+		syntax->fatalError("Expected assignment operator");
+		
+	//Add the children
+	buildVarAssign(smod);
+}
+
+

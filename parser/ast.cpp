@@ -251,9 +251,12 @@ void print_tree(AstNode *node, int indent, bool nl) {
 		}
 		std::cout << "}";
 		
-	} else if (node->type == AstType::Struct || node->type == AstType::StructAcc
-			|| node->type == AstType::StructMod) {
+	} else if (node->type == AstType::Struct || node->type == AstType::StructAcc) {
 		AstStruct *s = static_cast<AstStruct *>(node);
+		std::cout << " {" << s->str_name << ":" << s->var_name << "}";
+		
+	} else if (node->type == AstType::StructMod) {
+		auto *s = static_cast<AstStructMod *>(node);
 		std::cout << " {" << s->str_name << ":" << s->var_name << "}";
 		
 	//values

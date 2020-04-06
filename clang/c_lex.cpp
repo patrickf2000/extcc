@@ -82,7 +82,7 @@ void CScanner::initTokens() {
 	tokens["&"] = CTokenType::Amp;
 	tokens["["] = CTokenType::LBracket;
 	tokens["]"] = CTokenType::RBracket;
-	tokens["."] = CTokenType::Struct;
+	tokens["."] = CTokenType::Dot;
 	
 	//Constant/literal tokens
 	idToken = CTokenType::Id;

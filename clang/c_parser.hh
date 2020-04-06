@@ -55,6 +55,7 @@ private:
 	//Structure stuff
 	void buildStruct(std::string name);
 	void buildStructVar(std::string name, std::string vname);
+	void buildStructMod(std::string name);
 	
 	//Flow control
 	void buildCond(CondType type);

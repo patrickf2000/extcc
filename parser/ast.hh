@@ -124,6 +124,7 @@ struct Var {
 	bool is_array;
 	bool is_param;
 	bool is_ptr;
+	bool is_struct;
 	
 	//Needed for the assembler
 	int stack_pos;

@@ -34,6 +34,7 @@ private:
 	
 	//Holds declared variables
 	std::map<std::string, Var> vars;
+	std::map<std::string, AstStructDec *> structs;
 	int scope_level = 1;
 	DataType current_rval = DataType::Void;
 	
@@ -54,6 +55,7 @@ private:
 	
 	//Structure stuff
 	void buildStruct(std::string name);
+	void buildStructVar(std::string name, std::string vname);
 	
 	//Flow control
 	void buildCond(CondType type);

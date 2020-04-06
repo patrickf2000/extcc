@@ -6,6 +6,7 @@
 void CParser::buildStruct(std::string name) {
 	auto *dec = new AstStructDec(name);
 	topNodes.top()->children.push_back(dec);
+	structs[name] = dec;
 	
 	Token next = scan->getNext();
 	Var v;
@@ -41,3 +42,22 @@ void CParser::buildStruct(std::string name) {
 		next = scan->getNext();
 	}
 }
+
+//Builds a structure variable
+void CParser::buildStructVar(std::string name, std::string vname) {
+	auto *sv = new AstStruct;
+	sv->str_name = name;
+	sv->var_name = vname;
+	topNodes.top()->children.push_back(sv);
+	
+	Var v;
+	v.name = vname;
+	v.is_struct = true;
+	vars[vname] = v;
+	
+	Token next = scan->getNext();
+	
+	if (next.type != CTokenType::SemiColon)
+		syntax->fatalError("Expected terminator.");
+}
+

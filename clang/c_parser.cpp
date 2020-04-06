@@ -140,7 +140,8 @@ void CParser::parse() {
 					
 				//Structure variable
 				} else if (symToken.type == CTokenType::Id) {
-				
+					buildStructVar(idToken.id, symToken.id);
+					
 				//Syntax error
 				} else {
 					syntax->fatalError("Invalid struct syntax.");

@@ -135,6 +135,22 @@ void Asm_x64::build_var(LtacNode *node) {
 			}
 		} break;
 		
+		//Single-operations (increments, decrements)
+		case ltac::SingleOp: {
+			auto op = static_cast<LtacSingleOp *>(src);
+			
+			switch (op->op) {
+				case Operator::PreInc: break;
+				case Operator::PostInc: {
+					writer << "\tadd DWORD PTR [rbp-" << var->pos;
+					writer << "], 1" << std::endl;
+				} break;
+				
+				case Operator::PreDec: break;
+				case Operator::PostDec: break;
+			}
+		} break;
+		
 		//Function calls
 		case ltac::FuncCall: {
 			build_func_call(src);

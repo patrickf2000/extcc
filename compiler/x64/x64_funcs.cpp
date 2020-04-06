@@ -221,7 +221,7 @@ void Asm_x64::build_func_call(LtacNode *node) {
 					//Floats and Doubles
 					case DataType::Float: 
 					case DataType::Double: {
-						writer << "\tmovss " << call_flt_regs[call_index_flt];
+						writer << "\tcvtss2sd " << call_flt_regs[call_index_flt];
 						writer << ", xmm1" << std::endl;
 						++call_index_flt;
 					} break;

@@ -10,7 +10,7 @@ int main() {
 			puts("Halfway!");
 		}
 		
-		x = x + 1;
+		x++;
 	}
 
 	return 0;

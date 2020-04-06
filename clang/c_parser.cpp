@@ -115,6 +115,15 @@ void CParser::parse() {
 					arr->set_type(v.type);
 					buildVarAssign(arr);
 					
+				//Ignore the preprocessor
+				// TODO: REMOVE THIS!!!
+				} else if (t.id == "#include") {
+					if (next.type != CTokenType::String) {
+						scan->getNext();
+						scan->getNext();
+					}
+					
+				// Syntax error
 				} else {
 					syntax->fatalError("Invalid syntax");
 				}

@@ -37,8 +37,6 @@ void CParser::buildVarIncrement(std::string name, bool add_end) {
 
 //Builds a variable declaration
 void CParser::buildVarAssign(AstVarDec *vd, int stop, bool add_end) {
-	std::vector<AstNode *> nodes;
-	
 	if (add_end)
 		blockEnds.push(vd);
 	else
@@ -52,6 +50,7 @@ void CParser::buildVarAssign(AstVarDec *vd, int stop, bool add_end) {
 	
 	//Get all tokens until the semi-colon
 	Token next = scan->getNext();
+	std::vector<AstNode *> nodes;
 	
 	while (next.type != stop) {
 		nodes.push_back(buildNode(next, float2dbl));

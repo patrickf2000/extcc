@@ -32,7 +32,10 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 			case CTokenType::Short:
 			case CTokenType::Int:
 			case CTokenType::Float:
-			case CTokenType::Double: v.type = token2type(next.type); break;
+			case CTokenType::Double: {
+				v.type = token2type(next.type); 
+				current_rval = v.type;
+			} break;
 			
 			case CTokenType::Id: v.name = next.id; break;
 			
@@ -81,7 +84,39 @@ void CParser::buildFuncCall(AstFuncCall *fc, bool add_top) {
 void CParser::buildReturn() {
 	auto ret = new AstReturn;
 	topNodes.top()->children.push_back(ret);
-	addChildren(ret);
+	
+	//Load the children
+	Token next = scan->getNext();
+	std::vector<AstNode *> nodes;
+	
+	while (next.type != CTokenType::SemiColon) {
+		nodes.push_back(buildNode(next));
+		next = scan->getNext();
+	}
+	
+	//See if we have a math expression
+	if (nodes.size() == 1) {
+		ret->children.push_back(nodes.at(0));
+	} else {
+		auto math = new AstMath;
+		ret->children.push_back(math);
+		
+		bool is_float = false;
+		if (current_rval == DataType::Float 
+			|| current_rval == DataType::Double) {
+			is_float = true;
+		}
+		
+		for (auto child : nodes) {
+			if (child->type == AstType::Int && is_float) {
+				auto *i = static_cast<AstInt *>(child);
+				auto *f = new AstFloat((float)i->get_val());
+				math->children.push_back(f);
+			} else {
+				math->children.push_back(child);
+			}
+		}
+	}
 }
 
 

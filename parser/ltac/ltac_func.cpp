@@ -179,6 +179,12 @@ void LTAC_Builder::build_ret(AstNode *node) {
 				rnode->children.push_back(li);
 			} break;
 			
+			//Math
+			case AstType::Math: {
+				auto lmath = convert_ast_var(arg);
+				rnode->children.push_back(lmath);
+			} break;
+			
 			//TODO: Add the rest
 		}
 	}

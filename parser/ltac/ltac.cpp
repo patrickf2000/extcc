@@ -33,8 +33,14 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 			if (code_ln->children.size() > 0) {
 				content += "(";
 				for (auto arg : code_ln->children) {
-					content += code2str(arg, true);
-					content += ", ";
+					if (arg->type == ltac::Math) {
+						std::string math = "\tmov reg, " + code2str(arg, true);
+						content = math + "\n" + content;
+						content += "reg, ";
+					} else {
+						content += code2str(arg, true);
+						content += ", ";
+					}
 				}
 				content += ")";
 			}

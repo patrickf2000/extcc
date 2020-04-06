@@ -145,6 +145,13 @@ LtacNode *LTAC_Builder::convert_ast_var(AstNode *val) {
 			lval = arr;
 		} break;
 		
+		//Increment
+		case AstType::Inc: {
+			auto op = new LtacSingleOp;
+			op->op = Operator::PostInc;
+			lval = op;
+		} break;
+		
 		//Math
 		case AstType::Math: {
 			auto math = new LtacMath;

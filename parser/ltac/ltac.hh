@@ -33,6 +33,7 @@ enum class ltac {
 	
 	MathOp,
 	Math,
+	SingleOp,
 	
 	Push,
 	Pop,
@@ -62,6 +63,11 @@ enum class Operator {
 	
 	PAdd,
 	PSub,
+	
+	PreInc,
+	PostInc,
+	PreDec,
+	PostDec,
 	
 	Equal,
 	NotEqual,
@@ -261,6 +267,13 @@ public:
 	explicit LtacMath() { type = ltac::Math; }
 	
 	LtacNode *init_val;
+};
+
+//Single-instruction operator
+class LtacSingleOp : public LtacNode {
+public:
+	explicit LtacSingleOp() { type = ltac::SingleOp; }
+	Operator op;
 };
 
 //Comparisons

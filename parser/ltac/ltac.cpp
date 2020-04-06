@@ -141,6 +141,19 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 			content += "\n";
 		} break;
 		
+		case ltac::SingleOp: {
+			auto op = static_cast<LtacSingleOp *>(code_ln);
+			
+			switch (op->op) {
+				case Operator::PreInc: content += "++(var)"; break;
+				case Operator::PostInc: content += "(var)++"; break;
+				case Operator::PreDec: content += "--(var)"; break;
+				case Operator::PostDec: content += "(var)--"; break;
+			}
+			
+			content += "\n";
+		} break;
+		
 		case ltac::Push: content += "\tpush reg\n"; break;
 		case ltac::Pop: content += "\tpop reg\n"; break;
 		

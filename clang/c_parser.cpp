@@ -107,7 +107,7 @@ void CParser::parse() {
 					buildVarAssign(arr);
 					
 				} else {
-					//TODO: Syntax error
+					syntax->fatalError("Invalid syntax");
 				}
 			} break;
 			
@@ -274,7 +274,17 @@ AstNode *CParser::buildNode(Token t, bool float2dbl) {
 		} break;
 		
 		//Operators
-		case CTokenType::Plus: return new AstNode(AstType::Add);
+		case CTokenType::Plus: {
+			Token next = scan->getNext();
+			
+			if (next.type == CTokenType::Plus) {
+				return new AstNode(AstType::Inc);
+			} else {
+				scan->unget(next);
+				return new AstNode(AstType::Add);
+			}
+		}
+		
 		case CTokenType::Minus: return new AstNode(AstType::Sub);
 		case CTokenType::Mul: return new AstNode(AstType::Mul);
 		case CTokenType::Div: return new AstNode(AstType::Div);

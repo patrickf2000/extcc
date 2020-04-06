@@ -16,6 +16,7 @@ public:
 	explicit Scanner(std::string in);
 	Token getNext();
 	void unget(Token t);
+	void finishLine();
 	bool isSeparator(char c);
 	bool isWhitespace(char c);
 	bool isInt();

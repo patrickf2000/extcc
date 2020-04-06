@@ -17,6 +17,9 @@ public:
 		scan = s;
 	}
 	
+	//Fatal error messages
+	void fatalError(std::string msg);
+	
 	//Adds an error message
 	void addError(std::string msg);
 	void addError(CompileMsg msg);

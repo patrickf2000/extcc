@@ -3,6 +3,20 @@
 
 #include "syntax.hh"
 
+//Fatal error- Stops the compiler
+void Syntax::fatalError(std::string msg) {
+	displayErrors();
+
+	scan->finishLine();
+	std::string original = scan->getCurrentLn();
+
+	std::cout << "[Error] " << msg << std::endl;
+	std::cout << "[" << scan->getLnNo() << "] " << original << std::endl;
+	
+	scan->close();
+	std::exit(1);
+}
+
 //Adds an error message (via string)
 void Syntax::addError(std::string msg) {
 	CompileMsg cm;
@@ -51,5 +65,6 @@ void Syntax::displayErrors() {
 		std::cout << "[" << msg.ln_no << "] " << msg.original << std::endl;
 	}
 	
+	scan->close();
 	std::exit(1);
 }

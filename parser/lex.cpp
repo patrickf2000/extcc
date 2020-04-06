@@ -124,6 +124,17 @@ void Scanner::unget(Token t) {
 	stored.push(t);
 }
 
+//Returns the rest of the line
+//ONLY call this in a fatal error event
+void Scanner::finishLine() {
+	char c = 0;
+	
+	while (!reader.eof() && c != '\n') {
+		reader.get(c);
+		current_ln += c;
+	}
+}
+
 //Check to see if we have a separator
 bool Scanner::isSeparator(char c) {
 	for (char s : separators) {

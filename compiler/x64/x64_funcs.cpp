@@ -270,12 +270,21 @@ void Asm_x64::build_ret(LtacNode *node) {
 		++ret_index;
 	
 		switch (val->type) {
+			//Variables
 			case ltac::Var: {
 				auto var = static_cast<LtacVar *>(val);
 				
 				writer << "\tmov " << reg << ", [rbp-";
 				writer << std::to_string(var->pos) << "]";
 				writer << std::endl;
+			} break;
+			
+			//Integers
+			case ltac::Int: {
+				auto i = static_cast<LtacInt *>(val);
+				
+				writer << "\tmov " << reg << ", ";
+				writer << i->val << std::endl;
 			} break;
 			
 			//TODO: Add the rest

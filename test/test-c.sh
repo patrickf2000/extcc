@@ -18,7 +18,20 @@ do
 	diff <(/tmp/ctest/$entry2) <($B_PATH/out.bin)
 
 	if [[ $? == 0 ]] ;then
-		echo "Pass"
+		/tmp/ctest/$entry2 > /dev/null
+		ret1=$?
+		
+		$B_PATH/out.bin > /dev/null
+		ret2=$?
+		
+		if [[ $ret1 == $ret2 ]] ; then
+			echo "Pass"
+		else
+			echo "Fail on return values:"
+			echo "Expected: $ret1"
+			echo "Actual: $ret2"
+			exit 1
+		fi
 	else
 		echo "Fail"
 		echo ""

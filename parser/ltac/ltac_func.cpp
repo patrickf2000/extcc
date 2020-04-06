@@ -172,6 +172,13 @@ void LTAC_Builder::build_ret(AstNode *node) {
 				rnode->children.push_back(var);
 			} break;
 			
+			//Integers
+			case AstType::Int: {
+				auto i = static_cast<AstInt *>(arg);
+				auto li = new LtacInt(i->get_val());
+				rnode->children.push_back(li);
+			} break;
+			
 			//TODO: Add the rest
 		}
 	}

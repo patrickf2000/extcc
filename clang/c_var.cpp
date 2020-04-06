@@ -2,9 +2,10 @@
 #include "c_lex.hh"
 
 //Creates a new variable
-void CParser::buildVarDec(int type, Token id, bool is_ptr) {
+void CParser::buildVarDec(int type, Token id, bool is_ptr, bool init_default) {
 	auto *vd = new AstVarDec(id.id);
-	vd->set_type(token2type(type));
+	DataType d_type = token2type(type);
+	vd->set_type(d_type);
 	vd->is_ptr = is_ptr;
 	
 	if (vars.find(vd->get_name()) != vars.end())
@@ -12,13 +13,27 @@ void CParser::buildVarDec(int type, Token id, bool is_ptr) {
 				
 	Var v;
 	v.name = vd->get_name();
-	v.type = vd->get_type();
+	v.type = d_type;
 	v.is_array = false;
 	v.is_param = false;
 	v.scope_level = scope_level;
 	vars[v.name] = v;
 	
-	buildVarAssign(vd);
+	if (init_default) {
+		topNodes.top()->children.push_back(vd);
+		AstNode *dnode;
+		
+		switch (d_type) {
+			case DataType::Int: dnode = new AstInt(0); break;
+			
+			case DataType::Float: dnode = new AstFloat(0); break;
+			case DataType::Double: dnode = new AstDouble(0); break;
+		}
+		
+		vd->children.push_back(dnode);
+	} else {
+		buildVarAssign(vd);
+	}
 }
 
 //Builds a variable increment statement

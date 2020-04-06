@@ -47,7 +47,7 @@ private:
 	void buildReturn();
 	
 	//Variable stuff
-	void buildVarDec(int type, Token id, bool is_ptr = false);
+	void buildVarDec(int type, Token id, bool is_ptr = false, bool init_default = false);
 	void buildVarIncrement(std::string name, bool add_end = false);
 	void buildVarAssign(AstVarDec *vd, int stop = CTokenType::SemiColon, bool add_end = false);
 	void buildArrayDec(AstArrayDec *arr);

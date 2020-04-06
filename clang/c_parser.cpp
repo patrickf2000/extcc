@@ -47,6 +47,10 @@ void CParser::parse() {
 				} else if (symToken.type == CTokenType::Assign) {
 					buildVarDec(type, idToken, ptr);
 					
+				//Uninitalized variable declaration
+				} else if (symToken.type == CTokenType::SemiColon) {
+					buildVarDec(type, idToken, ptr, true);
+					
 				//Array declaration
 				} else if (symToken.type == CTokenType::LBracket) {
 					auto *arr = new AstArrayDec;
@@ -63,7 +67,7 @@ void CParser::parse() {
 					
 				//Syntax error
 				} else {
-					//TODO: Rest in peace
+					syntax->fatalError("Invalid variable, array, or function declaration.");
 				}
 			} break;
 			

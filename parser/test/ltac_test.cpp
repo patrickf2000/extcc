@@ -5,23 +5,32 @@
 #include <ltac/ltac.hh>
 #include <ltac/ltac_build.hh>
 
-#ifdef BUILD_CLANG
 #include <c_parser.hh>
-#endif
+
+void help() {
+	std::cout << "Fatal: Missing or invalid command line options" << std::endl;
+	std::cout << "CMD: asm <file> <language>" << std::endl;
+	std::cout << "Language:" << std::endl;
+	std::cout << "\t-c\tC language" << std::endl;
+}
 
 int main(int argc, char *argv[]) {
-	if (argc == 1) {
-		std::cout << "Fatal: No input file." << std::endl;
+	if (argc != 3) {
+		help();
 		return 1;
 	}
 	
-#ifdef BUILD_CLANG
+	std::string language = argv[2];
+	AstNode *top;
+	
+	if (language == "-c") {
 		CParser parser(argv[1]);
 		parser.parse();
-		AstNode *top = parser.getTree();
-#else
-#error Unknown Compiler
-#endif
+		top = parser.getTree();
+	} else {
+		help();
+		return 1;
+	}
 	
 	LTAC_Builder *builder = new LTAC_Builder;
 	LtacFile *file = builder->build_file(top);

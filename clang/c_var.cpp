@@ -1,6 +1,20 @@
 #include "c_parser.hh"
 #include "c_lex.hh"
 
+//Builds a variable increment statement
+void CParser::buildVarIncrement(std::string name, bool add_end) {
+	auto *va = new AstVarAssign(name);
+	Var v = vars[va->get_name()];
+	va->set_type(v.type);
+		
+	va->children.push_back(new AstNode(AstType::Inc));
+	
+	if (add_end)
+		blockEnds.push(va);
+	else
+		topNodes.top()->children.push_back(va);
+}
+
 //Builds a variable declaration
 void CParser::buildVarAssign(AstVarDec *vd, int stop, bool add_end) {
 	std::vector<AstNode *> nodes;

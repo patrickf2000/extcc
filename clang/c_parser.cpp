@@ -91,6 +91,15 @@ void CParser::parse() {
 					va->set_type(v.type);
 					buildVarAssign(va);
 					
+				//Variable increment
+				} else if (next.type == CTokenType::Plus) {
+					next = scan->getNext();
+					
+					if (next.type != CTokenType::Plus)
+						syntax->fatalError("Expected increment operator.");
+						
+					buildVarIncrement(t.id);
+					
 				//Array assignment
 				} else if (next.type == CTokenType::LBracket) {
 					auto *arr = new AstArrayAssign;

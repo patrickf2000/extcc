@@ -37,15 +37,24 @@ private:
 	
 	//Functions
 	DataType token2type(int token);
+	
+	//Function stuff
 	void buildExtern();
 	void buildFuncDec(AstFuncDec *fd);
 	void buildFuncCall(AstFuncCall *fc, bool add_top = true);
 	void buildReturn();
+	
+	//Variable stuff
+	void buildVarIncrement(std::string name, bool add_end = false);
 	void buildVarAssign(AstVarDec *vd, int stop = CTokenType::SemiColon, bool add_end = false);
 	void buildArrayDec(AstArrayDec *arr);
+	
+	//Flow control
 	void buildCond(CondType type);
 	void buildElse();
 	void buildFor();
+	
+	//Utilities
 	void addChildren(AstNode *parent, int stop = CTokenType::SemiColon);
 	AstNode *buildNode(Token t, bool float2dbl = false);
 };

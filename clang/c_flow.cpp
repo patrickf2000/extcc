@@ -143,11 +143,23 @@ void CParser::buildFor() {
 	Token id = scan->getNext();
 	next = scan->getNext();
 	
+	//Regular assignment
 	if (next.type == CTokenType::Assign) {
 		auto *va = new AstVarAssign(id.id);
 		buildVarAssign(va, CTokenType::RightParen, true);
+		
+	//Increment
+	} else if (next.type == CTokenType::Plus) {
+		next = scan->getNext();
+		if (next.type != CTokenType::Plus) {
+			syntax->fatalError("Expected token- perhaps you meant to increment?");
+		}
+		
+		buildVarIncrement(id.id, true);
+		
+	//Syntax error
 	} else {
-		syntax->addError("Expected variable expression.");
+		syntax->fatalError("Expected variable expression.");
 	}
 }
 

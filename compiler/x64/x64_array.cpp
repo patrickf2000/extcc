@@ -167,12 +167,23 @@ void Asm_x64::build_array_set(LtacNode *node) {
 		
 		//Math expressions
 		case ltac::Math: {
-			if (arr->d_type == DataType::Int) {
-				build_int_math(arr, src, false);
+			switch (arr->d_type) {
+				//Integers
+				case DataType::Int: {
+					build_int_math(arr, src, false);
+					
+					writer << "\tmov DWORD PTR [r9], eax" << std::endl;
+					writer << std::endl;
+				} break;
+				
+				//Single-precision floats
+				case DataType::Float: {
+					build_float_math(arr, src, false);
+					
+					writer << "\tmovss [r9], xmm0" << std::endl;
+					writer << std::endl;
+				} break;
 			}
-			
-			writer << "\tmov DWORD PTR [r9], eax" << std::endl;
-			writer << std::endl;
 		} break;
 		
 		//TODO: Add the rest

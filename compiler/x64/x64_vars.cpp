@@ -285,7 +285,7 @@ void Asm_x64::build_int_math(LtacVar *var, LtacNode *src, bool store) {
 }
 
 //Builds floating-point math expressions
-void Asm_x64::build_float_math(LtacVar *var, LtacNode *src) {
+void Asm_x64::build_float_math(LtacVar *var, LtacNode *src, bool store) {
 	auto math = static_cast<LtacMath *>(src);
 	
 	//Build the first value
@@ -335,8 +335,10 @@ void Asm_x64::build_float_math(LtacVar *var, LtacNode *src) {
 	}
 	
 	//Save the result back to the variable
-	writer << "\tmovss DWORD PTR [rbp-" << std::to_string(var->pos);
-	writer << "], xmm0" << std::endl << std::endl;
+	if (store) {
+		writer << "\tmovss DWORD PTR [rbp-" << std::to_string(var->pos);
+		writer << "], xmm0" << std::endl << std::endl;
+	}
 }
 
 //Builds vector integer math

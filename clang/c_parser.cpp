@@ -40,6 +40,7 @@ void CParser::parse() {
 				if (symToken.type == CTokenType::LeftParen) {
 					auto *fd = new AstFuncDec(idToken.id);
 					fd->rtype = token2type(type);
+					current_rval = fd->rtype;
 					buildFuncDec(fd);
 					
 				//Variable declaration

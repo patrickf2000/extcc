@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
 
-#include "ltac.hh"
+#include <ltac/ltac.hh>
+#include <ast.hh>
 
 std::string code2str(LtacNode *code_ln, bool child=false) {
 	std::string content = "";
@@ -28,9 +29,12 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 		} break;
 		
 		case ltac::Ret: {
-			content += "\tret ";
+			auto ret = static_cast<LtacRet *>(code_ln);
+		
+			content += "\tret (";
+			content += type2str(ret->d_type) + ") ";
 			
-			if (code_ln->children.size() > 0) {
+			if (ret->children.size() > 0) {
 				content += "(";
 				for (auto arg : code_ln->children) {
 					if (arg->type == ltac::Math) {

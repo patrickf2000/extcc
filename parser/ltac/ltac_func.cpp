@@ -155,7 +155,10 @@ LtacFuncCall *LTAC_Builder::build_func_call(AstNode *node) {
 
 //Builds a return statement
 void LTAC_Builder::build_ret(AstNode *node) {
-	auto rnode = new LtacNode(ltac::Ret);
+	auto aret = static_cast<AstReturn *>(node);
+	auto rnode = new LtacRet;
+	
+	rnode->d_type = aret->d_type;
 	file->code->children.push_back(rnode);
 	
 	//Build any return statement values

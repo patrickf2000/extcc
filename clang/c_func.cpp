@@ -32,10 +32,7 @@ void CParser::buildFuncDec(AstFuncDec *fd) {
 			case CTokenType::Short:
 			case CTokenType::Int:
 			case CTokenType::Float:
-			case CTokenType::Double: {
-				v.type = token2type(next.type); 
-				current_rval = v.type;
-			} break;
+			case CTokenType::Double: v.type = token2type(next.type); break;
 			
 			case CTokenType::Id: v.name = next.id; break;
 			
@@ -83,6 +80,7 @@ void CParser::buildFuncCall(AstFuncCall *fc, bool add_top) {
 //Builds a return statement
 void CParser::buildReturn() {
 	auto ret = new AstReturn;
+	ret->d_type = current_rval;
 	topNodes.top()->children.push_back(ret);
 	
 	//Load the children

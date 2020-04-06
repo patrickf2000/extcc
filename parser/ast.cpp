@@ -70,6 +70,8 @@ std::string ast2str(AstType type) {
 //Returns a data type as a string (debugging purposes)
 std::string type2str(DataType type) {
 	switch (type) {
+		case DataType::Void: return "Void";
+	
 		case DataType::Byte: return "Byte";
 		case DataType::Char: return "Char";
 		case DataType::Short: return "Short";
@@ -152,6 +154,10 @@ void print_tree(AstNode *node, int indent, bool nl) {
 	} else if (node->type == AstType::FuncCall) {
 		AstFuncCall *fc = dynamic_cast<AstFuncCall *>(node);
 		std::cout << " [" << fc->get_name() << "]";
+		
+	} else if (node->type == AstType::Return) {
+		auto ret = static_cast<AstReturn *>(node);
+		std::cout << " (" << type2str(ret->d_type) << ") ";
 		
 	} else if (node->type == AstType::VarDec || node->type == AstType::VarAssign) {
 		AstVarDec *vd = dynamic_cast<AstVarDec *>(node);

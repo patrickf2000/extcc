@@ -287,6 +287,11 @@ void Asm_x64::build_ret(LtacNode *node) {
 				writer << i->val << std::endl;
 			} break;
 			
+			//Math expressions
+			case ltac::Math: {
+			
+			} break;
+			
 			//TODO: Add the rest
 		}
 	}

@@ -197,6 +197,7 @@ public:
 class AstReturn : public AstNode {
 public:
 	AstReturn() { type = AstType::Return; }
+	DataType d_type = DataType::Void;
 };
 
 //Structure declarations
@@ -562,4 +563,5 @@ public:
 
 //Debugging stuff
 std::string ast2str(AstType type);
+std::string type2str(DataType type);
 void print_tree(AstNode *node, int indent = 0, bool nl=true);

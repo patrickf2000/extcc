@@ -172,6 +172,13 @@ public:
 	std::vector<LtacVar *> ret_dest;
 };
 
+//Function returns
+class LtacRet : public LtacNode {
+public:
+	explicit LtacRet() { type = ltac::Ret; }
+	DataType d_type = DataType::Void;
+};
+
 //Integers
 class LtacInt : public LtacNode {
 public:

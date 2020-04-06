@@ -6,7 +6,6 @@
 void CParser::buildStruct(std::string name) {
 	auto *dec = new AstStructDec(name);
 	topNodes.top()->children.push_back(dec);
-	structs[name] = dec;
 	
 	Token next = scan->getNext();
 	Var v;
@@ -49,11 +48,6 @@ void CParser::buildStructVar(std::string name, std::string vname) {
 	sv->str_name = name;
 	sv->var_name = vname;
 	topNodes.top()->children.push_back(sv);
-	
-	Var v;
-	v.name = vname;
-	v.is_struct = true;
-	vars[vname] = v;
 	
 	Token next = scan->getNext();
 	

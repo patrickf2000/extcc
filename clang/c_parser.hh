@@ -34,7 +34,6 @@ private:
 	
 	//Holds declared variables
 	std::map<std::string, Var> vars;
-	std::map<std::string, AstStructDec *> structs;
 	int scope_level = 1;
 	DataType current_rval = DataType::Void;
 	

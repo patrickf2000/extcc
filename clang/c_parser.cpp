@@ -44,17 +44,7 @@ void CParser::parse() {
 					
 				//Variable declaration
 				} else if (symToken.type == CTokenType::Assign) {
-					auto *vd = new AstVarDec(idToken.id);
-					vd->is_ptr = ptr;
-					vd->set_type(token2type(type));
-					buildVarAssign(vd);
-					
-					Var v;
-					v.name = vd->get_name();
-					v.type = vd->get_type();
-					v.is_array = false;
-					v.is_param = false;
-					vars[v.name] = v;
+					buildVarDec(type, idToken, ptr);
 					
 				//Array declaration
 				} else if (symToken.type == CTokenType::LBracket) {

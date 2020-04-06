@@ -120,9 +120,7 @@ void CParser::buildFor() {
 			next = scan->getNext();
 			
 			if (next.type == CTokenType::Assign) {
-				auto *vd = new AstVarDec(id.id);
-				vd->set_type(token2type(type));
-				buildVarAssign(vd);
+				buildVarDec(type, id);
 			} else {
 				syntax->addError("Invalid for-loop syntax.");
 			}

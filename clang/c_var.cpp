@@ -1,6 +1,22 @@
 #include "c_parser.hh"
 #include "c_lex.hh"
 
+//Creates a new variable
+void CParser::buildVarDec(int type, Token id, bool is_ptr) {
+	auto *vd = new AstVarDec(id.id);
+	vd->set_type(token2type(type));
+	vd->is_ptr = is_ptr;
+				
+	Var v;
+	v.name = vd->get_name();
+	v.type = vd->get_type();
+	v.is_array = false;
+	v.is_param = false;
+	vars[v.name] = v;
+	
+	buildVarAssign(vd);
+}
+
 //Builds a variable increment statement
 void CParser::buildVarIncrement(std::string name, bool add_end) {
 	auto *va = new AstVarAssign(name);

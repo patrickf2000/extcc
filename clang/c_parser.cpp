@@ -295,6 +295,24 @@ AstNode *CParser::buildNode(Token t, bool float2dbl) {
 			return id;
 		} break;
 		
+		//Multiplication or pointer
+		case CTokenType::Mul: {
+			Token next = scan->getNext();
+			
+			if (next.type == CTokenType::Id) {
+				Var v = vars[next.id];
+				
+				if (v.is_ptr) {
+					auto *id = new AstID(next.id);
+					id->is_ptr = true;
+					return id;
+				}
+			}
+			
+			scan->unget(next);
+			return new AstNode(AstType::Mul);
+		} break;
+
 		//Operators
 		case CTokenType::Plus: {
 			Token next = scan->getNext();
@@ -308,7 +326,6 @@ AstNode *CParser::buildNode(Token t, bool float2dbl) {
 		}
 		
 		case CTokenType::Minus: return new AstNode(AstType::Sub);
-		case CTokenType::Mul: return new AstNode(AstType::Mul);
 		case CTokenType::Div: return new AstNode(AstType::Div);
 		case CTokenType::Mod: return new AstNode(AstType::Mod);
 		

@@ -333,6 +333,7 @@ public:
 	}
 	
 	bool is_ref = false;	//Memory reference?
+	bool is_ptr = false;	//Pointer?
 };
 
 //The Integer type

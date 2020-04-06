@@ -16,6 +16,7 @@ void CParser::buildVarDec(int type, Token id, bool is_ptr, bool init_default) {
 	v.type = d_type;
 	v.is_array = false;
 	v.is_param = false;
+	v.is_ptr = is_ptr;
 	v.scope_level = scope_level;
 	vars[v.name] = v;
 	

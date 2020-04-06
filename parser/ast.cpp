@@ -266,6 +266,7 @@ void print_tree(AstNode *node, int indent, bool nl) {
 		auto id = dynamic_cast<AstID *>(node);
 		std::cout << " ";
 		if (id->is_ref) std::cout << "&";
+		else if (id->is_ptr) std::cout << "*";
 		
 		std::cout << id->get_name();
 	} else if (node->type == AstType::Str) {

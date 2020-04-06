@@ -142,24 +142,8 @@ void Asm_x64::build_func_call(LtacNode *node) {
 			case ltac::Var: {
 				auto var = static_cast<LtacVar *>(arg);
 				
-				//Single-precision float variables
-				if (var->d_type == DataType::Float) {
-					std::string reg = call_flt_regs[call_index_flt];
-					++call_index_flt;
-					
-					writer << "\tcvtss2sd xmm0, DWORD PTR [rbp-";
-					writer << std::to_string(var->pos) + "]" << std::endl;
-					
-				//Double-precision float variables
-				} else if (var->d_type == DataType::Double) {
-					std::string reg = call_flt_regs[call_index_flt];
-					++call_index_flt;
-					
-					writer << "\tmovsd xmm0, QWORD PTR [rbp-";
-					writer << std::to_string(var->pos) + "]" << std::endl;
-					
 				//Reference variables
-				} else if (var->is_ref) {
+				if (var->is_ref) {
 					writer << "\tlea " << call_regs[call_index] << ", ";
 					writer << "[rbp-" << std::to_string(var->pos) << "]";
 					
@@ -173,6 +157,22 @@ void Asm_x64::build_func_call(LtacNode *node) {
 					writer << "]" << std::endl;
 					
 					++call_index;
+					
+				//Single-precision float variables
+				} else if (var->d_type == DataType::Float) {
+					std::string reg = call_flt_regs[call_index_flt];
+					++call_index_flt;
+					
+					writer << "\tcvtss2sd xmm0, DWORD PTR [rbp-";
+					writer << std::to_string(var->pos) + "]" << std::endl;
+					
+				//Double-precision float variables
+				} else if (var->d_type == DataType::Double) {
+					std::string reg = call_flt_regs[call_index_flt];
+					++call_index_flt;
+					
+					writer << "\tmovsd xmm0, QWORD PTR [rbp-";
+					writer << std::to_string(var->pos) + "]" << std::endl;
 					
 				//Other variables- usually integers
 				} else {

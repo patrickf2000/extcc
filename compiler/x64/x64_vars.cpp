@@ -290,48 +290,65 @@ void Asm_x64::build_float_math(LtacVar *var, LtacNode *src, bool store) {
 	
 	//Build the first value
 	auto first = math->init_val;
+	std::string ln = "";
 	
 	switch (first->type) {
-		//An integer
+		//A float
 		case ltac::Float: {
 			auto i = static_cast<LtacFloat *>(first);
-			writer << "\tmovss xmm0, [" << i->name << "]" << std::endl;
+			ln = "\tmovss xmm0, [" + i->name + "]";
 		} break;
 		
 		//A variable
 		case ltac::Var: {
 			auto id = static_cast<LtacVar *>(first);
-			writer << "\tmovss xmm0, [rbp-" << std::to_string(id->pos);
-			writer << "]" << std::endl;
+			
+			if (id->d_type == DataType::Int) {
+				writer << "\tcvtsi2ss xmm0, DWORD PTR [rbp-";
+				writer << std::to_string(id->pos) << "]" << std::endl;
+			} else {
+				ln = "\tmovss xmm0, [rbp-" + std::to_string(id->pos) + "]";
+			}
 		} break;
 	}
+	
+	writer << ln << std::endl;
 	
 	//Build the other parts
 	for (auto node : math->children) {
 		auto math_op = static_cast<LtacMathOp *>(node);
+		ln = "";
 		
 		//Build the operator
 		switch (math_op->op) {
-			case Operator::Add: writer << "\taddss xmm0, "; break;
-			case Operator::Sub: writer << "\tsubss xmm0, "; break;
-			case Operator::Mul: writer << "\tmulss xmm0, "; break;
-			case Operator::Div: writer << "\tdivss xmm0, "; break;
+			case Operator::Add: ln = "\taddss xmm0, "; break;
+			case Operator::Sub: ln = "\tsubss xmm0, "; break;
+			case Operator::Mul: ln = "\tmulss xmm0, "; break;
+			case Operator::Div: ln = "\tdivss xmm0, "; break;
 		}
 		
 		//Build the operand
 		switch (math_op->operand->type) {
 			case ltac::Float: {
 				auto i = static_cast<LtacFloat *>(math_op->operand);
-				writer << "[" << i->name << "]" << std::endl;
+				ln += "[" + i->name + "]";
 			} break;
 			
 			case ltac::Var: {
 				auto id = static_cast<LtacVar *>(math_op->operand);
-				writer << "DWORD PTR ";
-				writer << "[rbp-" << std::to_string(id->pos) << "]";
-				writer << std::endl;
+				
+				if (id->d_type == DataType::Int) {
+					writer << "\tcvtsi2ss xmm2, [rbp-";
+					writer << std::to_string(id->pos) << "]" << std::endl;
+					
+					ln += "xmm2";
+				} else {
+					ln += "DWORD PTR [rbp-" + std::to_string(id->pos) + "]";
+				}
 			} break;
 		}
+		
+		writer << ln << std::endl;
 	}
 	
 	//Save the result back to the variable

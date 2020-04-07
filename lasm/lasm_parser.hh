@@ -39,6 +39,7 @@ private:
 	//Parser functions
 	void buildSection();
 	void buildFunc();
+	void buildFuncCall();
 	void buildRet();
 	void buildPushArg();
 	void buildString();

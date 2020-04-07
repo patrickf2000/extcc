@@ -14,6 +14,7 @@ void AsmParser::parse() {
 		switch (type) {
 			case AsmTokenType::Section: buildSection(); break;
 			case AsmTokenType::Func: buildFunc(); break;
+			case AsmTokenType::Call: buildFuncCall(); break;
 			case AsmTokenType::Ret: buildRet(); break;
 			case AsmTokenType::PushArg: buildPushArg(); break;
 			case AsmTokenType::String: buildString(); break;
@@ -54,6 +55,19 @@ void AsmParser::buildFunc() {
 		syntax->fatalError("Expected function name.");
 		
 	auto *func = new LtacFunc(next.id);
+	
+	checkCode();
+	file->code->children.push_back(func);
+}
+
+//Builds a function call
+void AsmParser::buildFuncCall() {
+	Token next = scan->getNext();
+	
+	if (next.type != AsmTokenType::Name)
+		syntax->fatalError("Expected function name.");
+		
+	auto *func = new LtacFuncCall(next.id);
 	
 	checkCode();
 	file->code->children.push_back(func);

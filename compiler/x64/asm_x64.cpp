@@ -58,6 +58,7 @@ void Asm_x64::build_code(LtacCodeSec *code) {
 			case ltac::Array: build_array(ln); break;
 			case ltac::ArraySet: build_array_set(ln); break;
 			
+			case ltac::Reg: build_reg(ln); break;
 			case ltac::Var: build_var(ln); break;
 			
 			case ltac::ICmp: build_icmp(ln); break;

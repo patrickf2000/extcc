@@ -1,5 +1,64 @@
 #include "asm_x64.hh"
 
+//There are LTAC commands to manage the registers
+// These represent the registers and the order they should
+// be used.
+
+//64-bit registers
+std::string registers[] = {
+	"r10",
+	"r11",
+	"r12",
+	"r13",
+	"r14",
+	"r15",
+	"r8",
+	"r9",
+	"rax",
+	"rbx",
+	"rcx",
+	"rdx",
+	"rsi",
+	"rdi"
+};
+
+//32-bit registers
+std::string registers32[] = {
+	"r10d",
+	"r11d",
+	"r12d",
+	"r13d",
+	"r14d",
+	"r15d",
+	"r8d",
+	"r9d",
+	"eax",
+	"ebx",
+	"ecx",
+	"edx",
+	"esi",
+	"edi"
+};
+
+//Build a register load
+void Asm_x64::build_reg(LtacNode *node) {
+	auto reg = static_cast<LtacReg *>(node);
+	auto src = reg->children[0];
+	int pos = reg->pos - 1;
+	
+	switch (src->type) {
+		//Variable
+		case ltac::Var: {
+			auto var = static_cast<LtacVar *>(src);
+		
+			writer << "\tmov " << registers32[pos] << ", ";
+			writer << "[rbp-" << var->pos << "]" << std::endl;
+		} break;
+		
+		//TODO: add rest
+	}
+}
+
 //Build a variable declaration
 void Asm_x64::build_var(LtacNode *node) {
 	auto var = static_cast<LtacVar *>(node);

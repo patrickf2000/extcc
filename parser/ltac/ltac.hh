@@ -25,6 +25,8 @@ enum class ltac {
 	ArrayAcc,
 	ArraySet,
 	
+	PushArg,
+	
 	Int,
 	Byte,
 	Float,
@@ -161,6 +163,11 @@ public:
 	int rvar = -1;
 	bool is_ref = false;
 	bool is_ptr = false;
+};
+
+//Push argument operation
+class LtacPushArg : public LtacNode {
+	explicit LtacPushArg() { type = ltac::PushArg; }
 };
 
 //Function calls

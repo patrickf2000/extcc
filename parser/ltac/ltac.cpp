@@ -79,6 +79,11 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 				content += "\n\n";
 		} break;
 		
+		case ltac::PushArg: {
+			auto arg = code_ln->children[0];
+			content += "\tpush_arg " + code2str(arg, true) + "\n";
+		} break;
+		
 		case ltac::Var: {
 			auto var = static_cast<LtacVar *>(code_ln);
 			std::string v_str = "";

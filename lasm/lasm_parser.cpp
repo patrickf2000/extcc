@@ -22,6 +22,8 @@ void AsmParser::parse() {
 			case AsmTokenType::NewLn: break;
 		}
 	}
+	
+	calcStackSize();
 }
 
 //Make sure the code section was declared
@@ -50,15 +52,34 @@ void AsmParser::buildSection() {
 
 //Builds a function
 void AsmParser::buildFunc() {
+	checkCode();
 	Token next = scan->getNext();
 	
 	if (next.type != AsmTokenType::Name)
 		syntax->fatalError("Expected function name.");
 		
 	auto *func = new LtacFunc(next.id);
+
+	if (topNode.size() > 0)
+		calcStackSize();
 	
-	checkCode();
 	file->code->children.push_back(func);
+	topNode.push(func);
+}
+
+//Calculates the stack position of the last function
+void AsmParser::calcStackSize() {
+	int stack_size = 0;
+	if (stack_pos > 0) {
+		while (stack_size < (stack_pos + 1))
+			stack_size += 16;
+	}
+	
+	auto func = static_cast<LtacFunc *>(topNode.top());
+	topNode.pop();
+	
+	func->stack_size = stack_size;
+	stack_pos = 0;
 }
 
 //Builds a push-arg statement

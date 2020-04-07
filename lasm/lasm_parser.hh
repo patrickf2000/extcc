@@ -15,8 +15,6 @@ public:
 		scan = new AsmScanner(in);
 		file = new LtacFile;
 		syntax = new Syntax(scan);
-		
-		topNode.push(file);
 	}
 	
 	LtacFile *getFile() {
@@ -40,6 +38,7 @@ private:
 	//Parser functions
 	void buildSection();
 	void buildFunc();
+	void calcStackSize();
 	void buildPushArg();
 	void buildFuncCall();
 	void buildRet();

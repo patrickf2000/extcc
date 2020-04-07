@@ -138,7 +138,14 @@ void AsmParser::buildVar() {
 	auto *var = new LtacVar;
 	file->code->children.push_back(var);
 	
+	Token name = scan->getNext();
+	
+	if (name.type != AsmTokenType::Name)
+		syntax->fatalError("Expected variable name.");
+	
 	addChildren(var, true);
+	
+	vars[name.id] = stack_pos;
 	var->pos = stack_pos;
 }
 

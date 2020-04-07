@@ -2,6 +2,7 @@
 
 #include <string>
 #include <stack>
+#include <map>
 
 #include <parser.hh>
 #include <syntax.hh>
@@ -29,6 +30,7 @@ private:
 	
 	//Control stuff
 	std::stack<LtacNode *> topNode;
+	std::map<std::string, int> vars;
 	int stack_pos = 0;
 	
 	//Check functions

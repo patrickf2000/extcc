@@ -21,6 +21,7 @@ enum class ltac {
 	Label,
 	Ret,
 	Var,
+	Reg,
 	Array,
 	ArrayAcc,
 	ArraySet,
@@ -163,6 +164,13 @@ public:
 	int rvar = -1;
 	bool is_ref = false;
 	bool is_ptr = false;
+};
+
+//Register assignment/operation
+class LtacReg : public LtacNode {
+public:
+	explicit LtacReg() { type = ltac::Reg; }
+	int pos = 0;
 };
 
 //Push argument operation

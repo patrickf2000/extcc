@@ -23,6 +23,9 @@ namespace LtacAsm {
 		PushArg,
 		Call,
 		
+		//Register operations
+		Ldr,
+		
 		//Identifiers
 		Name,
 		IntL,

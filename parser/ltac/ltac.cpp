@@ -108,6 +108,19 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 			}
 		} break;
 		
+		case ltac::Reg: {
+			auto reg = static_cast<LtacReg *>(code_ln);
+			std::string name = "r" + std::to_string(reg->pos);
+			
+			if (child) {
+				content += name;
+			} else {
+				content = "\tmov " + name + ", ";
+				content += code2str(reg->children[0], true);
+				content += "\n";
+			}
+		} break;
+		
 		case ltac::Byte:
 		case ltac::Int: {
 			auto li = static_cast<LtacInt *>(code_ln);

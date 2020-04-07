@@ -297,6 +297,19 @@ AstNode *CParser::buildNode(Token t, bool float2dbl) {
 				
 				return acc;
 				
+			//Struct access
+			} else if (next.type == CTokenType::Dot) {
+				auto *acc = new AstStructAcc;
+				acc->str_name = t.id;
+				
+				next = scan->getNext();
+				
+				if (next.type != CTokenType::Id)
+					syntax->fatalError("Invalid structure access: Identifier required.");
+					
+				acc->var_name = next.id;
+				return acc;
+				
 			//Function call
 			} else if (next.type == CTokenType::LeftParen) {
 				auto *fd = new AstFuncCall(t.id);

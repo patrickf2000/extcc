@@ -65,6 +65,13 @@ Token Scanner::getNext() {
 			current = "";
 			return next;
 		} else if (!in_quote) {
+			if (c == '.') {
+				if (isInt()) {
+					current += c;
+					continue;
+				}
+			} 
+			
 			if (isWhitespace(c)) {
 				if (c == '\n') {
 					current_ln = "";

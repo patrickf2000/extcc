@@ -1,5 +1,7 @@
 #include "lasm_lex.hh"
 
+using namespace Asm;
+
 //Tell the scanner about our separators
 void AsmScanner::initSeparators() {
 	separators.push_back('\n');
@@ -32,9 +34,8 @@ void AsmScanner::initTokens() {
 	tokens[")"] = AsmTokenType::Comma;
 	
 	//Constant/literal tokens
-	idToken = AsmTokenType::Id;
-	intToken = AsmTokenType::No;
+	idToken = AsmTokenType::Name;
+	intToken = AsmTokenType::Int;
 	fltToken = AsmTokenType::Float;
-	charToken = AsmTokenType::Char;
 	strToken = AsmTokenType::String;
 }

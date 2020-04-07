@@ -33,6 +33,8 @@ int main(int argc, char *argv[]) {
 		
 		LTAC_Builder *builder = new LTAC_Builder;
 		file = builder->build_file(top);
+		
+		delete builder;
 	} else if (language == "-l") {
 		AsmParser parser(argv[1]);
 		parser.parse();
@@ -44,7 +46,6 @@ int main(int argc, char *argv[]) {
 	
 	print_ltac(file);
 	
-	delete builder;
 	delete file;
 	delete top;
 	

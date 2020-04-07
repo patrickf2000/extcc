@@ -6,6 +6,10 @@
 #include <fstream>
 #include <stack>
 
+enum TokenType {
+
+};
+
 struct Token {
 	int type;
 	std::string id;

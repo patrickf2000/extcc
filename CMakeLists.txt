@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(extcc)
 
-include_directories(parser quik clang compiler)
+include_directories(parser quik clang lasm compiler)
 
 add_compile_options(-std=c++14 -g)
 
@@ -27,6 +27,11 @@ set(C_SRC
 	clang/c_var.cpp
 )
 
+set(LASM_SRC
+	lasm/lasm_lex.cpp
+	lasm/lasm_parser.cpp
+)
+
 set(QK_SRC
 	quik/qk_lex.cpp
 )
@@ -48,6 +53,7 @@ set(COMPILER_SRC
 # Build all the frontend libraries
 add_library(parser ${PARSER_SRC})
 add_library(cparser ${C_SRC})
+add_library(lasm_parser ${LASM_SRC})
 add_library(qkparser ${QK_SRC})
 
 # Build the utilities
@@ -69,6 +75,6 @@ target_link_libraries(clex cparser)
 target_link_libraries(qklex qkparser)
 
 target_link_libraries(ast cparser qkparser)
-target_link_libraries(asm cparser qkparser)
+target_link_libraries(asm cparser qkparser lasm_parser)
 
 target_link_libraries(cc cparser)

@@ -143,7 +143,13 @@ LtacFuncCall *LTAC_Builder::build_func_call(AstNode *node) {
 				if (overload) fn_name += "_STR";
 			} break;
 			
-			//TODO: Add the rest
+			//Push a struct access
+			case AstType::StructAcc: {
+				auto acc = build_struct_acc(arg);
+				l_fc->children.push_back(acc);
+				
+				if (overload) fn_name += "_STR";
+			} break;
 		}
 	}
 	

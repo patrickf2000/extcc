@@ -145,6 +145,11 @@ LtacNode *LTAC_Builder::convert_ast_var(AstNode *val) {
 			lval = arr;
 		} break;
 		
+		//Structure access
+		case AstType::StructAcc: {
+			lval = build_struct_acc(val);
+		} break;
+		
 		//Increment
 		case AstType::Inc: {
 			auto op = new LtacSingleOp;

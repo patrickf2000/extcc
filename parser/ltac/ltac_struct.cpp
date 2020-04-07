@@ -59,3 +59,25 @@ void LTAC_Builder::build_struct_mod(AstNode *node) {
 	
 	file->code->children.push_back(var);
 }
+
+//Builds structure field access
+LtacVar *LTAC_Builder::build_struct_acc(AstNode *node) {
+	auto *acc = static_cast<AstStructAcc *>(node);
+	auto str_name = acc->str_name;
+	auto var_name = acc->var_name;
+	Var sv;
+	
+	for (auto v : struct_vars) {
+		if (v.struct_name == str_name && v.name == var_name) {
+			sv = v;
+			break;
+		}
+	}
+	
+	auto *var = new LtacVar;
+	var->pos = sv.stack_pos;
+	var->d_type = sv.type;
+	var->is_ptr = sv.is_ptr;
+	return var;
+}
+

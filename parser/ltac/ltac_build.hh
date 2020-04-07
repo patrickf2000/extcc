@@ -39,6 +39,7 @@ protected:
 	void build_struct(AstNode *node);
 	void build_struct_dec(AstNode *node);
 	void build_struct_mod(AstNode *node);
+	LtacVar *build_struct_acc(AstNode *node);
 	
 	//Utility stuff
 	LtacNode *build_string(AstNode *node);

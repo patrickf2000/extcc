@@ -144,7 +144,20 @@ void CParser::parse() {
 					
 				//Structure variable
 				} else if (symToken.type == CTokenType::Id) {
-					buildStructVar(idToken.id, symToken.id);
+					Token next = scan->getNext();
+					
+					//Function declaration that returns a struct
+					if (next.type == CTokenType::LeftParen) {
+						auto *fd = new AstFuncDec(symToken.id);
+						fd->rtype = DataType::Pointer;
+						current_rval = DataType::Pointer;
+						buildFuncDec(fd);
+					
+					//Structure variable
+					} else {
+						scan->unget(next);
+						buildStructVar(idToken.id, symToken.id);
+					}
 					
 				//Syntax error
 				} else {
@@ -222,6 +235,7 @@ DataType CParser::token2type(int token) {
 		case CTokenType::Int: return DataType::Int;
 		case CTokenType::Float: return DataType::Float;
 		case CTokenType::Double: return DataType::Double;
+		case CTokenType::Struct: return DataType::Pointer;
 	}
 
 	return DataType::None;

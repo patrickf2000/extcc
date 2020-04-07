@@ -37,6 +37,13 @@ std::string ret_regs32[] {
 	"r12d"
 };
 
+std::string ret_regs[] {
+	"rax",
+	"r10",
+	"r11",
+	"r12"
+};
+
 //Build a function declaration
 void Asm_x64::build_func(LtacNode *node) {
 	auto fd = static_cast<LtacFunc *>(node);
@@ -269,16 +276,22 @@ void Asm_x64::build_ret(LtacNode *node) {
 
 	for (auto val : ret->children) {
 		auto reg = ret_regs32[ret_index];
-		++ret_index;
 	
 		switch (val->type) {
 			//Variables
 			case ltac::Var: {
 				auto var = static_cast<LtacVar *>(val);
 				
-				writer << "\tmov " << reg << ", [rbp-";
-				writer << std::to_string(var->pos) << "]";
-				writer << std::endl;
+				if (var->is_ptr) {
+					reg = ret_regs[ret_index];
+					
+					writer << "\tmov " << reg << ", QWORD PTR ";
+					writer << "[rbp-" << var->pos << "]" << std::endl;
+				} else {
+					writer << "\tmov " << reg << ", [rbp-";
+					writer << std::to_string(var->pos) << "]";
+					writer << std::endl;
+				}
 			} break;
 			
 			//Integers
@@ -300,6 +313,8 @@ void Asm_x64::build_ret(LtacNode *node) {
 			
 			//TODO: Add the rest
 		}
+		
+		++ret_index;
 	}
 
 	writer << std::endl;

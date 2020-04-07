@@ -31,6 +31,15 @@ void LTAC_Builder::build_struct_dec(AstNode *node) {
 		
 		struct_vars.push_back(v);
 	}
+	
+	//Store the struct as a variable
+	v.name = sd->var_name;
+	v.stack_pos = stack_pos;
+	v.is_struct = true;
+	v.is_ptr = true;
+	v.is_array = false;
+	v.is_param = false;
+	vars[v.name] = v;
 }
 
 //Builds a structure field modification

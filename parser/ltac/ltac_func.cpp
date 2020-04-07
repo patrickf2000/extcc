@@ -178,6 +178,7 @@ void LTAC_Builder::build_ret(AstNode *node) {
 				auto var = new LtacVar;
 				var->pos = v.stack_pos;
 				var->d_type = v.type;
+				var->is_ptr = v.is_ptr;
 				rnode->children.push_back(var);
 			} break;
 			

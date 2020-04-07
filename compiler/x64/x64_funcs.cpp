@@ -44,6 +44,9 @@ std::string ret_regs[] {
 	"r12"
 };
 
+int call_index = 0;
+int call_index_flt = 0;
+
 //Build a function declaration
 void Asm_x64::build_func(LtacNode *node) {
 	auto fd = static_cast<LtacFunc *>(node);
@@ -115,14 +118,38 @@ void Asm_x64::build_func(LtacNode *node) {
 		writer << std::endl;
 }
 
+//Builds a push argument call
+// This pushes an argument to one of the call registers
+void Asm_x64::build_push_arg(LtacNode *node, bool is_arg) {
+	auto arg = node->children[0];
+	
+	//Build the actual argument
+	switch (arg->type) {
+		//Raw string arguments
+		case ltac::String: {
+			auto lstr = static_cast<LtacString *>(arg);
+			auto reg = call_regs[call_index];
+			++call_index;
+			
+			if (pic) {
+				writer << "\tlea " << reg << ", ";
+				writer << lstr->name << "[rip]" << std::endl;
+			} else {
+				writer << "\tmov " << reg << ", ";
+				writer << "OFFSET FLAT:" << lstr->name << std::endl;
+			}
+		} break;
+		
+		//TODO: Build the rest
+	}
+}
+
 //Build a function call
 void Asm_x64::build_func_call(LtacNode *node) {
 	auto fc = static_cast<LtacFuncCall *>(node);
 	
 	//Add the arguments
-	int call_index = 0;
-	int call_index_flt = 0;
-	
+	//TODO: Eventually make the entire thing use the build_push_arg function
 	for (auto arg : fc->children) {
 		switch (arg->type) {
 			//Raw integer arguments
@@ -136,19 +163,7 @@ void Asm_x64::build_func_call(LtacNode *node) {
 			} break;
 		
 			//Raw string arguments
-			case ltac::String: {
-				auto lstr = static_cast<LtacString *>(arg);
-				auto reg = call_regs[call_index];
-				++call_index;
-				
-				if (pic) {
-					writer << "\tlea " << reg << ", ";
-					writer << lstr->name << "[rip]" << std::endl;
-				} else {
-					writer << "\tmov " << reg << ", ";
-					writer << "OFFSET FLAT:" << lstr->name << std::endl;
-				}
-			} break;
+			case ltac::String: build_push_arg(arg, true); break;
 			
 			//Other variables
 			case ltac::Var: {
@@ -265,6 +280,9 @@ void Asm_x64::build_func_call(LtacNode *node) {
 		
 		writer << std::endl;
 	}
+	
+	call_index = 0;
+	call_index_flt = 0;
 }
 
 //Builds a function return

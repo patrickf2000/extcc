@@ -51,6 +51,7 @@ void Asm_x64::build_code(LtacCodeSec *code) {
 			} break;
 			
 			case ltac::Func: build_func(ln); break;
+			case ltac::PushArg: build_push_arg(ln); break;
 			case ltac::FuncCall: build_func_call(ln); break;
 			case ltac::Ret: build_ret(ln); break;
 			

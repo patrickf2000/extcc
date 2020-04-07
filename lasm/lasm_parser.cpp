@@ -9,7 +9,6 @@ void AsmParser::parse() {
 	while (type != -1) {
 		Token next = scan->getNext();
 		type = next.type;
-		bool nl = false;
 		
 		switch (type) {
 			case AsmTokenType::Section: buildSection(); break;
@@ -19,6 +18,7 @@ void AsmParser::parse() {
 			case AsmTokenType::PushArg: buildPushArg(); break;
 			case AsmTokenType::String: buildString(); break;
 			case AsmTokenType::Var: buildVar(); break;
+			case AsmTokenType::Ldr: buildLdr(); break;
 			case AsmTokenType::NewLn: break;
 		}
 	}
@@ -147,6 +147,37 @@ void AsmParser::buildVar() {
 	
 	vars[name.id] = stack_pos;
 	var->pos = stack_pos;
+}
+
+//Builds the load register command
+void AsmParser::buildLdr() {
+	auto *reg = new LtacReg;
+	file->code->children.push_back(reg);
+	
+	Token no = scan->getNext();
+	Token val = scan->getNext();
+	
+	if (no.type != AsmTokenType::IntL)
+		syntax->fatalError("Expected register number.");
+	
+	int v = std::stoi(no.id);
+	
+	if (v <= 0)
+		syntax->fatalError("Invalid register; A register must be a number greater than 0.");
+		
+	reg->pos = v;
+	
+	//Build the value being loaded
+	switch (val.type) {
+		//Other variables
+		case AsmTokenType::Name: {
+			auto *lv = new LtacVar;
+			lv->pos = vars[val.id];
+			reg->children.push_back(lv);
+		} break;
+		
+		//TODO: Add rest
+	}
 }
 
 //Adds children to a parent node

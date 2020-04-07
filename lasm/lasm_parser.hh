@@ -46,6 +46,7 @@ private:
 	void buildRet();
 	void buildString();
 	void buildVar();
+	void buildLdr();
 	
 	void addChildren(LtacNode *parent, bool inc_stack=false);
 };

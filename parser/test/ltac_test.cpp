@@ -46,8 +46,5 @@ int main(int argc, char *argv[]) {
 	
 	print_ltac(file);
 	
-	delete file;
-	delete top;
-	
 	return 0;
 }

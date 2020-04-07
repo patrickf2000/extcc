@@ -15,7 +15,7 @@ void AsmScanner::initSeparators() {
 void AsmScanner::initKeywords() {
 	keywords.push_back("section");
 	keywords.push_back("data");
-	keywords.push_back("text");
+	keywords.push_back("code");
 	keywords.push_back("func");
 	keywords.push_back("ret");
 }
@@ -25,7 +25,7 @@ void AsmScanner::initTokens() {
 	//Start with keywords
 	tokens["section"] = AsmTokenType::Section;
 	tokens["data"] = AsmTokenType::Data;
-	tokens["text"] = AsmTokenType::Text;
+	tokens["code"] = AsmTokenType::Code;
 	tokens["func"] = AsmTokenType::Func;
 	tokens["ret"] = AsmTokenType::Ret;
 	

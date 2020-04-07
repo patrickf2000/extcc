@@ -9,7 +9,7 @@ namespace Asm {
 		//Section tokens
 		Section,
 		Data,
-		Text,
+		Code,
 		
 		//Function tokens
 		Func,

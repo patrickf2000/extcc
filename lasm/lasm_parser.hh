@@ -32,6 +32,11 @@ private:
 	//Control stuff
 	std::stack<LtacNode *> topNode;
 	
-	//Parser function
+	//Check functions
+	void checkCode();
+	
+	//Parser functions
 	void buildSection();
+	void buildFunc();
+	void buildRet();
 };

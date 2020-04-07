@@ -12,6 +12,7 @@ namespace LtacAsm {
 		Code,
 		
 		//Data tokens
+		Int,
 		String,
 		Float,
 		
@@ -23,7 +24,7 @@ namespace LtacAsm {
 		
 		//Identifiers
 		Name,
-		Int,
+		IntL,
 		FloatL,
 		StringL,
 		

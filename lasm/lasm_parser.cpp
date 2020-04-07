@@ -99,6 +99,13 @@ void AsmParser::buildPushArg() {
 	
 	//Construct the argument
 	switch (type.type) {
+		//Push an integer
+		case AsmTokenType::Int: {
+			int val = std::stoi(name.id);
+			auto *i = new LtacInt(val);
+			push->children.push_back(i);
+		} break;
+	
 		//Push a string
 		case AsmTokenType::String: {
 			auto *str = new LtacString;

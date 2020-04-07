@@ -20,6 +20,7 @@ void AsmScanner::initKeywords() {
 	keywords.push_back("ret");
 	keywords.push_back("string");
 	keywords.push_back("float");
+	keywords.push_back("pusharg");
 }
 
 //Match everything with a token
@@ -32,6 +33,7 @@ void AsmScanner::initTokens() {
 	tokens["ret"] = AsmTokenType::Ret;
 	tokens["string"] = AsmTokenType::String;
 	tokens["float"] = AsmTokenType::Float;
+	tokens["pusharg"] = AsmTokenType::PushArg;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;

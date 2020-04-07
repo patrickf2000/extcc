@@ -167,6 +167,7 @@ public:
 
 //Push argument operation
 class LtacPushArg : public LtacNode {
+public:
 	explicit LtacPushArg() { type = ltac::PushArg; }
 };
 

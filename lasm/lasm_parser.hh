@@ -40,5 +40,6 @@ private:
 	void buildSection();
 	void buildFunc();
 	void buildRet();
+	void buildPushArg();
 	void buildString();
 };

@@ -18,6 +18,7 @@ namespace LtacAsm {
 		//Function tokens
 		Func,
 		Ret,
+		PushArg,
 		
 		//Identifiers
 		Name,

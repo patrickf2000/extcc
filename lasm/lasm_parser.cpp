@@ -15,6 +15,7 @@ void AsmParser::parse() {
 			case AsmTokenType::Section: buildSection(); break;
 			case AsmTokenType::Func: buildFunc(); break;
 			case AsmTokenType::Ret: buildRet(); break;
+			case AsmTokenType::PushArg: buildPushArg(); break;
 			case AsmTokenType::String: buildString(); break;
 			case AsmTokenType::NewLn: break;
 		}
@@ -70,6 +71,29 @@ void AsmParser::buildRet() {
 	
 	if (next.type == AsmTokenType::NewLn)
 		return;
+}
+
+//Builds a push-arg statement
+void AsmParser::buildPushArg() {
+	checkCode();
+	
+	Token type = scan->getNext();
+	Token name = scan->getNext();
+	
+	auto *push = new LtacPushArg;
+	file->code->children.push_back(push);
+	
+	//Construct the argument
+	switch (type.type) {
+		//Push a string
+		case AsmTokenType::String: {
+			auto *str = new LtacString;
+			str->name = name.id;
+			push->children.push_back(str);
+		} break;
+		
+		default: syntax->fatalError("Unknown type.");
+	}
 }
 
 //Builds a string declaration

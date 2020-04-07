@@ -18,6 +18,8 @@ void AsmScanner::initKeywords() {
 	keywords.push_back("code");
 	keywords.push_back("func");
 	keywords.push_back("ret");
+	keywords.push_back("string");
+	keywords.push_back("float");
 }
 
 //Match everything with a token
@@ -28,6 +30,8 @@ void AsmScanner::initTokens() {
 	tokens["code"] = AsmTokenType::Code;
 	tokens["func"] = AsmTokenType::Func;
 	tokens["ret"] = AsmTokenType::Ret;
+	tokens["string"] = AsmTokenType::String;
+	tokens["float"] = AsmTokenType::Float;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;
@@ -36,6 +40,6 @@ void AsmScanner::initTokens() {
 	//Constant/literal tokens
 	idToken = AsmTokenType::Name;
 	intToken = AsmTokenType::Int;
-	fltToken = AsmTokenType::Float;
-	strToken = AsmTokenType::String;
+	fltToken = AsmTokenType::FloatL;
+	strToken = AsmTokenType::StringL;
 }

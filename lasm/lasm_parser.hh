@@ -34,9 +34,11 @@ private:
 	
 	//Check functions
 	void checkCode();
+	void checkData();
 	
 	//Parser functions
 	void buildSection();
 	void buildFunc();
 	void buildRet();
+	void buildString();
 };

@@ -15,15 +15,22 @@ void AsmParser::parse() {
 			case AsmTokenType::Section: buildSection(); break;
 			case AsmTokenType::Func: buildFunc(); break;
 			case AsmTokenType::Ret: buildRet(); break;
+			case AsmTokenType::String: buildString(); break;
 			case AsmTokenType::NewLn: break;
 		}
 	}
 }
 
-//Make sure the code section was declarated
+//Make sure the code section was declared
 void AsmParser::checkCode() {
 	if (file->code == nullptr)
 		syntax->fatalError("Not in code section.");
+}
+
+//Make sure the data section was declared
+void AsmParser::checkData() {
+	if (file->data == nullptr)
+		syntax->fatalError("Not in data section.");
 }
 
 //Builds a section
@@ -64,5 +71,22 @@ void AsmParser::buildRet() {
 	if (next.type == AsmTokenType::NewLn)
 		return;
 }
+
+//Builds a string declaration
+void AsmParser::buildString() {
+	checkData();
+
+	Token next = scan->getNext();
+	Token str = scan->getNext();
+	
+	if (next.type != AsmTokenType::Name)
+		syntax->fatalError("Expected variable name.");
+	else if (str.type != AsmTokenType::StringL)
+		syntax->fatalError("Expected string literal.");
+		
+	auto *lstr = new LtacString(next.id, str.id);
+	file->data->children.push_back(lstr);
+}
+
 
 

@@ -11,6 +11,10 @@ namespace LtacAsm {
 		Data,
 		Code,
 		
+		//Data tokens
+		String,
+		Float,
+		
 		//Function tokens
 		Func,
 		Ret,
@@ -18,8 +22,8 @@ namespace LtacAsm {
 		//Identifiers
 		Name,
 		Int,
-		Float,
-		String,
+		FloatL,
+		StringL,
 		
 		//Symbols
 		NewLn,

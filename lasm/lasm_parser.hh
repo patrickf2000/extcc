@@ -31,6 +31,7 @@ private:
 	
 	//Control stuff
 	std::stack<LtacNode *> topNode;
+	int stack_pos = 0;
 	
 	//Check functions
 	void checkCode();
@@ -39,8 +40,11 @@ private:
 	//Parser functions
 	void buildSection();
 	void buildFunc();
+	void buildPushArg();
 	void buildFuncCall();
 	void buildRet();
-	void buildPushArg();
 	void buildString();
+	void buildVar();
+	
+	void addChildren(LtacNode *parent, bool inc_stack=false);
 };

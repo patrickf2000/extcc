@@ -18,6 +18,7 @@ void AsmParser::parse() {
 			case AsmTokenType::Ret: buildRet(); break;
 			case AsmTokenType::PushArg: buildPushArg(); break;
 			case AsmTokenType::String: buildString(); break;
+			case AsmTokenType::Var: buildVar(); break;
 			case AsmTokenType::NewLn: break;
 		}
 	}
@@ -60,6 +61,14 @@ void AsmParser::buildFunc() {
 	file->code->children.push_back(func);
 }
 
+//Builds a push-arg statement
+void AsmParser::buildPushArg() {
+	auto *push = new LtacPushArg;
+	file->code->children.push_back(push);
+	
+	addChildren(push);
+}
+
 //Builds a function call
 void AsmParser::buildFuncCall() {
 	Token next = scan->getNext();
@@ -87,36 +96,6 @@ void AsmParser::buildRet() {
 		return;
 }
 
-//Builds a push-arg statement
-void AsmParser::buildPushArg() {
-	checkCode();
-	
-	Token type = scan->getNext();
-	Token name = scan->getNext();
-	
-	auto *push = new LtacPushArg;
-	file->code->children.push_back(push);
-	
-	//Construct the argument
-	switch (type.type) {
-		//Push an integer
-		case AsmTokenType::Int: {
-			int val = std::stoi(name.id);
-			auto *i = new LtacInt(val);
-			push->children.push_back(i);
-		} break;
-	
-		//Push a string
-		case AsmTokenType::String: {
-			auto *str = new LtacString;
-			str->name = name.id;
-			push->children.push_back(str);
-		} break;
-		
-		default: syntax->fatalError("Unknown type.");
-	}
-}
-
 //Builds a string declaration
 void AsmParser::buildString() {
 	checkData();
@@ -133,5 +112,44 @@ void AsmParser::buildString() {
 	file->data->children.push_back(lstr);
 }
 
+//Builds a variable declaration
+void AsmParser::buildVar() {
+	auto *var = new LtacVar;
+	file->code->children.push_back(var);
+	
+	addChildren(var, true);
+	var->pos = stack_pos;
+}
+
+//Adds children to a parent node
+void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
+	checkCode();
+	
+	Token type = scan->getNext();
+	Token name = scan->getNext();
+	
+	//Construct the argument
+	switch (type.type) {
+		//Push an integer
+		case AsmTokenType::Int: {
+			int val = std::stoi(name.id);
+			auto *i = new LtacInt(val);
+			parent->children.push_back(i);
+			
+			if (inc_stack) stack_pos += 4;
+		} break;
+	
+		//Push a string
+		case AsmTokenType::String: {
+			auto *str = new LtacString;
+			str->name = name.id;
+			parent->children.push_back(str);
+			
+			if (inc_stack) stack_pos += 8;
+		} break;
+		
+		default: syntax->fatalError("Unknown type.");
+	}
+}
 
 

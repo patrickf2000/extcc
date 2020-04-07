@@ -23,6 +23,7 @@ void AsmScanner::initKeywords() {
 	keywords.push_back("pusharg");
 	keywords.push_back("call");
 	keywords.push_back("int");
+	keywords.push_back("var");
 }
 
 //Match everything with a token
@@ -38,6 +39,7 @@ void AsmScanner::initTokens() {
 	tokens["pusharg"] = AsmTokenType::PushArg;
 	tokens["call"] = AsmTokenType::Call;
 	tokens["int"] = AsmTokenType::Int;
+	tokens["var"] = AsmTokenType::Var;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;

@@ -15,6 +15,7 @@ namespace LtacAsm {
 		Int,
 		String,
 		Float,
+		Var,
 		
 		//Function tokens
 		Func,

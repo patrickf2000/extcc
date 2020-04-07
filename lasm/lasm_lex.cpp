@@ -1,6 +1,6 @@
 #include "lasm_lex.hh"
 
-using namespace Asm;
+using namespace LtacAsm;
 
 //Tell the scanner about our separators
 void AsmScanner::initSeparators() {

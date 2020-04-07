@@ -67,9 +67,13 @@ add_executable(asm parser/test/ltac_test.cpp)
 add_executable(cc ${COMPILER_SRC})
 set_target_properties(cc PROPERTIES COMPILE_FLAGS "-DBUILD_CLANG")
 
+add_executable(ltasm ${COMPILER_SRC})
+set_target_properties(ltasm PROPERTIES COMPILE_FLAGS "-DBUILD_ASM")
+
 # Link everything
 target_link_libraries(qkparser parser)
 target_link_libraries(cparser parser)
+target_link_libraries(lasm_parser parser)
 
 target_link_libraries(clex cparser)
 target_link_libraries(qklex qkparser)
@@ -78,3 +82,5 @@ target_link_libraries(ast cparser qkparser)
 target_link_libraries(asm cparser qkparser lasm_parser)
 
 target_link_libraries(cc cparser)
+target_link_libraries(ltasm lasm_parser)
+

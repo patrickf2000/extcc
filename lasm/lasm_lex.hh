@@ -2,7 +2,7 @@
 
 #include <lex.hh>
 
-namespace Asm {
+namespace LtacAsm {
 	enum AsmTokenType {
 		None,
 		

@@ -14,6 +14,8 @@
 
 #ifdef BUILD_CLANG
 #include <c_parser.hh>
+#elif BUILD_ASM
+#include <lasm_parser.hh>
 #endif
 
 Compiler::Compiler(Config c) {
@@ -44,6 +46,10 @@ void Compiler::assemble() {
 		parser.parse();
 		parser.runSyntax();
 		AstNode *top = parser.getTree();
+#elif BUILD_ASM
+		AsmParser parser(src_files[i]);
+		parser.parse();
+		LtacFile *file = parser.getFile();
 #else
 #error Unknown Compiler
 #endif
@@ -52,9 +58,11 @@ void Compiler::assemble() {
 		if (config.arch == CpuArch::Arm7)
 			ptr_size = 4;
 		
+#ifndef BUILD_ASM
 		LTAC_Builder *builder = new LTAC_Builder;
 		builder->set_ptr_size(ptr_size);
 		LtacFile *file = builder->build_file(top);
+#endif
 		file->name = asm_files[i];
 		
 		switch (config.arch) {
@@ -78,8 +86,10 @@ void Compiler::assemble() {
 			} break;
 		}
 		
+#ifndef BUILD_ASM
 		delete top;
 		delete builder;
+#endif
 		delete file;
 	}
 }

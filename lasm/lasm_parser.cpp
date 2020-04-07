@@ -1,6 +1,6 @@
 #include "lasm_parser.hh"
 
-using namespace Asm;
+using namespace LtacAsm;
 
 //The main assembly parse file
 void AsmParser::parse() {

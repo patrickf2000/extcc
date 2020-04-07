@@ -121,7 +121,10 @@ void Asm_x64::build_func(LtacNode *node) {
 //Builds a push argument call
 // This pushes an argument to one of the call registers
 void Asm_x64::build_push_arg(LtacNode *node, bool is_arg) {
-	auto arg = node->children[0];
+	LtacNode *arg = node;
+	
+	if (!is_arg)
+		arg = node->children[0];
 	
 	//Build the actual argument
 	switch (arg->type) {

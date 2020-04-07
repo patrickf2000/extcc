@@ -67,6 +67,7 @@ void LTAC_Builder::assemble(AstNode *top) {
 			//Structures
 			case AstType::StructDec: build_struct(node); break;
 			case AstType::Struct: build_struct_dec(node); break;
+			case AstType::StructMod: build_struct_mod(node); break;
 			
 			//Comparisons
 			case AstType::If: 

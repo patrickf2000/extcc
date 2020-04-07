@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <vector>
 #include <stack>
 #include <string>
 
@@ -37,6 +38,7 @@ protected:
 	//Structure stuff
 	void build_struct(AstNode *node);
 	void build_struct_dec(AstNode *node);
+	void build_struct_mod(AstNode *node);
 	
 	//Utility stuff
 	LtacNode *build_string(AstNode *node);
@@ -59,6 +61,7 @@ private:
 	int ptr_size = 8;
 	std::map<std::string, Var> vars;
 	std::map<std::string, AstStructDec *> structs;
+	std::vector<Var> struct_vars;
 	
 	//Register variable
 	bool enable_rvar = false;

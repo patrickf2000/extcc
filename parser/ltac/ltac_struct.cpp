@@ -1,5 +1,4 @@
 #include "ltac_build.hh"
-#include <iostream>
 
 //Adds a structure definition
 void LTAC_Builder::build_struct(AstNode *node) {
@@ -20,15 +19,43 @@ void LTAC_Builder::build_struct_dec(AstNode *node) {
 	v.is_param = false;
 	
 	for (auto field : str->fields) {
-		v.name = field.name;
-		v.type = field.type;
-		v.is_ptr = field.is_ptr;
-		
 		if (field.is_ptr)
 			stack_pos += 8;
 		else
-			inc_stack(v.type);
+			inc_stack(field.type);
 			
-		vars[v.name] = v;
+		v.name = field.name;
+		v.type = field.type;
+		v.is_ptr = field.is_ptr;
+		v.stack_pos = stack_pos;
+		
+		struct_vars.push_back(v);
 	}
+}
+
+//Builds a structure field modification
+void LTAC_Builder::build_struct_mod(AstNode *node) {
+	auto *mod = static_cast<AstStructMod *>(node);
+	auto str_name = mod->str_name;
+	auto var_name = mod->var_name;
+	Var sv;
+	
+	for (auto v : struct_vars) {
+		if (v.struct_name == str_name && v.name == var_name) {
+			sv = v;
+			break;
+		}
+	}
+	
+	auto *var = new LtacVar;
+	var->pos = sv.stack_pos;
+	var->d_type = sv.type;
+	var->is_ptr = sv.is_ptr;
+	
+	//Build the assigned value
+	auto val = mod->children[0];
+	auto lval = convert_ast_var(val);
+	var->children.push_back(lval);
+	
+	file->code->children.push_back(var);
 }

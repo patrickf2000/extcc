@@ -36,6 +36,7 @@ enum class ltac {
 	
 	MathOp,
 	Math,
+	IMath,
 	SingleOp,
 	
 	Push,
@@ -279,13 +280,17 @@ public:
 	LtacNode *index;
 };
 
+class LtacOp : public LtacNode {
+public:
+	Operator op;
+};
+
 //Math operations
-class LtacMathOp : public LtacNode {
+class LtacMathOp : public LtacOp {
 public:
 	explicit LtacMathOp() { type = ltac::MathOp; }
 	
 	LtacNode *operand;
-	Operator op;
 };
 
 //Math
@@ -296,11 +301,16 @@ public:
 	LtacNode *init_val;
 };
 
+//Integer math
+class LtacIMath : public LtacOp {
+public:
+	explicit LtacIMath() { type = ltac::IMath; }
+};
+
 //Single-instruction operator
-class LtacSingleOp : public LtacNode {
+class LtacSingleOp : public LtacOp {
 public:
 	explicit LtacSingleOp() { type = ltac::SingleOp; }
-	Operator op;
 };
 
 //Comparisons

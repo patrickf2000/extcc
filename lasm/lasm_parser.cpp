@@ -19,6 +19,12 @@ void AsmParser::parse() {
 			case AsmTokenType::String: buildString(); break;
 			case AsmTokenType::Var: buildVar(); break;
 			case AsmTokenType::Ldr: buildLdr(); break;
+			
+			case AsmTokenType::IAdd:
+			case AsmTokenType::ISub:
+			case AsmTokenType::IMul:
+			case AsmTokenType::IDiv: buildMath(1, type); break;
+			
 			case AsmTokenType::NewLn: break;
 		}
 	}
@@ -180,6 +186,30 @@ void AsmParser::buildLdr() {
 	}
 }
 
+//Builds a single math command
+// 1-> Integer
+// 2-> Single precision float
+// 3-> Double precision float
+void AsmParser::buildMath(int type, int op) {
+	checkCode();
+	LtacOp *math = new LtacOp;
+
+	if (type == 1)
+		math = new LtacIMath;
+	
+	switch (op) {
+		case AsmTokenType::IAdd: math->op = Operator::Add; break;
+		case AsmTokenType::ISub: math->op = Operator::Sub; break;
+		case AsmTokenType::IMul: math->op = Operator::Mul; break;
+		case AsmTokenType::IDiv: math->op = Operator::Div; break;
+	}
+	
+	addChildren(math, false);
+	addChildren(math, false);
+	
+	file->code->children.push_back(math);
+}
+
 //Adds children to a parent node
 void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 	checkCode();
@@ -189,7 +219,15 @@ void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 	
 	//Construct the argument
 	switch (type.type) {
-		//Push an integer
+		//Registers
+		case AsmTokenType::Reg: {
+			int val = std::stoi(name.id);
+			auto *reg = new LtacReg;
+			reg->pos = val;
+			parent->children.push_back(reg);
+		} break;
+	
+		//Integers
 		case AsmTokenType::Int: {
 			int val = std::stoi(name.id);
 			auto *i = new LtacInt(val);
@@ -198,7 +236,7 @@ void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 			if (inc_stack) stack_pos += 4;
 		} break;
 	
-		//Push a string
+		//Strings
 		case AsmTokenType::String: {
 			auto *str = new LtacString;
 			str->name = name.id;

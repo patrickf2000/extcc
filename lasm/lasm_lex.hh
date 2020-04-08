@@ -16,6 +16,7 @@ namespace LtacAsm {
 		String,
 		Float,
 		Var,
+		Reg,
 		
 		//Function tokens
 		Func,
@@ -25,6 +26,12 @@ namespace LtacAsm {
 		
 		//Register operations
 		Ldr,
+		
+		//Math operations
+		IAdd,
+		ISub,
+		IMul,
+		IDiv,
 		
 		//Identifiers
 		Name,

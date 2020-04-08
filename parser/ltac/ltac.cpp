@@ -169,6 +169,24 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 			content += "\n";
 		} break;
 		
+		case ltac::IMath: {
+			auto math = static_cast<LtacIMath *>(code_ln);
+			content += "\t";
+			
+			switch (math->op) {
+				case Operator::Add: content += "iadd "; break;
+				case Operator::Sub: content += "isub "; break;
+				case Operator::Mul: content += "imul "; break;
+				case Operator::Div: content += "idiv "; break;
+				case Operator::Mod: content += "imod "; break;
+			}
+			
+			content += code2str(math->children[0], true);
+			content += ", ";
+			content += code2str(math->children[1], true);
+			content += "\n";
+		} break;
+		
 		case ltac::SingleOp: {
 			auto op = static_cast<LtacSingleOp *>(code_ln);
 			

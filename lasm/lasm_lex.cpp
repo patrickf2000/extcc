@@ -25,6 +25,11 @@ void AsmScanner::initKeywords() {
 	keywords.push_back("int");
 	keywords.push_back("var");
 	keywords.push_back("ldr");
+	keywords.push_back("iadd");
+	keywords.push_back("isub");
+	keywords.push_back("imul");
+	keywords.push_back("idiv");
+	keywords.push_back("reg");
 }
 
 //Match everything with a token
@@ -42,6 +47,11 @@ void AsmScanner::initTokens() {
 	tokens["int"] = AsmTokenType::Int;
 	tokens["var"] = AsmTokenType::Var;
 	tokens["ldr"] = AsmTokenType::Ldr;
+	tokens["iadd"] = AsmTokenType::IAdd;
+	tokens["isub"] = AsmTokenType::ISub;
+	tokens["imul"] = AsmTokenType::IMul;
+	tokens["idiv"] = AsmTokenType::IDiv;
+	tokens["reg"] = AsmTokenType::Reg;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;

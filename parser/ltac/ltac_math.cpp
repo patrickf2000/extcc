@@ -4,11 +4,21 @@
 void LTAC_Builder::build_int_math(LtacVar *var, AstNode *node, int r) {
 	auto reg = new LtacReg;
 	reg->pos = r;
-	file->code->children.push_back(reg);
 	
 	//Load the first value to a register
-	auto first = convert_ast_var(node->children[0]);
-	reg->children.push_back(first);
+	auto ast_first = node->children[0];
+	auto first = convert_ast_var(ast_first);
+	
+	if (ast_first->type == AstType::FuncCall) {
+		file->code->children.push_back(first);
+		
+		auto ret = new LtacRetReg;
+		reg->children.push_back(ret);
+	} else {
+		reg->children.push_back(first);
+	}
+	
+	file->code->children.push_back(reg);
 	
 	//Now assemble the math
 	for (int i = 1; i<node->children.size(); i+=2) {

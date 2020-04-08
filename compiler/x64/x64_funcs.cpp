@@ -15,8 +15,8 @@ std::string call_regs32[] = {
 	"esi",
 	"edx",
 	"ecx",
-	"r8",
-	"r9"
+	"r8d",
+	"r9d"
 };
 
 std::string call_flt_regs[] = {

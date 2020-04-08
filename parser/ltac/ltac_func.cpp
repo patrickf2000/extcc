@@ -95,12 +95,15 @@ LtacFuncCall *LTAC_Builder::build_func_call(AstNode *node) {
 	
 	//Build the arguments
 	for (auto arg : fc->children) {
+		auto larg = new LtacPushArg;
+		file->code->children.push_back(larg);
+	
 		switch (arg->type) {
 			//Push an integer
 			case AstType::Int: {
 				auto i = static_cast<AstInt *>(arg);
 				auto li = new LtacInt(i->get_val());
-				l_fc->children.push_back(li);
+				larg->children.push_back(li);
 				
 				if (overload) fn_name += "_INT";
 			} break;
@@ -108,7 +111,7 @@ LtacFuncCall *LTAC_Builder::build_func_call(AstNode *node) {
 			//Push a string
 			case AstType::Str: {
 				auto lstr = build_string(arg);
-				l_fc->children.push_back(lstr);
+				larg->children.push_back(lstr);
 				
 				if (overload) fn_name += "_STR";
 			} break;
@@ -123,7 +126,7 @@ LtacFuncCall *LTAC_Builder::build_func_call(AstNode *node) {
 				var->d_type = v.type;
 				var->is_ref = id->is_ref;
 				var->is_ptr = v.is_ptr;
-				l_fc->children.push_back(var);
+				larg->children.push_back(var);
 				
 				if (overload) {
 					switch (v.type) {
@@ -138,7 +141,7 @@ LtacFuncCall *LTAC_Builder::build_func_call(AstNode *node) {
 			//Push an array access
 			case AstType::ArrayAccess: {
 				auto arr = build_array_acc(arg);
-				l_fc->children.push_back(arr);
+				larg->children.push_back(arr);
 				
 				if (overload) fn_name += "_STR";
 			} break;
@@ -146,7 +149,7 @@ LtacFuncCall *LTAC_Builder::build_func_call(AstNode *node) {
 			//Push a struct access
 			case AstType::StructAcc: {
 				auto acc = build_struct_acc(arg);
-				l_fc->children.push_back(acc);
+				larg->children.push_back(acc);
 				
 				if (overload) fn_name += "_STR";
 			} break;

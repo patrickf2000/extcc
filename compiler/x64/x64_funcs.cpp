@@ -244,11 +244,6 @@ void Asm_x64::build_push_arg(LtacNode *node, bool is_arg) {
 void Asm_x64::build_func_call(LtacNode *node) {
 	auto fc = static_cast<LtacFuncCall *>(node);
 	
-	//Add the arguments
-	for (auto arg : fc->children) {
-		build_push_arg(arg, true);
-	}
-	
 	//Tell the function about floating-point arguments
 	if (call_index_flt > 0) {
 		writer << "\tmov eax, " << call_index_flt << std::endl;

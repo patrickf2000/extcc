@@ -26,7 +26,7 @@ void Asm_x64::build_imath(LtacNode *node) {
 		case Operator::Mul: writer << "\timul "; break;
 		case Operator::Div:
 		case Operator::Mod: {
-			//TODO: Add me
+			build_idiv(math);
 			return;
 		} break;
 	}
@@ -78,3 +78,59 @@ void Asm_x64::build_imath(LtacNode *node) {
 		} break;
 	}
 }
+
+//Builds integer division/modulus
+void Asm_x64::build_idiv(LtacIMath *math) {
+	auto dest = math->children[0];
+	auto src = math->children[1];
+	std::string loco = "";
+	
+	//The first value (dest) must be in eax
+	switch (dest->type) {
+		//Register
+		case ltac::Reg: {
+			auto reg = static_cast<LtacReg *>(dest);
+			int pos = reg->pos - 1;
+		
+			writer << "\tmov eax, " << registers32[pos] << std::endl;
+			loco = registers32[pos];
+		} break;
+		
+		//Variable
+		case ltac::Var: {
+			auto var = static_cast<LtacVar *>(dest);
+			
+			writer << "\tmov eax, DWORD PTR [rbp-" << var->pos;
+			writer << "]" << std::endl;
+			loco = "DWORD PTR [rbp-" + std::to_string(var->pos) + "]";
+		} break;
+	}
+	
+	//Generate the division instructions
+	writer << "\tcdq" << std::endl;
+	writer << "\tidiv ";
+	
+	//Generate the source instruction
+	switch (src->type) {
+		//Register
+		case ltac::Reg: {
+			auto reg = static_cast<LtacReg *>(src);
+			int pos = reg->pos - 1;
+			
+			writer << registers32[pos] << std::endl;
+		} break;
+		
+		//Variable
+		case ltac::Var: {
+			auto var = static_cast<LtacVar *>(src);
+			writer << "[rbp-" << var->pos << "]" << std::endl;
+		} break;
+	}
+	
+	//Store the result
+	if (math->op == Operator::Mod)
+		writer << "\tmov " << loco << ", edx" << std::endl;
+	else
+		writer << "\tmov " << loco << ", eax" << std::endl;
+}
+

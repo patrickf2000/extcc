@@ -34,4 +34,5 @@ protected:
 	void build_jmp(LtacNode *node);
 	
 	void build_imath(LtacNode *node);
+	void build_idiv(LtacIMath *math);
 };

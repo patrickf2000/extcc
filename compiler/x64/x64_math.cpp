@@ -38,12 +38,15 @@ void Asm_x64::build_imath(LtacNode *node) {
 			auto reg = static_cast<LtacReg *>(dest);
 			int pos = reg->pos - 1;
 			
-			writer << registers[pos] << ", ";
+			writer << registers32[pos] << ", ";
 		} break;
 		
 		//Variable
 		case ltac::Var: {
-			//TODO: Add me
+			auto var = static_cast<LtacVar *>(dest);
+			
+			writer << "DWORD PTR [rbp-" << var->pos;
+			writer << "], ";
 		} break;
 	}
 	
@@ -54,12 +57,19 @@ void Asm_x64::build_imath(LtacNode *node) {
 			auto reg = static_cast<LtacReg *>(src);
 			int pos = reg->pos - 1;
 			
-			writer << registers[pos] << std::endl;
+			writer << registers32[pos] << std::endl;
 		} break;
 		
 		//Variable
 		case ltac::Var: {
-			//TODO: Add me
+			auto var = static_cast<LtacVar *>(src);
+			
+			if (src_mem) {
+				writer << "r9d" << std::endl;
+			} else {
+				writer << "DWORD PTR [rbp-" << var->pos;
+				writer << "]" << std::endl;
+			}
 		} break;
 		
 		//Integer

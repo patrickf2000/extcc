@@ -226,6 +226,13 @@ void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 			reg->pos = val;
 			parent->children.push_back(reg);
 		} break;
+		
+		//Variables
+		case AsmTokenType::Var: {
+			auto *var = new LtacVar;
+			var->pos = vars[name.id];
+			parent->children.push_back(var);
+		} break;
 	
 		//Integers
 		case AsmTokenType::Int: {

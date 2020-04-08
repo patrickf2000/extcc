@@ -74,7 +74,8 @@ void Asm_x64::build_imath(LtacNode *node) {
 		
 		//Integer
 		case ltac::Int: {
-			//TODO: Add me
+			auto i = static_cast<LtacInt *>(src);
+			writer << i->val << std::endl;
 		} break;
 	}
 }

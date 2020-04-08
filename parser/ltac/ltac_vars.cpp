@@ -47,10 +47,23 @@ void LTAC_Builder::build_var_assign(AstNode *node) {
 	
 	//Build the assigned value
 	auto val = va->children[0];
-	auto lval = convert_ast_var(val);
-	var->children.push_back(lval);
 	
-	file->code->children.push_back(var);
+	switch (val->type) {
+		//Increment
+		case AstType::Inc: {
+			auto math = new LtacIMath;
+			math->op = Operator::Add;
+			math->children.push_back(var);
+			math->children.push_back(new LtacInt(1));
+			file->code->children.push_back(math);
+		} break;
+	
+		default: {
+			auto lval = convert_ast_var(val);
+			var->children.push_back(lval);
+			file->code->children.push_back(var);
+		}
+	}
 }
 
 //Build a multi-var variable assignment
@@ -106,19 +119,13 @@ LtacNode *LTAC_Builder::convert_ast_var(AstNode *val) {
 		} break;
 		
 		//Floats
-		case AstType::Float: {
-			lval = build_float(val);
-		} break;
+		case AstType::Float: lval = build_float(val); break;
 		
 		//Double
-		case AstType::Double: {
-			lval = build_double(val);
-		} break;
+		case AstType::Double: lval = build_double(val); break;
 		
 		//Strings
-		case AstType::Str: {
-			lval = build_string(val);
-		} break;
+		case AstType::Str: lval = build_string(val); break;
 		
 		//Other variables
 		case AstType::Id: {
@@ -134,28 +141,13 @@ LtacNode *LTAC_Builder::convert_ast_var(AstNode *val) {
 		} break;
 		
 		//Function class
-		case AstType::FuncCall: {
-			auto fc = build_func_call(val);
-			lval = fc;
-		} break;
+		case AstType::FuncCall: lval = build_func_call(val); break;
 		
 		//Array access
-		case AstType::ArrayAccess: {
-			auto arr = build_array_acc(val);
-			lval = arr;
-		} break;
+		case AstType::ArrayAccess: lval = build_array_acc(val); break;
 		
 		//Structure access
-		case AstType::StructAcc: {
-			lval = build_struct_acc(val);
-		} break;
-		
-		//Increment
-		case AstType::Inc: {
-			auto op = new LtacSingleOp;
-			op->op = Operator::PostInc;
-			lval = op;
-		} break;
+		case AstType::StructAcc: lval = build_struct_acc(val); break;
 		
 		//Math
 		case AstType::Math: {

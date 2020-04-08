@@ -10,6 +10,7 @@
 #include "utils.hh"
 
 #include "x64/asm_x64.hh"
+#include "i386/asm_i386.hh"
 #include "arm7/asm_arm7.hh"
 
 #ifdef BUILD_CLANG
@@ -75,7 +76,15 @@ void Compiler::assemble() {
 				asm_builder.write();
 			} break;
 			
-			case CpuArch::Intel32: break;
+			case CpuArch::Intel32: {
+				Asm_i386 asm_builder(file);
+				
+				if (config.out_type == BuildType::DynLib)
+					asm_builder.build_PIC();
+				
+				asm_builder.write();
+			} break;
+			
 			case CpuArch::Arm7: {
 				Asm_Arm7 asm_builder(file);
 				
@@ -101,6 +110,9 @@ void Compiler::compile() {
 		std::string cmd = "as " + asm_files[i] + " -o ";
 		cmd += obj_files[i];
 		
+		if (config.arch == CpuArch::Intel32)
+			cmd += " --32";
+		
 		system(cmd.c_str());
 	}
 }
@@ -116,10 +128,15 @@ void Compiler::link() {
 			ld_line += "/usr/lib/arm-linux-gnueabihf/crti.o ";
 			ld_line += "/usr/lib/arm-linux-gnueabihf/crtn.o ";
 			ld_line += "/usr/lib/arm-linux-gnueabihf/crt1.o ";
+		} else if (config.arch == CpuArch::Intel32) {
+			ld_line += "-melf_i386 ";
+			ld_line += "/usr/lib32/crti.o ";
+			ld_line += "/usr/lib32/crtn.o ";
+			ld_line += "/usr/lib32/crt1.o ";
 		} else {
 			ld_line += "/usr/lib/x86_64-linux-gnu/crti.o ";
 			ld_line += "/usr/lib/x86_64-linux-gnu/crtn.o ";
-			ld_line += "/usr/lib/x86_64-linux-gnu/crt1.o -lqkstdlib ";
+			ld_line += "/usr/lib/x86_64-linux-gnu/crt1.o ";
 		}
 		
 		ld_line += "-lc ";
@@ -130,6 +147,8 @@ void Compiler::link() {
 		
 		if (config.arch == CpuArch::Arm7)
 			ld_line += "-dynamic-linker /lib/ld-linux-armhf.so.3 ";
+		else if (config.arch == CpuArch::Intel32)
+			ld_line += "-dynamic-linker /lib32/ld-linux.so.2 ";
 		else
 			ld_line += "-dynamic-linker /lib64/ld-linux-x86-64.so.2 ";
 		

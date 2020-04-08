@@ -33,6 +33,7 @@ namespace LtacAsm {
 		ISub,
 		IMul,
 		IDiv,
+		IMod,
 		
 		//Identifiers
 		Name,

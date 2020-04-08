@@ -24,7 +24,8 @@ void AsmParser::parse() {
 			case AsmTokenType::IAdd:
 			case AsmTokenType::ISub:
 			case AsmTokenType::IMul:
-			case AsmTokenType::IDiv: buildMath(1, type); break;
+			case AsmTokenType::IDiv: 
+			case AsmTokenType::IMod: buildMath(1, type); break;
 			
 			case AsmTokenType::NewLn: break;
 		}
@@ -231,6 +232,7 @@ void AsmParser::buildMath(int type, int op) {
 		case AsmTokenType::ISub: math->op = Operator::Sub; break;
 		case AsmTokenType::IMul: math->op = Operator::Mul; break;
 		case AsmTokenType::IDiv: math->op = Operator::Div; break;
+		case AsmTokenType::IMod: math->op = Operator::Mod; break;
 	}
 	
 	addChildren(math, false);

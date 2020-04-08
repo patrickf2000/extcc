@@ -29,6 +29,7 @@ void AsmScanner::initKeywords() {
 	keywords.push_back("isub");
 	keywords.push_back("imul");
 	keywords.push_back("idiv");
+	keywords.push_back("imod");
 	keywords.push_back("reg");
 	keywords.push_back("str");
 }
@@ -52,6 +53,7 @@ void AsmScanner::initTokens() {
 	tokens["isub"] = AsmTokenType::ISub;
 	tokens["imul"] = AsmTokenType::IMul;
 	tokens["idiv"] = AsmTokenType::IDiv;
+	tokens["imod"] = AsmTokenType::IMod;
 	tokens["reg"] = AsmTokenType::Reg;
 	tokens["str"] = AsmTokenType::Str;
 	

@@ -32,4 +32,6 @@ protected:
 	
 	void build_icmp(LtacNode *node);
 	void build_jmp(LtacNode *node);
+	
+	void build_imath(LtacNode *node);
 };

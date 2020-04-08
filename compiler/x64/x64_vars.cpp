@@ -1,44 +1,5 @@
 #include "asm_x64.hh"
-
-//There are LTAC commands to manage the registers
-// These represent the registers and the order they should
-// be used.
-
-//64-bit registers
-std::string registers[] = {
-	"r10",
-	"r11",
-	"r12",
-	"r13",
-	"r14",
-	"r15",
-	"r8",
-	"r9",
-	"rax",
-	"rbx",
-	"rcx",
-	"rdx",
-	"rsi",
-	"rdi"
-};
-
-//32-bit registers
-std::string registers32[] = {
-	"r10d",
-	"r11d",
-	"r12d",
-	"r13d",
-	"r14d",
-	"r15d",
-	"r8d",
-	"r9d",
-	"eax",
-	"ebx",
-	"ecx",
-	"edx",
-	"esi",
-	"edi"
-};
+#include "registers.hh"
 
 //Build a register load
 void Asm_x64::build_reg(LtacNode *node) {

@@ -44,6 +44,7 @@ set(COMPILER_SRC
 	compiler/x64/x64_array.cpp
 	compiler/x64/x64_flow.cpp
 	compiler/x64/x64_funcs.cpp
+	compiler/x64/x64_math.cpp
 	compiler/x64/x64_vars.cpp
 	compiler/compiler.cpp
 	compiler/main.cpp

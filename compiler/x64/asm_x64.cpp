@@ -63,6 +63,8 @@ void Asm_x64::build_code(LtacCodeSec *code) {
 			
 			case ltac::ICmp: build_icmp(ln); break;
 			case ltac::Jmp: build_jmp(ln); break;
+			
+			case ltac::IMath: build_imath(ln); break;
 		}
 	}
 }

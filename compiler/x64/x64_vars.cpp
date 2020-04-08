@@ -16,6 +16,14 @@ void Asm_x64::build_reg(LtacNode *node) {
 			writer << "[rbp-" << var->pos << "]" << std::endl;
 		} break;
 		
+		//Integer
+		case ltac::Int: {
+			auto i = static_cast<LtacInt *>(src);
+			
+			writer << "\tmov " << registers32[pos] << ", ";
+			writer << i->val << std::endl;
+		} break;
+		
 		//TODO: add rest
 	}
 }

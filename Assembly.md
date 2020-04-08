@@ -10,8 +10,13 @@ pusharg {type} {value}&nbsp;&nbsp;&nbsp;&nbsp;    Prepare a variable or a value 
 call {name}&nbsp;&nbsp;&nbsp;&nbsp;    Call a function   
 var {name} {type} {value}&nbsp;&nbsp;&nbsp;&nbsp;    Declare a new variable and set its initial value   
 ret {?value}&nbsp;&nbsp;&nbsp;&nbsp;    Return from a function with an optional value   
+ldr {number} {variable}&nbsp;&nbsp;&nbsp;&nbsp;    Store a value to a register    
+str {number} {variable}&nbsp;&nbsp;&nbsp;&nbsp;    Move a value from the register to memory    
+iadd/isub/imul/idiv/imod (dest {type} {value}) (src {type} {value})&nbsp;&nbsp;&nbsp;&nbsp;    Perform integer math    
 
 ### Types
 int&nbsp;&nbsp;&nbsp;&nbsp;    Integers   
 string&nbsp;&nbsp;&nbsp;&nbsp;    Strings   
+var&nbsp;&nbsp;&nbsp;&nbsp;     Variable/memory location   
+reg&nbsp;&nbsp;&nbsp;&nbsp;    Register
 

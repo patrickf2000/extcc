@@ -19,6 +19,10 @@ void Asm_x64::build_imath(LtacNode *node) {
 		src_mem = true;
 	}
 	
+	//If the source is a function call, that must be built first
+	if (src->type == ltac::FuncCall)
+		build_func_call(src);
+	
 	//Determine the instruction
 	switch (math->op) {
 		case Operator::Add: writer << "\tadd "; break;
@@ -76,6 +80,11 @@ void Asm_x64::build_imath(LtacNode *node) {
 		case ltac::Int: {
 			auto i = static_cast<LtacInt *>(src);
 			writer << i->val << std::endl;
+		} break;
+		
+		//Return register- for function calls
+		case ltac::RetReg: {
+			writer << "eax" << std::endl;
 		} break;
 	}
 }

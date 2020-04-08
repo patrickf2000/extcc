@@ -121,6 +121,10 @@ std::string code2str(LtacNode *code_ln, bool child=false) {
 			}
 		} break;
 		
+		case ltac::RetReg: {
+			content += "rreg";
+		} break;
+		
 		case ltac::Byte:
 		case ltac::Int: {
 			auto li = static_cast<LtacInt *>(code_ln);

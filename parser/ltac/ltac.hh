@@ -22,6 +22,7 @@ enum class ltac {
 	Ret,
 	Var,
 	Reg,
+	RetReg,
 	Array,
 	ArrayAcc,
 	ArraySet,
@@ -166,6 +167,12 @@ class LtacReg : public LtacNode {
 public:
 	explicit LtacReg() { type = ltac::Reg; }
 	int pos = 0;
+};
+
+//Represents the function return register
+class LtacRetReg : public LtacReg {
+public:
+	explicit LtacRetReg() { type = ltac::RetReg; }
 };
 
 //Push argument operation

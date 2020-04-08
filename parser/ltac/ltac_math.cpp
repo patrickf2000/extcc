@@ -19,7 +19,6 @@ void LTAC_Builder::build_int_math(LtacVar *var, AstNode *node, int r) {
 		reg2->pos = r;
 		auto math = new LtacIMath;
 		math->children.push_back(reg2);
-		file->code->children.push_back(math);
 		
 		//Build the operator
 		switch (op->type) {
@@ -31,8 +30,38 @@ void LTAC_Builder::build_int_math(LtacVar *var, AstNode *node, int r) {
 		}
 		
 		//Build the source
-		auto src = convert_ast_var(next);
-		math->children.push_back(src);
+		//If we have a function call, we need to store and restore the register
+		if (next->type == AstType::FuncCall) {
+			//Save the register
+			auto var2 = new LtacVar;
+			var2->pos = var->pos;
+			file->code->children.push_back(var2);
+			
+			auto reg3 = new LtacReg;
+			reg3->pos = r;
+			var2->children.push_back(reg3);
+			
+			//Build the function call
+			auto src = convert_ast_var(next);
+			file->code->children.push_back(src);
+			
+			auto rreg = new LtacRetReg;
+			math->children.push_back(rreg);
+			
+			//Restore the register
+			auto reg4 = new LtacReg;
+			reg4->pos = r;
+			file->code->children.push_back(reg4);
+			
+			auto var3 = new LtacVar;
+			var3->pos = var->pos;
+			reg4->children.push_back(var3);
+		} else {
+			auto src = convert_ast_var(next);
+			math->children.push_back(src);
+		}
+		
+		file->code->children.push_back(math);
 	}
 	
 	//Store the register back to memory

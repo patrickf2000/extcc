@@ -30,6 +30,7 @@ void AsmScanner::initKeywords() {
 	keywords.push_back("imul");
 	keywords.push_back("idiv");
 	keywords.push_back("reg");
+	keywords.push_back("str");
 }
 
 //Match everything with a token
@@ -52,6 +53,7 @@ void AsmScanner::initTokens() {
 	tokens["imul"] = AsmTokenType::IMul;
 	tokens["idiv"] = AsmTokenType::IDiv;
 	tokens["reg"] = AsmTokenType::Reg;
+	tokens["str"] = AsmTokenType::Str;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;

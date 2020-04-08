@@ -19,6 +19,7 @@ void AsmParser::parse() {
 			case AsmTokenType::String: buildString(); break;
 			case AsmTokenType::Var: buildVar(); break;
 			case AsmTokenType::Ldr: buildLdr(); break;
+			case AsmTokenType::Str: buildStr(); break;
 			
 			case AsmTokenType::IAdd:
 			case AsmTokenType::ISub:
@@ -184,6 +185,34 @@ void AsmParser::buildLdr() {
 		
 		//TODO: Add rest
 	}
+}
+
+//Builds the store register command
+void AsmParser::buildStr() {
+	checkCode();
+	
+	auto *var = new LtacVar;
+	file->code->children.push_back(var);
+	
+	auto *reg = new LtacReg;
+	var->children.push_back(reg);
+	
+	Token no = scan->getNext();
+	Token val = scan->getNext();
+	
+	if (no.type != AsmTokenType::IntL)
+		syntax->fatalError("Expected register number.");
+		
+	if (val.type != AsmTokenType::Name)
+		syntax->fatalError("Expected variable.");
+		
+	int v = std::stoi(no.id);
+	
+	if (v <= 0)
+		syntax->fatalError("Invalid register; A register must be greater than 0.");
+		
+	reg->pos = v;
+	var->pos = vars[val.id];
 }
 
 //Builds a single math command

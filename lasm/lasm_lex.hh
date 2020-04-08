@@ -26,6 +26,7 @@ namespace LtacAsm {
 		
 		//Register operations
 		Ldr,
+		Str,
 		
 		//Math operations
 		IAdd,

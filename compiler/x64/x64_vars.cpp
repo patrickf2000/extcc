@@ -80,6 +80,15 @@ void Asm_x64::build_var(LtacNode *node) {
 			writer << lstr->name << std::endl;
 		} break;
 		
+		//Registers
+		case ltac::Reg: {
+			auto reg = static_cast<LtacReg *>(src);
+			int pos = reg->pos - 1;
+		
+			writer << "\tmov DWORD PTR [rbp-" << var->pos;
+			writer << "], " << registers32[pos] << std::endl;
+		} break;
+		
 		//Variables
 		case ltac::Var: {
 			auto var2 = static_cast<LtacVar *>(src);

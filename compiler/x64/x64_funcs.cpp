@@ -153,7 +153,90 @@ void Asm_x64::build_push_arg(LtacNode *node, bool is_arg) {
 			}
 		} break;
 		
-		//TODO: Build the rest
+		//Other variables
+		case ltac::Var: {
+			auto var = static_cast<LtacVar *>(arg);
+			
+			//Reference variables
+			if (var->is_ref) {
+				writer << "\tlea " << call_regs[call_index] << ", ";
+				writer << "[rbp-" << std::to_string(var->pos) << "]";
+				
+				writer << std::endl;
+				++call_index;
+				
+			//Pointer variables
+			} else if (var->is_ptr) {
+				writer << "\tmov " << call_regs[call_index] << ", ";
+				writer << "QWORD PTR [rbp-" << std::to_string(var->pos);
+				writer << "]" << std::endl;
+				
+				++call_index;
+				
+			//Single-precision float variables
+			} else if (var->d_type == DataType::Float) {
+				std::string reg = call_flt_regs[call_index_flt];
+				++call_index_flt;
+				
+				writer << "\tcvtss2sd xmm0, DWORD PTR [rbp-";
+				writer << std::to_string(var->pos) + "]" << std::endl;
+				
+			//Double-precision float variables
+			} else if (var->d_type == DataType::Double) {
+				std::string reg = call_flt_regs[call_index_flt];
+				++call_index_flt;
+				
+				writer << "\tmovsd xmm0, QWORD PTR [rbp-";
+				writer << std::to_string(var->pos) + "]" << std::endl;
+				
+			//Other variables- usually integers
+			} else {
+				std::string instr = "mov";
+				std::string prefix = "DWORD PTR";
+				std::string reg = call_regs32[call_index];
+				
+				if (var->d_type == DataType::Str) {
+					prefix = "QWORD PTR";
+					reg = call_regs[call_index];
+				}
+				
+				if (pic) {
+					writer << "\tmov " << reg << ", ";
+					writer << prefix << " -" << var->pos;
+					writer << "[rbp]";
+				} else {
+					writer << "\tmov " << reg << ", ";
+					writer << prefix << " ";
+					writer << "[rbp-" << var->pos << "]";
+				}
+				
+				writer << std::endl;
+				++call_index;
+			}
+		} break;
+		
+		//Array access
+		case ltac::ArrayAcc: {
+			build_array_acc(arg);
+			auto type = static_cast<LtacVar *>(arg)->d_type;
+		
+			switch (type) {
+				//Ints
+				case DataType::Int: {
+					writer << "\tmov " << call_regs32[call_index];
+					writer << ", ebx" << std::endl;
+					++call_index;
+				} break;
+				
+				//Floats and Doubles
+				case DataType::Float: 
+				case DataType::Double: {
+					writer << "\tcvtss2sd " << call_flt_regs[call_index_flt];
+					writer << ", xmm1" << std::endl;
+					++call_index_flt;
+				} break;
+			}
+		} break;
 	}
 }
 
@@ -162,99 +245,8 @@ void Asm_x64::build_func_call(LtacNode *node) {
 	auto fc = static_cast<LtacFuncCall *>(node);
 	
 	//Add the arguments
-	//TODO: Eventually make the entire thing use the build_push_arg function
 	for (auto arg : fc->children) {
-		switch (arg->type) {
-			case ltac::Int: 
-			case ltac::String: build_push_arg(arg, true); break;
-			
-			//Other variables
-			case ltac::Var: {
-				auto var = static_cast<LtacVar *>(arg);
-				
-				//Reference variables
-				if (var->is_ref) {
-					writer << "\tlea " << call_regs[call_index] << ", ";
-					writer << "[rbp-" << std::to_string(var->pos) << "]";
-					
-					writer << std::endl;
-					++call_index;
-					
-				//Pointer variables
-				} else if (var->is_ptr) {
-					writer << "\tmov " << call_regs[call_index] << ", ";
-					writer << "QWORD PTR [rbp-" << std::to_string(var->pos);
-					writer << "]" << std::endl;
-					
-					++call_index;
-					
-				//Single-precision float variables
-				} else if (var->d_type == DataType::Float) {
-					std::string reg = call_flt_regs[call_index_flt];
-					++call_index_flt;
-					
-					writer << "\tcvtss2sd xmm0, DWORD PTR [rbp-";
-					writer << std::to_string(var->pos) + "]" << std::endl;
-					
-				//Double-precision float variables
-				} else if (var->d_type == DataType::Double) {
-					std::string reg = call_flt_regs[call_index_flt];
-					++call_index_flt;
-					
-					writer << "\tmovsd xmm0, QWORD PTR [rbp-";
-					writer << std::to_string(var->pos) + "]" << std::endl;
-					
-				//Other variables- usually integers
-				} else {
-					std::string instr = "mov";
-					std::string prefix = "DWORD PTR";
-					std::string reg = call_regs32[call_index];
-					
-					if (var->d_type == DataType::Str) {
-						prefix = "QWORD PTR";
-						reg = call_regs[call_index];
-					}
-					
-					if (pic) {
-						writer << "\tmov " << reg << ", ";
-						writer << prefix << " -" << var->pos;
-						writer << "[rbp]";
-					} else {
-						writer << "\tmov " << reg << ", ";
-						writer << prefix << " ";
-						writer << "[rbp-" << var->pos << "]";
-					}
-					
-					writer << std::endl;
-					++call_index;
-				}
-			} break;
-			
-			//Array access
-			case ltac::ArrayAcc: {
-				build_array_acc(arg);
-				auto type = static_cast<LtacVar *>(arg)->d_type;
-			
-				switch (type) {
-					//Ints
-					case DataType::Int: {
-						writer << "\tmov " << call_regs32[call_index];
-						writer << ", ebx" << std::endl;
-						++call_index;
-					} break;
-					
-					//Floats and Doubles
-					case DataType::Float: 
-					case DataType::Double: {
-						writer << "\tcvtss2sd " << call_flt_regs[call_index_flt];
-						writer << ", xmm1" << std::endl;
-						++call_index_flt;
-					} break;
-				}
-			} break;
-			
-			//TODO: Add the rest
-		}
+		build_push_arg(arg, true);
 	}
 	
 	//Tell the function about floating-point arguments

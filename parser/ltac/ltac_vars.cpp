@@ -57,6 +57,18 @@ void LTAC_Builder::build_var_assign(AstNode *node) {
 			math->children.push_back(new LtacInt(1));
 			file->code->children.push_back(math);
 		} break;
+		
+		//Math
+		case AstType::Math: {
+			if (v.type == DataType::Int) {
+				build_int_math(var, val);
+			} else {
+				//TODO: Remove me
+				auto lval = convert_ast_var(val);
+				var->children.push_back(lval);
+				file->code->children.push_back(var);
+			}
+		} break;
 	
 		default: {
 			auto lval = convert_ast_var(val);

@@ -41,6 +41,9 @@ protected:
 	void build_struct_mod(AstNode *node);
 	LtacVar *build_struct_acc(AstNode *node);
 	
+	//Math stuff
+	void build_int_math(LtacVar *var, AstNode *node, int r = 1);
+	
 	//Utility stuff
 	LtacNode *build_string(AstNode *node);
 	LtacNode *build_float(AstNode *node);

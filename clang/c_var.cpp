@@ -128,8 +128,8 @@ void CParser::buildArrayDec(AstArrayDec *arr) {
 	
 	if (next.type == CTokenType::SemiColon) {
 		for (int i = 0; i<size; i++) {
-			auto i = new AstInt(0);
-			arr->children.push_back(i);
+			auto ai = new AstInt(0);
+			arr->children.push_back(ai);
 		}
 		
 		return;

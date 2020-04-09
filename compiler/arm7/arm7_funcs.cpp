@@ -68,6 +68,14 @@ void Asm_Arm7::build_pusharg(LtacNode *node, bool is_arg) {
 			writer << str->name << std::endl;
 		} break;
 		
+		//Other variables
+		case ltac::Var: {
+			auto var = static_cast<LtacVar *>(arg);
+			
+			writer << "\tldr " << call_regs[call_index] << ", [fp, #-";
+			writer << var->pos << "]" << std::endl;
+		} break;
+		
 		//TODO: Add the rest
 	}
 	

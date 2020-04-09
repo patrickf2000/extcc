@@ -27,6 +27,7 @@ void Asm_Arm7::build_code(LtacCodeSec *code) {
 			case ltac::PushArg: build_pusharg(ln); break;
 			case ltac::FuncCall: build_func_call(ln); break;
 			
+			case ltac::Reg: build_reg(ln); break;
 			case ltac::Var: build_var(ln); break;
 		}
 	}

@@ -11,6 +11,8 @@ void Asm_Arm7::build_code(LtacCodeSec *code) {
 		switch (ln->type) {
 			case ltac::Func: build_func(ln); break;
 			case ltac::Ret: build_ret(ln); break;
+			
+			case ltac::Var: build_var(ln); break;
 		}
 	}
 }

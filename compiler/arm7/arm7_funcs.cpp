@@ -14,5 +14,21 @@ void Asm_Arm7::build_func(LtacNode *node) {
 
 //Builds a function return
 void Asm_Arm7::build_ret(LtacNode *node) {
+	writer << std::endl;
+	
+	if (node->children.size() > 0) {
+		auto val = node->children[0];
+		
+		switch (val->type) {
+			//Integers
+			case ltac::Int: {
+				auto i = static_cast<LtacInt *>(val);
+				writer << "\tmov r0, #" << i->val << std::endl;
+			} break;
+			
+			//TODO: Add the rest
+		}
+	}
+
 	writer << "\tbx lr" << std::endl;
 }

@@ -17,4 +17,6 @@ public:
 	void build_ret(LtacNode *node);
 	
 	void build_var(LtacNode *node);
+private:
+	std::vector<std::string> data_labels;
 };

@@ -10,6 +10,12 @@ void Asm_Arm7::build_func(LtacNode *node) {
 	
 	writer << std::endl;
 	writer << fd->name << ":" << std::endl;
+	
+	//Setup the stack
+	writer << "\tstr fp, [sp, #-4]!" << std::endl;
+	writer << "\tadd fp, sp, #0" << std::endl;
+	writer << "\tsub sp, sp, #" << fd->stack_size << std::endl;
+	writer << std::endl;
 }
 
 //Builds a function return
@@ -30,5 +36,7 @@ void Asm_Arm7::build_ret(LtacNode *node) {
 		}
 	}
 
+	writer << "\tadd sp, fp, #0" << std::endl;
+	writer << "\tldr fp, [sp], #4" << std::endl;
 	writer << "\tbx lr" << std::endl;
 }

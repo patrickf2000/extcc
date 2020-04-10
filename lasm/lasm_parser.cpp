@@ -123,6 +123,9 @@ void AsmParser::buildRet() {
 	
 	if (next.type == AsmTokenType::NewLn)
 		return;
+	
+	scan->unget(next);
+	addChildren(ret);
 }
 
 //Builds a string declaration

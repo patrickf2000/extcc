@@ -14,10 +14,12 @@ public:
 	void build_code(LtacCodeSec *code);
 	
 	void build_func(LtacNode *node);
-	void build_func_call(LtacNode *node);
 	void build_ret(LtacNode *node);
+	void build_pusharg(LtacNode *node, bool is_arg=false);
+	void build_func_call(LtacNode *node);
 	
+	void build_reg(LtacNode *node);
 	void build_var(LtacNode *node);
 private:
-	std::vector<std::string> str_labels;
+	std::vector<std::string> data_labels;
 };

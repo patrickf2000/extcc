@@ -39,6 +39,7 @@ set(QK_SRC
 
 set(COMPILER_SRC
 	compiler/arm7/arm7_funcs.cpp
+	compiler/arm7/arm7_var.cpp
 	compiler/arm7/asm_arm7.cpp
 	compiler/base/asm_base.cpp
 	compiler/i386/asm_i386.cpp

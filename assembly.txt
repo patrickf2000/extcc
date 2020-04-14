@@ -1,0 +1,42 @@
+This document contains the syntax for LTAC assembly.
+LTAC Assembly provides direct access to the LTAC middle end.
+
+======================
+File structure
+======================
+section data
+<Data such as strings, floats, and other constants go here>
+
+section text
+<The actual code goes here>
+
+============================================
+Types-> Used in several commands
+============================================
+int -> Integers
+string -> String constants
+var -> Refers to a variable or memory location
+reg -> Refers to a register*
+
+*Note- Register numbers start at 1; max depends on platform
+
+==================================================================
+Code
+==================================================================
+func <name>                      Declars a function
+pusharg <type> <value>           Push an argument to be used in a function call
+call <name>                      Call a function
+var <name> <type> <value>        Create a variable and set an initial value
+ret <?value>                     Return from a function, optionally with a value
+ldr <register no> <variable>     Store a register into a variable
+str <register no> <variable>     Store register contents into a variable
+
+Math syntax:
+<instruction> {dest: <type> <value>} {src: <type> <value>}
+
+Math instructions
+iadd      Integer addition
+isub      Integer subtraction
+imul      Integer multiplication
+idiv      Integer division
+imod      Integer modulus (remainder of division)

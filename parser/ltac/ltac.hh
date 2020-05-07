@@ -76,6 +76,14 @@ enum class Operator {
 	LessEq
 };
 
+//Register types
+enum RegType {
+	Gp,
+	Flt,
+	Fpu,
+	Vec
+};
+
 //The nodes for ltac
 //This is the base class for all nodes
 class LtacNode {
@@ -167,6 +175,7 @@ class LtacReg : public LtacNode {
 public:
 	explicit LtacReg() { type = ltac::Reg; }
 	int pos = 0;
+	RegType rtype = RegType::Gp;
 };
 
 //Represents the function return register

@@ -48,8 +48,8 @@ private:
 	void buildString();
 	void buildFloat();
 	void buildVar();
-	void buildLdr();
-	void buildStr();
+	void buildLdr(RegType rtype = RegType::Gp);
+	void buildStr(RegType rtype = RegType::Gp);
 	void buildMath(int type, int op);
 	
 	void addChildren(LtacNode *parent, bool inc_stack=false);

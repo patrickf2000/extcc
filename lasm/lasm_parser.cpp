@@ -20,7 +20,9 @@ void AsmParser::parse() {
 			case AsmTokenType::Float: buildFloat(); break;
 			case AsmTokenType::Var: buildVar(); break;
 			case AsmTokenType::Ldr: buildLdr(); break;
+			case AsmTokenType::FLdr: buildLdr(RegType::Flt); break;
 			case AsmTokenType::Str: buildStr(); break;
+			case AsmTokenType::FStr: buildStr(RegType::Flt); break;
 			
 			case AsmTokenType::IAdd:
 			case AsmTokenType::ISub:
@@ -202,8 +204,9 @@ void AsmParser::buildVar() {
 }
 
 //Builds the load register command
-void AsmParser::buildLdr() {
+void AsmParser::buildLdr(RegType rtype) {
 	auto *reg = new LtacReg;
+	reg->rtype = rtype;
 	file->code->children.push_back(reg);
 	
 	Token no = scan->getNext();
@@ -233,13 +236,14 @@ void AsmParser::buildLdr() {
 }
 
 //Builds the store register command
-void AsmParser::buildStr() {
+void AsmParser::buildStr(RegType rtype) {
 	checkCode();
 	
 	auto *var = new LtacVar;
 	file->code->children.push_back(var);
 	
 	auto *reg = new LtacReg;
+	reg->rtype = rtype;
 	var->children.push_back(reg);
 	
 	Token no = scan->getNext();

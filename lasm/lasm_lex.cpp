@@ -56,6 +56,8 @@ void AsmScanner::initTokens() {
 	tokens["imod"] = AsmTokenType::IMod;
 	tokens["reg"] = AsmTokenType::Reg;
 	tokens["str"] = AsmTokenType::Str;
+	tokens["fldr"] = AsmTokenType::FLdr;
+	tokens["fstr"] = AsmTokenType::FStr;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;

@@ -47,7 +47,35 @@ void Asm_LLVM::build_func(LtacNode *node) {
 
 //Builds a function return
 void Asm_LLVM::build_ret(LtacNode *node) {
-	writer << "\tret i32 0" << std::endl;
+	if (node->children.size() == 0) {
+		writer << "\tret i32 0" << std::endl;
+	} else {
+		auto ret = node->children[0];
+		
+		switch (ret->type) {
+			//Variables
+			case ltac::Var: {
+				auto var = static_cast<LtacVar *>(ret);
+				int pos = vars[var->pos];
+				std::string type = "";
+				
+				switch (var->d_type) {
+					case DataType::Int: type = "i32"; break;
+					
+					//TODO: Add the rest
+				}
+				
+				//Load the variable
+				int pos2 = llvm_reg_pos;
+				writer << "\t%" << pos2 << " = load " << type << ", " << type;
+				writer << "* %" << pos << ", align 4" << std::endl;
+				
+				writer << "\tret " << type << " %" << pos2;
+				writer << std::endl;
+			} break;
+		}
+	}
+
 	writer << "}" << std::endl;
 }
 
@@ -67,7 +95,7 @@ void Asm_LLVM::build_var(LtacNode *node) {
 	
 	//Declare the variable and allocate space
 	if (llvm_pos <= 0) {
-		vars[llvm_reg_pos] = pos;
+		vars[pos] = llvm_reg_pos;
 		llvm_pos = llvm_reg_pos;
 		++llvm_reg_pos;
 		

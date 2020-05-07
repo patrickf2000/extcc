@@ -206,6 +206,7 @@ void AsmParser::buildVar() {
 	
 	vars[name.id] = stack_pos;
 	var->pos = stack_pos;
+	var->d_type = dt;
 }
 
 //Builds the load register command

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <map>
+
 #include <base/asm_base.hh>
 #include <ltac/ltac.hh>
 
@@ -12,4 +14,9 @@ public:
 	
 	void build_func(LtacNode *node);
 	void build_ret(LtacNode *node);
+	
+	void build_var(LtacNode *node);
+private:
+	std::map<int, int> vars;
+	int llvm_reg_pos = 1;
 };

@@ -12,8 +12,20 @@ void Asm_x64::build_reg(LtacNode *node) {
 		case ltac::Var: {
 			auto var = static_cast<LtacVar *>(src);
 		
-			writer << "\tmov " << registers32[pos] << ", ";
-			writer << "[rbp-" << var->pos << "]" << std::endl;
+			switch (reg->rtype) {
+				//General purpose registers
+				case RegType::Gp: {
+					writer << "\tmov " << registers32[pos] << ", ";
+					writer << "[rbp-" << var->pos << "]" << std::endl;
+				} break;
+				
+				//Floating-point registers
+				case RegType::Flt: {
+					writer << "\tmovss " << float_registers[pos] << ", ";
+					writer << "[rbp-" << var->pos << "]" << std::endl;
+				} break;
+			}
+			
 		} break;
 		
 		//Integer

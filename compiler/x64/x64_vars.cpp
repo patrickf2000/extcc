@@ -105,8 +105,20 @@ void Asm_x64::build_var(LtacNode *node) {
 			auto reg = static_cast<LtacReg *>(src);
 			int pos = reg->pos - 1;
 		
-			writer << "\tmov DWORD PTR [rbp-" << var->pos;
-			writer << "], " << registers32[pos] << std::endl;
+			switch (reg->rtype) {
+				//General purpose
+				case RegType::Gp: {
+					writer << "\tmov DWORD PTR [rbp-" << var->pos;
+					writer << "], " << registers32[pos] << std::endl;
+				} break;
+				
+				//Floating-point
+				case RegType::Flt: {
+					writer << "\tmovss DWORD PTR [rbp-" << var->pos;
+					writer << "], " << float_registers[pos] << std::endl;
+				} break;
+			}
+			
 		} break;
 		
 		//Variables

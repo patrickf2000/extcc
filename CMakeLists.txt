@@ -43,6 +43,7 @@ set(COMPILER_SRC
 	compiler/arm7/asm_arm7.cpp
 	compiler/base/asm_base.cpp
 	compiler/i386/asm_i386.cpp
+	compiler/llvm/asm_llvm.cpp
 	compiler/x64/asm_x64.cpp
 	compiler/x64/x64_array.cpp
 	compiler/x64/x64_flow.cpp

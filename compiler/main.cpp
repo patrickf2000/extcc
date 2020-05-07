@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 	config.obj_only = false;				// -c
 	config.optimize = false;				// --optimize
 	
-	config.arch = CpuArch::Intel64;			// -m <x86_64, i386, armv7>
+	config.arch = CpuArch::Intel64;			// -m <x86_64, i386, armv7, llvm>
 	config.asm_type = Asm::Gas;					// -a <gas, nasm>
 	config.out_type = BuildType::Exe;		// (nothing for executable)
 											// --static (for static library)
@@ -48,6 +48,8 @@ int main(int argc, char *argv[]) {
 				config.arch = CpuArch::Intel32;
 			} else if (arch == "armv7") {
 				config.arch = CpuArch::Arm7;
+			} else if (arch == "llvm") {
+				config.arch = CpuArch::LLVM;
 			} else {
 				std::cout << "Fatal: Unknown architecture: " << arch << std::endl;
 				return 1;
@@ -105,6 +107,7 @@ void help() {
 	std::cout << "\t\tx86_64\tIntel x86 64-bit Assembly. (default)" << std::endl;
 	std::cout << "\t\ti386\tIntel x86 32-bit Assembly." << std::endl;
 	std::cout << "\t\tarmv7\tArm v7 Assembly." << std::endl;
+	std::cout << "\t\tllvm\tLLVM IR" << std::endl;
 	std::cout << std::endl;
 	std::cout << "\t-a <TYPE>\tSpecify which Assembler to use." << std::endl;
 	std::cout << "\t\tgas\tUse the GNU assembler (default)." << std::endl;

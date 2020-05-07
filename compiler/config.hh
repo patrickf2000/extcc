@@ -4,7 +4,8 @@
 enum CpuArch {
 	Intel64,
 	Intel32,
-	Arm7
+	Arm7,
+	LLVM
 };
 
 //The Assembler to use

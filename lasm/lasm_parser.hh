@@ -54,3 +54,4 @@ private:
 	
 	void addChildren(LtacNode *parent, bool inc_stack=false);
 };
+

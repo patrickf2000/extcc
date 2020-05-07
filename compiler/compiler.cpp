@@ -12,6 +12,7 @@
 #include "x64/asm_x64.hh"
 #include "i386/asm_i386.hh"
 #include "arm7/asm_arm7.hh"
+#include "llvm/asm_llvm.hh"
 
 #ifdef BUILD_CLANG
 #include <c_parser.hh>
@@ -33,6 +34,9 @@ void Compiler::set_inputs(std::vector<std::string> inputs) {
 		
 		std::string asm_path = "/tmp/" + base + ".asm";
 		std::string obj_path = "/tmp/" + base + ".o";
+		
+		if (config.arch == CpuArch::LLVM)
+			asm_path = "/tmp/" + base;
 		
 		asm_files.push_back(asm_path);
 		obj_files.push_back(obj_path);
@@ -93,6 +97,12 @@ void Compiler::assemble() {
 					
 				asm_builder.write(false);
 			} break;
+			
+			case CpuArch::LLVM: {
+				file->name = asm_files[i] + ".ll";
+				Asm_LLVM llvm_builder(file);
+				llvm_builder.write(false, true);
+			} break;
 		}
 		
 #ifndef BUILD_ASM
@@ -109,6 +119,15 @@ void Compiler::compile() {
 	for (int i = 0; i<asm_files.size(); i++) {
 		std::string cmd = "as " + asm_files[i] + " -o ";
 		cmd += obj_files[i];
+		
+		if (config.arch == CpuArch::LLVM) {
+			cmd = "llc " + asm_files[i] + ".ll -o ";
+			cmd += asm_files[i] + ".asm";
+			system(cmd.c_str());
+			
+			cmd = "as " + asm_files[i] + ".asm -o ";
+			cmd += obj_files[i];
+		}
 		
 		if (config.arch == CpuArch::Intel32)
 			cmd += " --32";

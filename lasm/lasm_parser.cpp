@@ -30,6 +30,11 @@ void AsmParser::parse() {
 			case AsmTokenType::IDiv: 
 			case AsmTokenType::IMod: buildMath(1, type); break;
 			
+			case AsmTokenType::F32_Add:
+			case AsmTokenType::F32_Sub:
+			case AsmTokenType::F32_Mul:
+			case AsmTokenType::F32_Div: buildMath(2, type); break;
+			
 			case AsmTokenType::NewLn: break;
 		}
 	}
@@ -274,12 +279,18 @@ void AsmParser::buildMath(int type, int op) {
 
 	if (type == 1)
 		math = new LtacIMath;
+	else if (type == 2)
+		math = new LtacF32Math;
 	
 	switch (op) {
-		case AsmTokenType::IAdd: math->op = Operator::Add; break;
-		case AsmTokenType::ISub: math->op = Operator::Sub; break;
-		case AsmTokenType::IMul: math->op = Operator::Mul; break;
-		case AsmTokenType::IDiv: math->op = Operator::Div; break;
+		case AsmTokenType::IAdd: 
+		case AsmTokenType::F32_Add: math->op = Operator::Add; break;
+		case AsmTokenType::ISub: 
+		case AsmTokenType::F32_Sub: math->op = Operator::Sub; break;
+		case AsmTokenType::IMul:
+		case AsmTokenType::F32_Mul: math->op = Operator::Mul; break;
+		case AsmTokenType::IDiv:
+		case AsmTokenType::F32_Div: math->op = Operator::Div; break;
 		case AsmTokenType::IMod: math->op = Operator::Mod; break;
 	}
 	

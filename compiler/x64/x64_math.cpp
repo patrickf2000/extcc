@@ -144,3 +144,82 @@ void Asm_x64::build_idiv(LtacIMath *math) {
 		writer << "\tmov " << loco << ", eax" << std::endl;
 }
 
+//Build 32-bit floating-point math
+void Asm_x64::build_f32math(LtacNode *node) {
+	auto math = static_cast<LtacF32Math *>(node);
+	
+	auto dest = math->children[0];
+	auto src = math->children[1];
+	bool src_mem = false;
+	
+	//Memory-to-memory is impossible
+	if (dest->type == ltac::Var && src->type == ltac::Var) {
+		auto var = static_cast<LtacVar *>(src);
+		
+		writer << "\tmovss xmm7, [rbp-" << var->pos;
+		writer << "]" << std::endl;
+		
+		src_mem = true;
+	}
+	
+	//If the source is a function call, that must be built first
+	if (src->type == ltac::FuncCall)
+		build_func_call(src);
+	
+	//Determine the instruction
+	switch (math->op) {
+		case Operator::Add: writer << "\taddss "; break;
+		case Operator::Sub: writer << "\tsubss "; break;
+		case Operator::Mul: writer << "\tmulss "; break;
+		case Operator::Div: writer << "\tdivss "; break;
+	}
+	
+	//Build the destination
+	switch (dest->type) {
+		//Register
+		case ltac::Reg: {
+			auto reg = static_cast<LtacReg *>(dest);
+			int pos = reg->pos - 1;
+			
+			writer << float_registers[pos] << ", ";
+		} break;
+		
+		//Variable
+		case ltac::Var: {
+			auto var = static_cast<LtacVar *>(dest);
+			
+			writer << "DWORD PTR [rbp-" << var->pos;
+			writer << "], ";
+		} break;
+	}
+	
+	//Build the source
+	switch (src->type) {
+		//Register
+		case ltac::Reg: {
+			auto reg = static_cast<LtacReg *>(src);
+			int pos = reg->pos - 1;
+			
+			writer << float_registers[pos] << std::endl;
+		} break;
+		
+		//Variable
+		case ltac::Var: {
+			auto var = static_cast<LtacVar *>(src);
+			
+			if (src_mem) {
+				writer << "xmm7" << std::endl;
+			} else {
+				writer << "DWORD PTR [rbp-" << var->pos;
+				writer << "]" << std::endl;
+			}
+		} break;
+		
+		//Return register- for function calls
+		case ltac::RetReg: {
+			writer << "xmm0" << std::endl;
+		} break;
+	}
+}
+
+

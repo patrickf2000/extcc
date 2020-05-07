@@ -30,12 +30,18 @@ namespace LtacAsm {
 		FLdr,
 		FStr,
 		
-		//Math operations
+		//Integer math operations
 		IAdd,
 		ISub,
 		IMul,
 		IDiv,
 		IMod,
+		
+		//Float-32 math operations
+		F32_Add,
+		F32_Sub,
+		F32_Mul,
+		F32_Div,
 		
 		//Identifiers
 		Name,

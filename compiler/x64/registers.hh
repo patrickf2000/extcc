@@ -59,3 +59,4 @@ static std::string float_registers[] = {
 	"xmm6",
 	"xmm7"
 };
+

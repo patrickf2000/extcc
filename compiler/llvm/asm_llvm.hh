@@ -26,5 +26,6 @@ private:
 	std::map<int, int> vars;
 	int llvm_reg_pos = 1;
 	
+	std::map<std::string, std::string> func_sigs;
 	std::string args = "";
 };

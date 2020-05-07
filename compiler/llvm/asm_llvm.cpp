@@ -49,6 +49,20 @@ void Asm_LLVM::build_code(LtacCodeSec *code) {
 void Asm_LLVM::build_extern(LtacNode *node) {
 	auto ext = static_cast<LtacExtern *>(node);
 	
+	//Build the signature
+	std::string sig = type2str(ext->ret_type) + "(";
+	
+	for (int i = 0; i<ext->params.size(); i++) {
+		if (i > 0)
+			writer << ",";
+			
+		sig += type2str(ext->params[i]);
+	}
+	
+	sig += ")";
+	func_sigs[ext->name] = sig;
+	
+	//Build the declaration
 	writer << "declare " << type2str(ext->ret_type) << " @";
 	writer << ext->name << "(";
 	
@@ -136,8 +150,9 @@ void Asm_LLVM::build_pusharg(LtacNode *node) {
 //Builds a function call
 void Asm_LLVM::build_func_call(LtacNode *node) {
 	auto fc = static_cast<LtacFuncCall *>(node);
+	auto sig = func_sigs[fc->name];
 	
-	writer << "\tcall void @" << fc->name << "(";
+	writer << "\tcall " + sig + " @" << fc->name << "(";
 	writer << args << ") nounwind" << std::endl;
 	writer << std::endl;
 	

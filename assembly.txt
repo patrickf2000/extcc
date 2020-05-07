@@ -7,7 +7,7 @@ File structure
 section data
 <Data such as strings, floats, and other constants go here>
 
-section text
+section code
 <The actual code goes here>
 
 ============================================

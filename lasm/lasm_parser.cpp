@@ -17,6 +17,7 @@ void AsmParser::parse() {
 			case AsmTokenType::Ret: buildRet(); break;
 			case AsmTokenType::PushArg: buildPushArg(); break;
 			case AsmTokenType::String: buildString(); break;
+			case AsmTokenType::Float: buildFloat(); break;
 			case AsmTokenType::Var: buildVar(); break;
 			case AsmTokenType::Ldr: buildLdr(); break;
 			case AsmTokenType::Str: buildStr(); break;
@@ -142,6 +143,30 @@ void AsmParser::buildString() {
 		
 	auto *lstr = new LtacString(next.id, str.id);
 	file->data->children.push_back(lstr);
+}
+
+//Builds a float declaration
+void AsmParser::buildFloat() {
+	checkData();
+	
+	Token next = scan->getNext();
+	Token flt = scan->getNext();
+	
+	if (next.type != AsmTokenType::Name)
+		syntax->fatalError("Expected variable name.");
+	else if (flt.type != AsmTokenType::FloatL)
+		syntax->fatalError("Expected float literal.");
+		
+	auto *l_flt = new LtacFloat;
+		
+	float f = std::stod(flt.id);
+	char buf[32];
+	sprintf(buf, "%d", *(unsigned int*)&f);
+	l_flt->i_val = std::stoi(std::string(buf));
+	
+	l_flt->val = f;
+	l_flt->name = next.id;
+	file->data->children.push_back(l_flt);
 }
 
 //Builds a variable declaration

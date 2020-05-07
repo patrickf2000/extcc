@@ -45,6 +45,7 @@ private:
 	void buildFuncCall();
 	void buildRet();
 	void buildString();
+	void buildFloat();
 	void buildVar();
 	void buildLdr();
 	void buildStr();

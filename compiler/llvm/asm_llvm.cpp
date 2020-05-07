@@ -19,6 +19,7 @@ void Asm_LLVM::build_data(LtacDataSec *data) {
 			//Strings
 			case ltac::String: {
 				auto lstr = static_cast<LtacString *>(ln);
+				strings[lstr->name] = lstr->val.length();
 				
 				writer << "@" << lstr->name << " = internal constant [";
 				writer << lstr->val.length() << " x i8] c\"" << lstr->val;
@@ -34,6 +35,8 @@ void Asm_LLVM::build_code(LtacCodeSec *code) {
 		switch (ln->type) {
 			case ltac::Func: build_func(ln); break;
 			case ltac::Ret: build_ret(ln); break;
+			
+			case ltac::PushArg: build_pusharg(ln); break;
 			
 			case ltac::Var: build_var(ln); break;
 		}
@@ -80,6 +83,29 @@ void Asm_LLVM::build_ret(LtacNode *node) {
 	}
 
 	writer << "}" << std::endl;
+}
+
+//Builds a push-arg call
+void Asm_LLVM::build_pusharg(LtacNode *node) {
+	auto child = node->children[0];
+
+	switch (child->type) {
+		//Strings
+		case ltac::String: {
+			auto lstr = static_cast<LtacString *>(child);
+			int len = strings[lstr->name];
+		
+			int pos2 = llvm_reg_pos;
+			++llvm_reg_pos;
+			
+			writer << "\t%" << pos2 << " = getelementptr [";
+			writer << len << " x i8], [";
+			writer << len << " x i8]* @" << lstr->name;
+			writer << ", i32 0, i32 0" << std::endl;
+		} break;
+		
+		//TODO: Add the rest
+	}
 }
 
 //Builds a variable

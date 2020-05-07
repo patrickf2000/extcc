@@ -31,6 +31,7 @@ private:
 	//Control stuff
 	std::stack<LtacNode *> topNode;
 	std::map<std::string, int> vars;
+	std::map<std::string, DataType> types;
 	int stack_pos = 0;
 	
 	//Check functions

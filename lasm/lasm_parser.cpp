@@ -179,6 +179,22 @@ void AsmParser::buildVar() {
 	if (name.type != AsmTokenType::Name)
 		syntax->fatalError("Expected variable name.");
 	
+	//Build the type
+	Token type = scan->getNext();
+	DataType dt = DataType::None;
+	
+	switch (type.type) {
+		case AsmTokenType::Int: dt = DataType::Int; break;
+		case AsmTokenType::Float: dt = DataType::Float; break;
+		case AsmTokenType::String: dt = DataType::Str; break;
+		
+		//TODO: Add rest		
+	}
+	
+	types[name.id] = dt;
+	scan->unget(type);
+	
+	//Build the rest
 	addChildren(var, true);
 	
 	vars[name.id] = stack_pos;
@@ -290,6 +306,7 @@ void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 		case AsmTokenType::Var: {
 			auto *var = new LtacVar;
 			var->pos = vars[name.id];
+			var->d_type = types[name.id];
 			parent->children.push_back(var);
 		} break;
 	

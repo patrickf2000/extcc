@@ -37,6 +37,7 @@ void Asm_LLVM::build_code(LtacCodeSec *code) {
 			case ltac::Ret: build_ret(ln); break;
 			
 			case ltac::PushArg: build_pusharg(ln); break;
+			case ltac::FuncCall: build_func_call(ln); break;
 			
 			case ltac::Var: build_var(ln); break;
 		}
@@ -102,10 +103,26 @@ void Asm_LLVM::build_pusharg(LtacNode *node) {
 			writer << len << " x i8], [";
 			writer << len << " x i8]* @" << lstr->name;
 			writer << ", i32 0, i32 0" << std::endl;
+			
+			if (args.length() > 0)
+				args += ", ";
+				
+			args += "i8* %" + std::to_string(pos2);
 		} break;
 		
 		//TODO: Add the rest
 	}
+}
+
+//Builds a function call
+void Asm_LLVM::build_func_call(LtacNode *node) {
+	auto fc = static_cast<LtacFuncCall *>(node);
+	
+	writer << "\tcall void @" << fc->name << "(";
+	writer << args << ") nounwind" << std::endl;
+	writer << std::endl;
+	
+	args = "";
 }
 
 //Builds a variable

@@ -42,6 +42,7 @@ private:
 	void buildSection();
 	void buildFunc();
 	void calcStackSize();
+	void buildExtern();
 	void buildPushArg();
 	void buildFuncCall();
 	void buildRet();
@@ -53,5 +54,6 @@ private:
 	void buildMath(int type, int op);
 	
 	void addChildren(LtacNode *parent, bool inc_stack=false);
+	DataType getDataType(Token t);
 };
 

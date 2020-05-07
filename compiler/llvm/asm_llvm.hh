@@ -12,12 +12,15 @@ public:
 	void build_data(LtacDataSec *data);
 	void build_code(LtacCodeSec *code);
 	
+	void build_extern(LtacNode *node);
 	void build_func(LtacNode *node);
 	void build_ret(LtacNode *node);
 	void build_pusharg(LtacNode *node);
 	void build_func_call(LtacNode *node);
 	
 	void build_var(LtacNode *node);
+	
+	std::string type2str(DataType t);
 private:
 	std::map<std::string, int> strings;
 	std::map<int, int> vars;

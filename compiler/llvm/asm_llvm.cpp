@@ -33,6 +33,7 @@ void Asm_LLVM::build_data(LtacDataSec *data) {
 void Asm_LLVM::build_code(LtacCodeSec *code) {
 	for (auto ln : code->children) {
 		switch (ln->type) {
+			case ltac::Extern: build_extern(ln); break;
 			case ltac::Func: build_func(ln); break;
 			case ltac::Ret: build_ret(ln); break;
 			
@@ -44,10 +45,28 @@ void Asm_LLVM::build_code(LtacCodeSec *code) {
 	}
 }
 
+//Builds an extern declaration
+void Asm_LLVM::build_extern(LtacNode *node) {
+	auto ext = static_cast<LtacExtern *>(node);
+	
+	writer << "declare " << type2str(ext->ret_type) << " @";
+	writer << ext->name << "(";
+	
+	for (int i = 0; i<ext->params.size(); i++) {
+		if (i > 0)
+			writer << ",";
+			
+		writer << type2str(ext->params[i]);
+	}
+	
+	writer << ")" << std::endl;
+}
+
 //Builds a function declaration
 void Asm_LLVM::build_func(LtacNode *node) {
 	auto func = static_cast<LtacFunc *>(node);
 	
+	writer << std::endl;
 	writer << "define i32 @" << func->name << "() {";
 	writer << std::endl;
 }
@@ -167,4 +186,16 @@ void Asm_LLVM::build_var(LtacNode *node) {
 	
 	writer << std::endl;
 }
+
+//Converts a datatype to an LLVM type
+std::string Asm_LLVM::type2str(DataType t) {
+	switch (t) {
+		case DataType::Int: return "i32";
+		case DataType::Str: return "i8*";
+		case DataType::Void: return "void";
+	}
+	
+	return "";
+}
+
 

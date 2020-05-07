@@ -13,6 +13,7 @@ void AsmParser::parse() {
 		switch (type) {
 			case AsmTokenType::Section: buildSection(); break;
 			case AsmTokenType::Func: buildFunc(); break;
+			case AsmTokenType::Extern: buildExtern(); break;
 			case AsmTokenType::Call: buildFuncCall(); break;
 			case AsmTokenType::Ret: buildRet(); break;
 			case AsmTokenType::PushArg: buildPushArg(); break;
@@ -96,6 +97,32 @@ void AsmParser::calcStackSize() {
 	
 	func->stack_size = stack_size;
 	stack_pos = 0;
+}
+
+//Builds an extern statement
+void AsmParser::buildExtern() {
+	checkCode();
+	auto *ext = new LtacExtern;
+	file->code->children.push_back(ext);
+	
+	//Build the return type
+	Token next = scan->getNext();
+	ext->ret_type = getDataType(next);
+	
+	//Build the name
+	next = scan->getNext();
+	if (next.type != AsmTokenType::Name)
+		syntax->fatalError("Expected name.");
+		
+	ext->name = next.id;
+	
+	//Build the parameters
+	next = scan->getNext();
+	
+	while (next.type != AsmTokenType::NewLn) {
+		ext->params.push_back(getDataType(next));
+		next = scan->getNext();
+	}
 }
 
 //Builds a push-arg statement
@@ -360,5 +387,18 @@ void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 		default: syntax->fatalError("Unknown type.");
 	}
 }
+
+DataType AsmParser::getDataType(Token t) {
+	switch (t.type) {
+		case AsmTokenType::Int: return DataType::Int;
+		case AsmTokenType::Float: return DataType::Float;
+		case AsmTokenType::Void: return DataType::Void;
+		case AsmTokenType::String: return DataType::Str;
+	}
+	
+	syntax->fatalError("Unknown data type!");
+	return DataType::None;
+}
+
 
 

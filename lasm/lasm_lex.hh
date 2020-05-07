@@ -15,11 +15,13 @@ namespace LtacAsm {
 		Int,
 		String,
 		Float,
+		Void,
 		Var,
 		Reg,
 		
 		//Function tokens
 		Func,
+		Extern,
 		Ret,
 		PushArg,
 		Call,

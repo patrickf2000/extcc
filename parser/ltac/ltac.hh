@@ -17,6 +17,7 @@ enum class LtacType {
 enum class ltac {
 	None,
 	Func,
+	Extern,
 	FuncCall,
 	Label,
 	Ret,
@@ -151,6 +152,19 @@ public:
 	int stack_size = 0;
 	bool is_global = false;
 	bool is_extern = false;
+};
+
+//External functions
+class LtacExtern : public LtacLabel {
+public:
+	explicit LtacExtern() { type = ltac::Extern; }
+	explicit LtacExtern(std::string n) {
+		type = ltac::Extern;
+		name = n;
+	}
+	
+	DataType ret_type = DataType::Void;
+	std::vector<DataType> params;
 };
 
 //A node with a datatype

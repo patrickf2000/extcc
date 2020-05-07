@@ -19,7 +19,10 @@ void Asm_LLVM::build_data(LtacDataSec *data) {
 			//Strings
 			case ltac::String: {
 				auto lstr = static_cast<LtacString *>(ln);
-
+				
+				writer << "@" << lstr->name << " = internal constant [";
+				writer << lstr->val.length() << " x i8] c\"" << lstr->val;
+				writer << "\"" << std::endl;
 			} break;
 		}
 	}

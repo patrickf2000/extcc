@@ -301,6 +301,19 @@ void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 			
 			if (inc_stack) stack_pos += 4;
 		} break;
+		
+		//Floats
+		case AsmTokenType::Float: {
+			if (name.type == AsmTokenType::Name) {
+				auto *f = new LtacFloat;
+				f->name = name.id;
+				parent->children.push_back(f);
+				
+				if (inc_stack) stack_pos += 4;
+			} else {
+				//TODO: Raw floats
+			}
+		} break;
 	
 		//Strings
 		case AsmTokenType::String: {

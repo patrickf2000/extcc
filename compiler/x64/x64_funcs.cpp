@@ -137,6 +137,17 @@ void Asm_x64::build_push_arg(LtacNode *node, bool is_arg) {
 			
 			++call_index;
 		} break;
+		
+		//Raw float arguments
+		case ltac::Float: {
+			auto lf = static_cast<LtacFloat *>(arg);
+			auto reg = call_flt_regs[call_index_flt];
+			
+			writer << "\tmovss " << reg << ", " << lf->name << std::endl;
+			writer << "\tcvtss2sd " << reg << ", " << reg << std::endl;
+			
+			++call_index_flt;
+		} break;
 	
 		//Raw string arguments
 		case ltac::String: {

@@ -36,7 +36,8 @@ enum class DataType {
 	Double256,
 	Matrix,
 	Str,
-	Pointer
+	Pointer,
+	Any
 };
 
 //Conditional operator information

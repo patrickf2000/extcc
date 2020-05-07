@@ -64,6 +64,7 @@ void AsmScanner::initTokens() {
 	tokens["f32.div"] = AsmTokenType::F32_Div;
 	tokens["extern"] = AsmTokenType::Extern;
 	tokens["void"] = AsmTokenType::Void;
+	tokens["any"] = AsmTokenType::Any;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;

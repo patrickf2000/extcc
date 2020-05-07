@@ -394,6 +394,7 @@ DataType AsmParser::getDataType(Token t) {
 		case AsmTokenType::Float: return DataType::Float;
 		case AsmTokenType::Void: return DataType::Void;
 		case AsmTokenType::String: return DataType::Str;
+		case AsmTokenType::Any: return DataType::Any;
 	}
 	
 	syntax->fatalError("Unknown data type!");

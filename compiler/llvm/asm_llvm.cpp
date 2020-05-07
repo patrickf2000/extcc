@@ -54,7 +54,7 @@ void Asm_LLVM::build_extern(LtacNode *node) {
 	
 	for (int i = 0; i<ext->params.size(); i++) {
 		if (i > 0)
-			writer << ",";
+			sig += ",";
 			
 		sig += type2str(ext->params[i]);
 	}
@@ -123,6 +123,9 @@ void Asm_LLVM::build_ret(LtacNode *node) {
 void Asm_LLVM::build_pusharg(LtacNode *node) {
 	auto child = node->children[0];
 
+	if (args.length() > 0)
+		args += ", ";
+
 	switch (child->type) {
 		//Strings
 		case ltac::String: {
@@ -136,11 +139,30 @@ void Asm_LLVM::build_pusharg(LtacNode *node) {
 			writer << len << " x i8], [";
 			writer << len << " x i8]* @" << lstr->name;
 			writer << ", i32 0, i32 0" << std::endl;
-			
-			if (args.length() > 0)
-				args += ", ";
 				
 			args += "i8* %" + std::to_string(pos2);
+		} break;
+		
+		//Variables
+		case ltac::Var: {
+			auto var = static_cast<LtacVar *>(child);
+			
+			switch (var->d_type) {
+				//Integer variables
+				case DataType::Int: {
+					int pos = vars[var->pos];
+				
+					int pos2 = llvm_reg_pos;
+					++llvm_reg_pos;
+					
+					writer << "\t%" << pos2 << " = load i32, i32* %";
+					writer << pos << ", align 4" << std::endl;
+					
+					args += "i32 %" + std::to_string(pos2);
+				} break;
+				
+				//TODO: Add the rest
+			}
 		} break;
 		
 		//TODO: Add the rest
@@ -208,6 +230,7 @@ std::string Asm_LLVM::type2str(DataType t) {
 		case DataType::Int: return "i32";
 		case DataType::Str: return "i8*";
 		case DataType::Void: return "void";
+		case DataType::Any: return "...";
 	}
 	
 	return "";

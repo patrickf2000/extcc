@@ -16,6 +16,7 @@ namespace LtacAsm {
 		String,
 		Float,
 		Void,
+		Any,
 		Var,
 		Reg,
 		

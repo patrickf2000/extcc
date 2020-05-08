@@ -41,15 +41,21 @@ set(COMPILER_SRC
 	compiler/arm7/arm7_funcs.cpp
 	compiler/arm7/arm7_var.cpp
 	compiler/arm7/asm_arm7.cpp
-	compiler/base/asm_base.cpp
+	
 	compiler/i386/asm_i386.cpp
+	
 	compiler/llvm/asm_llvm.cpp
+	compiler/llvm/llvm_func.cpp
+	compiler/llvm/llvm_var.cpp
+	
 	compiler/x64/asm_x64.cpp
 	compiler/x64/x64_array.cpp
 	compiler/x64/x64_flow.cpp
 	compiler/x64/x64_funcs.cpp
 	compiler/x64/x64_math.cpp
 	compiler/x64/x64_vars.cpp
+	
+	compiler/base/asm_base.cpp
 	compiler/compiler.cpp
 	compiler/main.cpp
 	compiler/utils.cpp

@@ -37,6 +37,7 @@ namespace LtacAsm {
 		
 		//Array operations
 		ArraySet,
+		ArrayAcc,
 		
 		//Integer math operations
 		IAdd,

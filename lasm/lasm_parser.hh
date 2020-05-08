@@ -54,6 +54,7 @@ private:
 	void buildStr(RegType rtype = RegType::Gp);
 	void buildMath(int type, int op);
 	void buildArraySet();
+	void buildArrayAcc();
 	
 	void addChildren(LtacNode *parent, bool inc_stack=false);
 	DataType getDataType(Token t);

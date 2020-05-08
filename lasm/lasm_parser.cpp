@@ -39,6 +39,7 @@ void AsmParser::parse() {
 			case AsmTokenType::F32_Div: buildMath(2, type); break;
 			
 			case AsmTokenType::ArraySet: buildArraySet(); break;
+			case AsmTokenType::ArrayAcc: buildArrayAcc(); break;
 			
 			case AsmTokenType::NewLn: break;
 		}
@@ -388,6 +389,38 @@ void AsmParser::buildArraySet() {
 	arrayset->d_type = types[name.id];
 	arrayset->type_size = 4;
 	arrayset->is_ptr = true;
+}
+
+//Builds the array access command
+void AsmParser::buildArrayAcc() {
+	checkCode();
+	
+	Token name = scan->getNext();
+	auto acc = new LtacArrayAcc;
+	auto var = new LtacVar;
+	
+	var->children.push_back(acc);
+	file->code->children.push_back(var);
+	
+	if (name.type != AsmTokenType::Name)
+		syntax->fatalError("Expected variable name.");
+		
+	acc->pos = vars[name.id];
+	acc->d_type = types[name.id];
+	acc->is_ptr = pointers[name.id];
+	acc->type_size = 4;
+		
+	addChildren(acc, false);
+	
+	//Get the variable name
+	name = scan->getNext();
+	
+	if (name.type != AsmTokenType::Name)
+		syntax->fatalError("Expected variable name.");
+		
+	var->pos = vars[name.id];
+	var->d_type = types[name.id];
+	var->is_ptr = pointers[name.id];
 }
 
 //Adds children to a parent node

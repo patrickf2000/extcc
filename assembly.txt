@@ -17,6 +17,7 @@ int -> Integers
 string -> String constants
 var -> Refers to a variable or memory location
 reg -> Refers to a register*
+ptr -> Refers to a pointer
 
 *Note- Register numbers start at 1; max depends on platform
 
@@ -30,6 +31,7 @@ var <name> <type> <value>        Create a variable and set an initial value
 ret <?value>                     Return from a function, optionally with a value
 ldr <register no> <variable>     Store a register into a variable
 str <register no> <variable>     Store register contents into a variable
+str.ret <variable>               Store return register value into a variable
 
 Math syntax:
 <instruction> {dest: <type> <value>} {src: <type> <value>}

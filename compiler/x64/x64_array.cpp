@@ -126,7 +126,12 @@ void Asm_x64::build_array_set(LtacNode *node) {
 	switch (arr->index->type) {
 		//Set by integer
 		case ltac::Int: {
+			auto *li = static_cast<LtacInt *>(arr->index);
+			int offset = li->val * size;
 			
+			writer << "\tmov r9, QWORD PTR [rbp-";
+			writer << std::to_string(pos) << "]" << std::endl;
+			writer << "\tmov r9, [r9+" << offset << "]" << std::endl;
 		} break;
 		
 		//Set by variable
@@ -141,7 +146,6 @@ void Asm_x64::build_array_set(LtacNode *node) {
 			writer << "\tmov r9, QWORD PTR [rbp-" << std::to_string(pos);
 			writer << "]" << std::endl;
 			writer << "\tadd r9, rdx" << std::endl;
-			writer << std::endl;
 		} break;
 	}
 	
@@ -155,7 +159,6 @@ void Asm_x64::build_array_set(LtacNode *node) {
 			
 			writer << "\tmov DWORD PTR [r9], ";
 			writer << std::to_string(li->val) << std::endl;
-			writer << std::endl;
 		} break;
 	
 		//Other variables
@@ -165,7 +168,6 @@ void Asm_x64::build_array_set(LtacNode *node) {
 			writer << "\tmov eax, [rbp-" << std::to_string(var->pos);
 			writer << "]" << std::endl;
 			writer << "\tmov DWORD PTR [r9], eax" << std::endl;
-			writer << std::endl;
 		} break;
 		
 		//Math expressions
@@ -191,5 +193,7 @@ void Asm_x64::build_array_set(LtacNode *node) {
 		
 		//TODO: Add the rest
 	}
+	
+	writer << std::endl;
 }
 

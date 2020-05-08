@@ -20,10 +20,12 @@ void AsmParser::parse() {
 			case AsmTokenType::String: buildString(); break;
 			case AsmTokenType::Float: buildFloat(); break;
 			case AsmTokenType::Var: buildVar(); break;
+			case AsmTokenType::Ptr: buildVar(true); break;
 			case AsmTokenType::Ldr: buildLdr(); break;
 			case AsmTokenType::FLdr: buildLdr(RegType::Flt); break;
 			case AsmTokenType::Str: buildStr(); break;
 			case AsmTokenType::FStr: buildStr(RegType::Flt); break;
+			case AsmTokenType::StrRet: buildStr(RegType::Ret); break;
 			
 			case AsmTokenType::IAdd:
 			case AsmTokenType::ISub:
@@ -204,8 +206,9 @@ void AsmParser::buildFloat() {
 }
 
 //Builds a variable declaration
-void AsmParser::buildVar() {
+void AsmParser::buildVar(bool is_ptr) {
 	auto *var = new LtacVar;
+	var->is_ptr = is_ptr;
 	file->code->children.push_back(var);
 	
 	Token name = scan->getNext();
@@ -226,10 +229,15 @@ void AsmParser::buildVar() {
 	}
 	
 	types[name.id] = dt;
-	scan->unget(type);
+	pointers[name.id] = is_ptr;
 	
 	//Build the rest
-	addChildren(var, true);
+	if (!is_ptr) {
+		scan->unget(type);
+		addChildren(var, true);
+	} else {
+		stack_pos += 8;
+	}
 	
 	vars[name.id] = stack_pos;
 	var->pos = stack_pos;
@@ -279,22 +287,33 @@ void AsmParser::buildStr(RegType rtype) {
 	reg->rtype = rtype;
 	var->children.push_back(reg);
 	
-	Token no = scan->getNext();
-	Token val = scan->getNext();
-	
-	if (no.type != AsmTokenType::IntL)
-		syntax->fatalError("Expected register number.");
+	if (rtype == RegType::Ret) {
+		Token val = scan->getNext();
 		
-	if (val.type != AsmTokenType::Name)
-		syntax->fatalError("Expected variable.");
+		if (val.type != AsmTokenType::Name)
+			syntax->fatalError("Expected variable");
+			
+		var->pos = vars[val.id];
+		var->d_type = types[val.id];
+		var->is_ptr = pointers[val.id];
+	} else {
+		Token no = scan->getNext();
+		Token val = scan->getNext();
 		
-	int v = std::stoi(no.id);
-	
-	if (v <= 0)
-		syntax->fatalError("Invalid register; A register must be greater than 0.");
+		if (no.type != AsmTokenType::IntL)
+			syntax->fatalError("Expected register number.");
+			
+		if (val.type != AsmTokenType::Name)
+			syntax->fatalError("Expected variable.");
+			
+		int v = std::stoi(no.id);
 		
-	reg->pos = v;
-	var->pos = vars[val.id];
+		if (v <= 0)
+			syntax->fatalError("Invalid register; A register must be greater than 0.");
+			
+		reg->pos = v;
+		var->pos = vars[val.id];
+	}
 }
 
 //Builds a single math command
@@ -350,6 +369,7 @@ void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 			auto *var = new LtacVar;
 			var->pos = vars[name.id];
 			var->d_type = types[name.id];
+			var->is_ptr = pointers[name.id];
 			parent->children.push_back(var);
 		} break;
 	

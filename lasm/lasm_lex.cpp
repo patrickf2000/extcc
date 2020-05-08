@@ -65,6 +65,8 @@ void AsmScanner::initTokens() {
 	tokens["extern"] = AsmTokenType::Extern;
 	tokens["void"] = AsmTokenType::Void;
 	tokens["any"] = AsmTokenType::Any;
+	tokens["ptr"] = AsmTokenType::Ptr;
+	tokens["str.ret"] = AsmTokenType::StrRet;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;

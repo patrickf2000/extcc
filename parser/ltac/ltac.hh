@@ -81,6 +81,7 @@ enum class Operator {
 //Register types
 enum RegType {
 	Gp,
+	Ret,
 	Flt,
 	Fpu,
 	Vec

@@ -19,6 +19,7 @@ namespace LtacAsm {
 		Any,
 		Var,
 		Reg,
+		Ptr,
 		
 		//Function tokens
 		Func,
@@ -32,6 +33,7 @@ namespace LtacAsm {
 		Str,
 		FLdr,
 		FStr,
+		StrRet,
 		
 		//Integer math operations
 		IAdd,

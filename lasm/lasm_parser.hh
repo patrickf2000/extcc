@@ -32,6 +32,7 @@ private:
 	std::stack<LtacNode *> topNode;
 	std::map<std::string, int> vars;
 	std::map<std::string, DataType> types;
+	std::map<std::string, bool> pointers;
 	int stack_pos = 0;
 	
 	//Check functions
@@ -48,7 +49,7 @@ private:
 	void buildRet();
 	void buildString();
 	void buildFloat();
-	void buildVar();
+	void buildVar(bool is_ptr = false);
 	void buildLdr(RegType rtype = RegType::Gp);
 	void buildStr(RegType rtype = RegType::Gp);
 	void buildMath(int type, int op);

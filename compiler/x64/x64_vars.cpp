@@ -42,6 +42,9 @@ void Asm_x64::build_reg(LtacNode *node) {
 
 //Build a variable declaration
 void Asm_x64::build_var(LtacNode *node) {
+	if (node->children.size() == 0)
+		return;
+		
 	auto var = static_cast<LtacVar *>(node);
 	auto src = node->children[0];
 	
@@ -110,6 +113,26 @@ void Asm_x64::build_var(LtacNode *node) {
 				case RegType::Gp: {
 					writer << "\tmov DWORD PTR [rbp-" << var->pos;
 					writer << "], " << registers32[pos] << std::endl;
+				} break;
+				
+				//Return register
+				case RegType::Ret: {
+					//Pointers use RAX
+					if (var->is_ptr) {
+						writer << "\tmov QWORD PTR [rbp-" << var->pos;
+						writer << "], rax" << std::endl;
+						
+					//Floating-point uses XMM0
+					} else if (var->d_type == DataType::Float 
+							|| var->d_type == DataType::Double) {
+						writer << "\tmovss [rbp-" << var->pos << "], xmm0";
+						writer << std::endl;
+					
+					//All else uses EAX
+					} else {
+						writer << "\tmov DWORD PTR [rbp-" << var->pos;
+						writer << "], eax" << std::endl;
+					}
 				} break;
 				
 				//Floating-point

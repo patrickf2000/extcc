@@ -35,6 +35,9 @@ namespace LtacAsm {
 		FStr,
 		StrRet,
 		
+		//Array operations
+		ArraySet,
+		
 		//Integer math operations
 		IAdd,
 		ISub,

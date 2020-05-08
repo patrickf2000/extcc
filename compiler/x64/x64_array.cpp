@@ -126,7 +126,7 @@ void Asm_x64::build_array_set(LtacNode *node) {
 	switch (arr->index->type) {
 		//Set by integer
 		case ltac::Int: {
-		
+			
 		} break;
 		
 		//Set by variable

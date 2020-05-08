@@ -38,6 +38,8 @@ void AsmParser::parse() {
 			case AsmTokenType::F32_Mul:
 			case AsmTokenType::F32_Div: buildMath(2, type); break;
 			
+			case AsmTokenType::ArraySet: buildArraySet(); break;
+			
 			case AsmTokenType::NewLn: break;
 		}
 	}
@@ -345,6 +347,47 @@ void AsmParser::buildMath(int type, int op) {
 	addChildren(math, false);
 	
 	file->code->children.push_back(math);
+}
+
+//Builds the array-set command
+//Syntax <name> <index ref> <value>
+void AsmParser::buildArraySet() {
+	checkCode();
+	
+	Token name = scan->getNext();
+	Token index_type = scan->getNext();
+	Token index_val = scan->getNext();
+	
+	auto arrayset = new LtacArraySet;
+	file->code->children.push_back(arrayset);
+	
+	//Syntax check
+	if (name.type != AsmTokenType::Name)
+		syntax->fatalError("Expected ptr name in arrayset.");
+		
+	//Build the index node
+	if (index_type.type == AsmTokenType::Int) {
+		auto li = new LtacInt;
+		li->val = std::stoi(index_val.id);
+		
+		arrayset->index = li;
+	} else if (index_type.type == AsmTokenType::Var) {
+		auto lvar = new LtacVar;
+		lvar->pos = vars[index_val.id];
+		lvar->d_type = types[index_val.id];
+		
+		arrayset->index = lvar;
+	} else {
+		syntax->fatalError("Unknown value for arrayset");
+	}
+	
+	//Build the new value
+	addChildren(arrayset, false);
+	
+	arrayset->pos = vars[name.id];
+	arrayset->d_type = types[name.id];
+	arrayset->type_size = 4;
+	arrayset->is_ptr = true;
 }
 
 //Adds children to a parent node

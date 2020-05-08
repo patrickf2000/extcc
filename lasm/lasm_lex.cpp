@@ -67,6 +67,7 @@ void AsmScanner::initTokens() {
 	tokens["any"] = AsmTokenType::Any;
 	tokens["ptr"] = AsmTokenType::Ptr;
 	tokens["str.ret"] = AsmTokenType::StrRet;
+	tokens["arrayset"] = AsmTokenType::ArraySet;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;

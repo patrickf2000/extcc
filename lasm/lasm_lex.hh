@@ -50,6 +50,12 @@ namespace LtacAsm {
 		IDiv,
 		IMod,
 		
+		//Vector integer math
+		VIAdd,
+		VISub,
+		VIMul,
+		VIDiv,
+		
 		//Float-32 math operations
 		F32_Add,
 		F32_Sub,

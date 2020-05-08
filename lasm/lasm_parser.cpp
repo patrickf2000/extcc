@@ -36,6 +36,11 @@ void AsmParser::parse() {
 			case AsmTokenType::IDiv: 
 			case AsmTokenType::IMod: buildMath(1, type); break;
 			
+			case AsmTokenType::VIAdd:
+			case AsmTokenType::VISub:
+			case AsmTokenType::VIMul:
+			case AsmTokenType::VIDiv: buildMath(4, type); break;
+			
 			case AsmTokenType::F32_Add:
 			case AsmTokenType::F32_Sub:
 			case AsmTokenType::F32_Mul:
@@ -158,6 +163,7 @@ void AsmParser::buildVar(bool is_ptr) {
 // 1-> Integer
 // 2-> Single precision float
 // 3-> Double precision float
+// 4-> Vector-Integer
 void AsmParser::buildMath(int type, int op) {
 	checkCode();
 	LtacOp *math = new LtacOp;
@@ -166,16 +172,26 @@ void AsmParser::buildMath(int type, int op) {
 		math = new LtacIMath;
 	else if (type == 2)
 		math = new LtacF32Math;
+	else if (type == 4)
+		math = new LtacVIMath;
 	
 	switch (op) {
-		case AsmTokenType::IAdd: 
+		case AsmTokenType::IAdd:
+		case AsmTokenType::VIAdd:
 		case AsmTokenType::F32_Add: math->op = Operator::Add; break;
-		case AsmTokenType::ISub: 
+		
+		case AsmTokenType::ISub:
+		case AsmTokenType::VISub: 
 		case AsmTokenType::F32_Sub: math->op = Operator::Sub; break;
+		
 		case AsmTokenType::IMul:
+		case AsmTokenType::VIMul:
 		case AsmTokenType::F32_Mul: math->op = Operator::Mul; break;
+		
 		case AsmTokenType::IDiv:
+		case AsmTokenType::VIDiv:
 		case AsmTokenType::F32_Div: math->op = Operator::Div; break;
+		
 		case AsmTokenType::IMod: math->op = Operator::Mod; break;
 	}
 	

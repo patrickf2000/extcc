@@ -74,4 +74,15 @@ void AsmParser::buildStr(RegType rtype) {
 	}
 }
 
+//Builds the load vector register command
+void AsmParser::buildVLdr() {
+
+}
+
+//Builds the store-vector register command
+void AsmParser::buildVStr() {
+
+}
+
+
 

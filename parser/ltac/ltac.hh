@@ -47,7 +47,9 @@ enum class ltac {
 	Cmp,
 	ICmp,
 	
-	Jmp
+	Jmp,
+	
+	VLoad
 };
 
 // This relates to ltac data
@@ -362,6 +364,13 @@ public:
 	
 	std::string dest;
 	Operator op = Operator::None;
+};
+
+//Vector operations
+//Load a vector register
+class LtacVLoad : public LtacVar {
+public:
+	explicit LtacVLoad() { type = ltac::VLoad; }
 };
 
 //Useful functions

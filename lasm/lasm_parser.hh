@@ -52,8 +52,7 @@ private:
 	void buildVar(bool is_ptr = false);
 	void buildLdr(RegType rtype = RegType::Gp);
 	void buildStr(RegType rtype = RegType::Gp);
-	void buildVLdr();
-	void buildVStr();
+	void buildVLdr(bool load = true);
 	void buildMath(int type, int op);
 	void buildArraySet();
 	void buildArrayAcc();

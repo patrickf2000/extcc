@@ -38,4 +38,5 @@ protected:
 	void build_f32math(LtacNode *node);
 	
 	void build_vload(LtacNode *node);
+	void build_vstore(LtacNode *node);
 };

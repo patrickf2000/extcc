@@ -49,7 +49,8 @@ enum class ltac {
 	
 	Jmp,
 	
-	VLoad
+	VLoad,
+	VStore
 };
 
 // This relates to ltac data
@@ -367,11 +368,22 @@ public:
 };
 
 //Vector operations
+//Base class
+class LtacVOp : public LtacVar {
+public:
+	int reg = 1;
+};
+
 //Load a vector register
-class LtacVLoad : public LtacVar {
+class LtacVLoad : public LtacVOp {
 public:
 	explicit LtacVLoad() { type = ltac::VLoad; }
-	int reg = 1;
+};
+
+//Store a vector register
+class LtacVStore : public LtacVOp {
+public:
+	explicit LtacVStore() { type = ltac::VStore; }
 };
 
 //Useful functions

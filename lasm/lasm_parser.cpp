@@ -28,7 +28,7 @@ void AsmParser::parse() {
 			case AsmTokenType::StrRet: buildStr(RegType::Ret); break;
 			
 			case AsmTokenType::Vldr: buildVLdr(); break;
-			case AsmTokenType::Vstr: buildVStr(); break;
+			case AsmTokenType::Vstr: buildVLdr(false); break;
 			
 			case AsmTokenType::IAdd:
 			case AsmTokenType::ISub:

@@ -60,3 +60,24 @@ static std::string float_registers[] = {
 	"xmm7"
 };
 
+//Vector registers
+static std::string vector_registers[] = {
+	"ymm0",
+	"ymm1",
+	"ymm2",
+	"ymm3",
+	"ymm4",
+	"ymm5",
+	"ymm6",
+	"ymm7",
+	"ymm8",
+	"ymm9",
+	"ymm10",
+	"ymm11",
+	"ymm12",
+	"ymm13",
+	"ymm14",
+	"ymm15"
+};
+
+

@@ -371,6 +371,7 @@ public:
 class LtacVLoad : public LtacVar {
 public:
 	explicit LtacVLoad() { type = ltac::VLoad; }
+	int reg = 1;
 };
 
 //Useful functions

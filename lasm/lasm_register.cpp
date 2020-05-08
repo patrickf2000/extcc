@@ -76,7 +76,29 @@ void AsmParser::buildStr(RegType rtype) {
 
 //Builds the load vector register command
 void AsmParser::buildVLdr() {
-
+	checkCode();
+	
+	auto *vector = new LtacVLoad;
+	file->code->children.push_back(vector);
+	
+	Token no = scan->getNext();
+	Token val = scan->getNext();
+	
+	if (no.type != AsmTokenType::IntL)
+		syntax->fatalError("Expected register number.");
+		
+	if (val.type != AsmTokenType::Name)
+		syntax->fatalError("Expected variable.");
+		
+	int v = std::stoi(no.id);
+	
+	if (v <= 0)
+		syntax->fatalError("Invalid register; A register must be greater than 0.");
+		
+	vector->reg = v;
+	vector->pos = vars[val.id];
+	vector->d_type = types[val.id];
+	vector->is_ptr = pointers[val.id];
 }
 
 //Builds the store-vector register command

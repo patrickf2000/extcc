@@ -57,6 +57,7 @@ set(COMPILER_SRC
 	compiler/x64/x64_funcs.cpp
 	compiler/x64/x64_math.cpp
 	compiler/x64/x64_vars.cpp
+	compiler/x64/x64_vector.cpp
 	
 	compiler/base/asm_base.cpp
 	compiler/compiler.cpp

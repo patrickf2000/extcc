@@ -23,9 +23,9 @@ void Asm_x64::build_vstore(LtacNode *node) {
 	writer << vector_registers[reg] << std::endl;
 }
 
-//Builds vector integer math
-void Asm_x64::build_vimath(LtacNode *node) {
-	auto math = static_cast<LtacVIMath *>(node);
+//Builds vector math
+void Asm_x64::build_vmath(LtacNode *node) {
+	auto math = static_cast<LtacOp *>(node);
 	
 	auto dest = math->children[0];
 	auto src = math->children[1];
@@ -45,10 +45,33 @@ void Asm_x64::build_vimath(LtacNode *node) {
 	
 	//Determine the operation
 	switch (math->op) {
-		case Operator::Add: writer << "\tvpaddd "; break;
-		case Operator::Sub: writer << "\tvpsubd "; break;
-		case Operator::Mul: writer << "\tvpmulld "; break;
-		case Operator::Div: break;
+		case Operator::Add: {
+			if (node->type == ltac::VIMath)
+				writer << "\tvpaddd ";
+			else if (node->type == ltac::VF32Math)
+				writer << "\tvaddps ";
+		} break;
+		
+		case Operator::Sub: {
+			if (node->type == ltac::VIMath)
+				writer << "\tvpsubd ";
+			else if (node->type == ltac::VF32Math)
+				writer << "\tvsubps ";
+		} break;
+		
+		case Operator::Mul: {
+			if (node->type == ltac::VIMath)
+				writer << "\tvpmulld ";
+			else if (node->type == ltac::VF32Math)
+				writer << "\tvmulps "; 
+		} break;
+		
+		case Operator::Div: {
+			if (node->type == ltac::VIMath)
+				writer << "\tvdivps ";
+			else if (node->type == ltac::VF32Math)
+				writer << "\tvdivps ";
+		} break;
 	}
 	
 	writer << reg << ", " << reg << ", ";

@@ -78,6 +78,10 @@ void AsmScanner::initTokens() {
 	tokens["icmp"] = AsmTokenType::ICmp;
 	tokens["jl"] = AsmTokenType::Jl;
 	tokens["lbl"] = AsmTokenType::Lbl;
+	tokens["f32.vadd"] = AsmTokenType::F32_VAdd;
+	tokens["f32.vsub"] = AsmTokenType::F32_VSub;
+	tokens["f32.vmul"] = AsmTokenType::F32_VMul;
+	tokens["f32.vdiv"] = AsmTokenType::F32_VDiv;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;

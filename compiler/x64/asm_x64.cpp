@@ -69,7 +69,8 @@ void Asm_x64::build_code(LtacCodeSec *code) {
 			
 			case ltac::VLoad: build_vload(ln); break;
 			case ltac::VStore: build_vstore(ln); break;
-			case ltac::VIMath: build_vimath(ln); break;
+			case ltac::VIMath: 
+			case ltac::VF32Math: build_vmath(ln); break;
 		}
 	}
 }

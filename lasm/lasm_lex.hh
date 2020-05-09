@@ -63,6 +63,12 @@ namespace LtacAsm {
 		F32_Mul,
 		F32_Div,
 		
+		//Vector float-32 math
+		F32_VAdd,
+		F32_VSub,
+		F32_VMul,
+		F32_VDiv,
+		
 		//Identifiers
 		Name,
 		IntL,

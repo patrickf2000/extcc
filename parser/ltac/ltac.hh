@@ -41,6 +41,7 @@ enum class ltac {
 	IMath,
 	VIMath,
 	F32Math,
+	VF32Math,
 	
 	Push,
 	Pop,
@@ -347,6 +348,12 @@ public:
 class LtacF32Math : public LtacOp {
 public:
 	explicit LtacF32Math() { type = ltac::F32Math; }
+};
+
+//Vector float-32 math
+class LtacVF32Math : public LtacOp {
+public:
+	explicit LtacVF32Math() { type = ltac::VF32Math; }
 };
 
 //Comparisons

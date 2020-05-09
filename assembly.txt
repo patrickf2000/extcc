@@ -71,3 +71,9 @@ f32.sub      Subtraction
 f32.mul      Multiplication
 f32.div      Division
 
+Vector single-precision Floating-point Math instructions
+f32.vadd      Addition
+f32.vsub      Subtraction
+f32.vmul      Multiplication
+f32.vdiv      Division
+

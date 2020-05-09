@@ -155,6 +155,10 @@ void Asm_x64::build_f32math(LtacNode *node) {
 	//Floating-point instructions only work on registers
 	if (dest->type == ltac::Var) {
 		src_mem = true;
+		auto var = static_cast<LtacVar *>(dest);
+		
+		writer << "\tmovss xmm8, [rbp-" << var->pos;
+		writer << "]" << std::endl;
 	}
 	
 	//Variables
@@ -167,7 +171,7 @@ void Asm_x64::build_f32math(LtacNode *node) {
 	//Float constants
 	} else if (src->type == ltac::Float) {
 		auto flt = static_cast<LtacFloat *>(src);
-		writer << "\tmovss xmm7, " << flt->name << "[rip]" << std::endl;
+		writer << "\tmovss xmm7, DWORD PTR " << flt->name << "[rip]" << std::endl;
 	}
 	
 	//If the source is a function call, that must be built first

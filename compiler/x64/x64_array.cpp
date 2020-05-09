@@ -165,9 +165,17 @@ void Asm_x64::build_array_set(LtacNode *node) {
 		case ltac::Var: {
 			auto *var = static_cast<LtacVar *>(src);
 			
-			writer << "\tmov eax, [rbp-" << std::to_string(var->pos);
-			writer << "]" << std::endl;
-			writer << "\tmov DWORD PTR [r9], eax" << std::endl;
+			if (var->d_type == DataType::Int) {
+				writer << "\tmov eax, [rbp-" << std::to_string(var->pos);
+				writer << "]" << std::endl;
+				writer << "\tmov DWORD PTR [r9], eax" << std::endl;
+			} else if (var->d_type == DataType::Float) {
+				writer << "\tmovss xmm0, [rbp-" << std::to_string(var->pos);
+				writer << "]" << std::endl;
+				writer << "\tmovss DWORD PTR [r9], xmm0" << std::endl;
+			} else {
+				//TODO
+			}
 		} break;
 		
 		//Math expressions

@@ -126,16 +126,30 @@ void AsmParser::buildFloat() {
 	else if (flt.type != AsmTokenType::FloatL)
 		syntax->fatalError("Expected float literal.");
 		
+	buildFloat(next.id, flt.id);
+}
+
+LtacFloat *AsmParser::buildFloat(std::string name, std::string val) {
+	if (name == "") {
+		name = "FLT_" + std::to_string(flt_count);
+		++flt_count;
+	}
+
 	auto *l_flt = new LtacFloat;
 		
-	float f = std::stod(flt.id);
+	float f = std::stod(val);
 	char buf[32];
 	sprintf(buf, "%d", *(unsigned int*)&f);
 	l_flt->i_val = std::stoi(std::string(buf));
 	
 	l_flt->val = f;
-	l_flt->name = next.id;
+	l_flt->name = name;
 	file->data->children.push_back(l_flt);
+	
+	auto *l_flt2 = new LtacFloat;
+	l_flt2->name = name;
+	l_flt2->val = f;
+	return l_flt2;
 }
 
 //Builds a variable declaration
@@ -268,6 +282,12 @@ LtacNode *AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 			if (inc_stack) stack_pos += 4;
 		} break;
 		
+		//Float literals
+		case AsmTokenType::FloatL: {
+			ret = buildFloat("", name.id);
+			if (inc_stack) stack_pos += 4;
+		} break;
+		
 		//Floats
 		case AsmTokenType::Float: {
 			if (name.type == AsmTokenType::Name) {
@@ -275,11 +295,11 @@ LtacNode *AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 				f->name = name.id;
 				//parent->children.push_back(f);
 				ret = f;
-				
-				if (inc_stack) stack_pos += 4;
 			} else {
-				//TODO: Raw floats
+				ret = buildFloat("", name.id);
 			}
+			
+			if (inc_stack) stack_pos += 4;
 		} break;
 	
 		//Strings

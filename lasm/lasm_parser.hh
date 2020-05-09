@@ -34,6 +34,7 @@ private:
 	std::map<std::string, DataType> types;
 	std::map<std::string, bool> pointers;
 	int stack_pos = 0;
+	int flt_count = 0;
 	
 	//Check functions
 	void checkCode();
@@ -52,6 +53,8 @@ private:
 	
 	void buildString();
 	void buildFloat();
+	LtacFloat *buildFloat(std::string name, std::string val);
+	
 	void buildVar(bool is_ptr = false);
 	void buildLdr(RegType rtype = RegType::Gp);
 	void buildStr(RegType rtype = RegType::Gp);

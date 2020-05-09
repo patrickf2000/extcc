@@ -32,7 +32,12 @@ void Asm_x64::build_vloadi(LtacNode *node) {
 		
 		//Variable
 		case ltac::Var: {
-		
+			auto var = static_cast<LtacVar *>(index);
+			int pos = var->pos;
+			
+			writer << "\tmovsxd rdx, [rbp-" << pos << "]" << std::endl;
+			writer << "\tshl rdx, 2" << std::endl;
+			writer << "\tadd rax, rdx" << std::endl;
 		} break;
 		
 		//Other- This is an error

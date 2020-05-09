@@ -30,6 +30,7 @@ set(C_SRC
 
 set(LASM_SRC
 	lasm/lasm_array.cpp
+	lasm/lasm_flow.cpp
 	lasm/lasm_funcs.cpp
 	lasm/lasm_lex.cpp
 	lasm/lasm_parser.cpp

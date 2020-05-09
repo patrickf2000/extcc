@@ -49,6 +49,9 @@ void AsmParser::parse() {
 			case AsmTokenType::ArraySet: buildArraySet(); break;
 			case AsmTokenType::ArrayAcc: buildArrayAcc(); break;
 			
+			case AsmTokenType::ICmp: buildCmp(); break;
+			case AsmTokenType::Jl: buildJmp(type); break;
+			
 			case AsmTokenType::NewLn: break;
 		}
 	}
@@ -212,11 +215,12 @@ void AsmParser::buildMath(int type, int op) {
 }
 
 //Adds children to a parent node
-void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
+LtacNode *AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 	checkCode();
 	
 	Token type = scan->getNext();
 	Token name = scan->getNext();
+	LtacNode *ret;
 	
 	//Construct the argument
 	switch (type.type) {
@@ -225,7 +229,8 @@ void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 			int val = std::stoi(name.id);
 			auto *reg = new LtacReg;
 			reg->pos = val;
-			parent->children.push_back(reg);
+			//parent->children.push_back(reg);
+			ret = reg;
 		} break;
 		
 		//Variables
@@ -234,14 +239,16 @@ void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 			var->pos = vars[name.id];
 			var->d_type = types[name.id];
 			var->is_ptr = pointers[name.id];
-			parent->children.push_back(var);
+			//parent->children.push_back(var);
+			ret = var;
 		} break;
 	
 		//Integers
 		case AsmTokenType::Int: {
 			int val = std::stoi(name.id);
 			auto *i = new LtacInt(val);
-			parent->children.push_back(i);
+			//parent->children.push_back(i);
+			ret = i;
 			
 			if (inc_stack) stack_pos += 4;
 		} break;
@@ -251,7 +258,8 @@ void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 			if (name.type == AsmTokenType::Name) {
 				auto *f = new LtacFloat;
 				f->name = name.id;
-				parent->children.push_back(f);
+				//parent->children.push_back(f);
+				ret = f;
 				
 				if (inc_stack) stack_pos += 4;
 			} else {
@@ -263,13 +271,19 @@ void AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 		case AsmTokenType::String: {
 			auto *str = new LtacString;
 			str->name = name.id;
-			parent->children.push_back(str);
+			//parent->children.push_back(str);
+			ret = str;
 			
 			if (inc_stack) stack_pos += 8;
 		} break;
 		
 		default: syntax->fatalError("Unknown type.");
 	}
+	
+	if (parent != nullptr)
+		parent->children.push_back(ret);
+		
+	return ret;
 }
 
 DataType AsmParser::getDataType(Token t) {

@@ -75,6 +75,8 @@ void AsmScanner::initTokens() {
 	tokens["visub"] = AsmTokenType::VISub;
 	tokens["vimul"] = AsmTokenType::VIMul;
 	tokens["vidiv"] = AsmTokenType::VIDiv;
+	tokens["icmp"] = AsmTokenType::ICmp;
+	tokens["jl"] = AsmTokenType::Jl;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;

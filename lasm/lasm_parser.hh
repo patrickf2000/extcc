@@ -41,12 +41,14 @@ private:
 	
 	//Parser functions
 	void buildSection();
+	
 	void buildFunc();
 	void calcStackSize();
 	void buildExtern();
 	void buildPushArg();
 	void buildFuncCall();
 	void buildRet();
+	
 	void buildString();
 	void buildFloat();
 	void buildVar(bool is_ptr = false);
@@ -54,10 +56,14 @@ private:
 	void buildStr(RegType rtype = RegType::Gp);
 	void buildVLdr(bool load = true);
 	void buildMath(int type, int op);
+	
 	void buildArraySet();
 	void buildArrayAcc();
 	
-	void addChildren(LtacNode *parent, bool inc_stack=false);
+	void buildCmp();
+	void buildJmp(int type);
+	
+	LtacNode *addChildren(LtacNode *parent, bool inc_stack=false);
 	DataType getDataType(Token t);
 };
 

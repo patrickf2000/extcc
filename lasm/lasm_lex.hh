@@ -68,6 +68,10 @@ namespace LtacAsm {
 		FloatL,
 		StringL,
 		
+		//Flow control
+		ICmp,
+		Jl,
+		
 		//Symbols
 		NewLn,
 		Comma

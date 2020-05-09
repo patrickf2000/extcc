@@ -75,12 +75,17 @@ void AsmParser::buildStr(RegType rtype) {
 }
 
 //Builds the load/store vector register command
-void AsmParser::buildVLdr(bool load) {
+//Types:
+// 1- > vldr
+// 2 -> vldri
+// 3 -> vstr
+void AsmParser::buildVLdr(int type) {
 	checkCode();
 	
 	auto *vector = new LtacVOp;
-	if (load) vector = new LtacVLoad;
-	else vector = new LtacVStore;
+	if (type == 1) vector = new LtacVLoad;
+	else if (type == 2) vector = new LtacVLoadI;
+	else if (type == 3) vector = new LtacVStore;
 	
 	file->code->children.push_back(vector);
 	
@@ -102,6 +107,10 @@ void AsmParser::buildVLdr(bool load) {
 	vector->pos = vars[val.id];
 	vector->d_type = types[val.id];
 	vector->is_ptr = pointers[val.id];
+	
+	if (type == 2) {
+		addChildren(vector, false);
+	}
 }
 
 

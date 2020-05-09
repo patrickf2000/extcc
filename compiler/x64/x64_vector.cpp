@@ -13,6 +13,39 @@ void Asm_x64::build_vload(LtacNode *node) {
 	writer << "\tvmovups " << vector_registers[reg] << ", [rax]" << std::endl;
 }
 
+//Load a vector register from an index
+void Asm_x64::build_vloadi(LtacNode *node) {
+	auto vload = static_cast<LtacVLoad *>(node);
+	auto index = vload->children[0];
+	int reg = vload->reg - 1;
+	
+	writer << "\tmov rax, [rbp-" << vload->pos << "]" << std::endl;
+	
+	switch (index->type) {
+		//Integer
+		case ltac::Int: {
+			auto li = static_cast<LtacInt *>(index);
+			int val = li->val * 4;
+			
+			writer << "\tadd rax, " << val << std::endl;
+		} break;
+		
+		//Variable
+		case ltac::Var: {
+		
+		} break;
+		
+		//Other- This is an error
+		default: {
+			std::cout << "[Arch error] Vector loading from an index is only valid "
+				<< "with integers and variables." << std::endl;
+			std::exit(1);
+		}
+	}
+	
+	writer << "\tvmovups " << vector_registers[reg] << ", [rax]" << std::endl;
+}
+
 //Build a vector store operation
 void Asm_x64::build_vstore(LtacNode *node) {
 	auto vstore = static_cast<LtacVStore *>(node);

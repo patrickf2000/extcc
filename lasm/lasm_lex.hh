@@ -42,6 +42,7 @@ namespace LtacAsm {
 		
 		//Vector operations
 		Vldr,
+		Vldri,
 		Vstr,
 		
 		//Integer math operations

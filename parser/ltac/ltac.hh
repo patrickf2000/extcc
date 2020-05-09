@@ -52,6 +52,7 @@ enum class ltac {
 	Jmp,
 	
 	VLoad,
+	VLoadI,
 	VStore
 };
 
@@ -392,6 +393,12 @@ public:
 class LtacVLoad : public LtacVOp {
 public:
 	explicit LtacVLoad() { type = ltac::VLoad; }
+};
+
+//Load a vector register at an index
+class LtacVLoadI : public LtacVOp {
+public:
+	explicit LtacVLoadI() { type = ltac::VLoadI; }
 };
 
 //Store a vector register

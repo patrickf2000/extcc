@@ -143,19 +143,29 @@ void AsmParser::buildVar(bool is_ptr) {
 		//TODO: Add rest		
 	}
 	
-	types[name.id] = dt;
-	pointers[name.id] = is_ptr;
-	
-	//Build the rest
-	if (!is_ptr) {
-		scan->unget(type);
-		addChildren(var, true);
+	if (vars[name.id] == 0) {
+		types[name.id] = dt;
+		pointers[name.id] = is_ptr;
+
+		//Build the rest
+		if (!is_ptr) {
+			scan->unget(type);
+			addChildren(var, true);
+		} else {
+			stack_pos += 8;
+		}
+
+		vars[name.id] = stack_pos;
+		var->pos = stack_pos;
 	} else {
-		stack_pos += 8;
+		if (!is_ptr) {
+			scan->unget(type);
+			addChildren(var, false);
+		}
+		
+		var->pos = vars[name.id];
 	}
 	
-	vars[name.id] = stack_pos;
-	var->pos = stack_pos;
 	var->d_type = dt;
 }
 

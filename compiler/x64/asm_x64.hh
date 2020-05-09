@@ -39,4 +39,5 @@ protected:
 	
 	void build_vload(LtacNode *node);
 	void build_vstore(LtacNode *node);
+	void build_vimath(LtacNode *node);
 };

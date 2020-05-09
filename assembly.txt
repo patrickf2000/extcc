@@ -15,6 +15,7 @@ Types-> Used in several commands
 ============================================
 int -> Integers
 string -> String constants
+float -> Float constants
 var -> Refers to a variable or memory location
 reg -> Refers to a register*
 ptr -> Refers to a pointer
@@ -24,21 +25,49 @@ ptr -> Refers to a pointer
 ==================================================================
 Code
 ==================================================================
-func <name>                      Declars a function
+var <name> <type> <value>        Create a variable and set an initial value
+ptr <name> <type>                Create a pointer variable of a type
+
+lbl <name>                       Declares a label
+func <name>                      Declares a function
 pusharg <type> <value>           Push an argument to be used in a function call
 call <name>                      Call a function
-var <name> <type> <value>        Create a variable and set an initial value
 ret <?value>                     Return from a function, optionally with a value
-ldr <register no> <variable>     Store a register into a variable
+
+icmp {lval: <type> <value>} {rval: <type> <value>}      Compare integers
+
+jl <name>       Jump to a label
+
+ldr <register no> <variable>     Load variable to a register
 str <register no> <variable>     Store register contents into a variable
 str.ret <variable>               Store return register value into a variable
+fldr <register no> <variable>    Load variable to floating-point register
+fstr <register no> <variable>    Store floating-point register to varaible
+vldr <register no> <variable>    Load pointer contents to vector register
+vstr <register no> <variable>    Store vector register contents to pointer
+
+arrayset <ptr variable> {index: <type> <value>} {src: <type> <value>}    Set array cotnents
+arrayacc <ptr variable> {index: <type> <value>} {dest: <variable>}       Access array contents
 
 Math syntax:
 <instruction> {dest: <type> <value>} {src: <type> <value>}
 
-Math instructions
+Integer Math instructions
 iadd      Integer addition
 isub      Integer subtraction
 imul      Integer multiplication
 idiv      Integer division
 imod      Integer modulus (remainder of division)
+
+Vector-integer Math instructions
+viadd      Integer addition
+visub      Integer subtraction
+vimul      Integer multiplication
+vidiv      Integer division
+
+Single-precision Floating-point Math instructions
+f32.add      Addition
+f32.sub      Subtraction
+f32.mul      Multiplication
+f32.div      Division
+

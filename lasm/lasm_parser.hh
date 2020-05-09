@@ -41,6 +41,7 @@ private:
 	
 	//Parser functions
 	void buildSection();
+	void buildLabel();
 	
 	void buildFunc();
 	void calcStackSize();

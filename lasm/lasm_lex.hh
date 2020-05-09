@@ -10,6 +10,7 @@ namespace LtacAsm {
 		Section,
 		Data,
 		Code,
+		Lbl,
 		
 		//Data tokens
 		Int,

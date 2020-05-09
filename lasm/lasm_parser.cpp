@@ -12,6 +12,8 @@ void AsmParser::parse() {
 		
 		switch (type) {
 			case AsmTokenType::Section: buildSection(); break;
+			case AsmTokenType::Lbl: buildLabel(); break;
+			
 			case AsmTokenType::Func: buildFunc(); break;
 			case AsmTokenType::Extern: buildExtern(); break;
 			case AsmTokenType::Call: buildFuncCall(); break;
@@ -81,6 +83,19 @@ void AsmParser::buildSection() {
 		file->code = new LtacCodeSec;
 	else
 		syntax->fatalError("Invalid section name.");
+}
+
+//Builds a label
+void AsmParser::buildLabel() {
+	checkCode();
+	Token next = scan->getNext();
+	
+	if (next.type != AsmTokenType::Name)
+		syntax->fatalError("Expected label name.");
+		
+	auto lbl = new LtacLabel;
+	lbl->name = next.id;
+	file->code->children.push_back(lbl);
 }
 
 //Builds a string declaration

@@ -152,14 +152,22 @@ void Asm_x64::build_f32math(LtacNode *node) {
 	auto src = math->children[1];
 	bool src_mem = false;
 	
-	//Memory-to-memory is impossible
-	if (dest->type == ltac::Var && src->type == ltac::Var) {
+	//Floating-point instructions only work on registers
+	if (dest->type == ltac::Var) {
+		src_mem = true;
+	}
+	
+	//Variables
+	if (src->type == ltac::Var) {
 		auto var = static_cast<LtacVar *>(src);
 		
 		writer << "\tmovss xmm7, [rbp-" << var->pos;
 		writer << "]" << std::endl;
 		
-		src_mem = true;
+	//Float constants
+	} else if (src->type == ltac::Float) {
+		auto flt = static_cast<LtacFloat *>(src);
+		writer << "\tmovss xmm7, " << flt->name << "[rip]" << std::endl;
 	}
 	
 	//If the source is a function call, that must be built first
@@ -186,10 +194,7 @@ void Asm_x64::build_f32math(LtacNode *node) {
 		
 		//Variable
 		case ltac::Var: {
-			auto var = static_cast<LtacVar *>(dest);
-			
-			writer << "DWORD PTR [rbp-" << var->pos;
-			writer << "], ";
+			writer << "xmm8, ";
 		} break;
 	}
 	
@@ -203,22 +208,24 @@ void Asm_x64::build_f32math(LtacNode *node) {
 			writer << float_registers[pos] << std::endl;
 		} break;
 		
-		//Variable
-		case ltac::Var: {
-			auto var = static_cast<LtacVar *>(src);
-			
-			if (src_mem) {
-				writer << "xmm7" << std::endl;
-			} else {
-				writer << "DWORD PTR [rbp-" << var->pos;
-				writer << "]" << std::endl;
-			}
+		//Floats and variables
+		case ltac::Var:
+		case ltac::Float: {
+			writer << "xmm7" << std::endl;
 		} break;
 		
 		//Return register- for function calls
 		case ltac::RetReg: {
 			writer << "xmm0" << std::endl;
 		} break;
+	}
+	
+	//If the destination is a variable, store it
+	if (src_mem) {
+		auto var = static_cast<LtacVar *>(dest);
+			
+		writer << "\tmovss DWORD PTR [rbp-" << var->pos;
+		writer << "], xmm8" << std::endl;
 	}
 }
 

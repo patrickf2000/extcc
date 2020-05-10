@@ -45,6 +45,8 @@ fldr <register no> <variable>    Load variable to floating-point register
 fstr <register no> <variable>    Store floating-point register to varaible
 vldr <register no> <variable>    Load pointer contents to vector register
 vstr <register no> <variable>    Store vector register contents to pointer
+f64.ldr <register no> <variable>    Load double variable to register
+f64.str <register no> <variable>    Store register to double variable
 
 arrayset <ptr variable> {index: <type> <value>} {src: <type> <value>}    Set array cotnents
 arrayacc <ptr variable> {index: <type> <value>} {dest: <variable>}       Access array contents
@@ -76,4 +78,10 @@ f32.vadd      Addition
 f32.vsub      Subtraction
 f32.vmul      Multiplication
 f32.vdiv      Division
+
+Double-precision float math instructions
+f64.add       Addition
+f64.sub       Subtraction
+f64.mul       Multiplication
+f64.div       Division
 

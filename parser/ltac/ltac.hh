@@ -89,6 +89,7 @@ enum RegType {
 	Gp,
 	Ret,
 	Flt,
+	Flt64,
 	Fpu,
 	Vec
 };

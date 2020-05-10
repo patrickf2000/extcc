@@ -28,6 +28,9 @@ void AsmParser::parse() {
 			case AsmTokenType::Str: buildStr(); break;
 			case AsmTokenType::FStr: buildStr(RegType::Flt); break;
 			case AsmTokenType::StrRet: buildStr(RegType::Ret); break;
+
+			case AsmTokenType::F64_Ldr: buildLdr(RegType::Flt64); break;
+			case AsmTokenType::F64_Str: buildStr(RegType::Flt64); break;
 			
 			case AsmTokenType::Vldr: buildVLdr(1); break;
 			case AsmTokenType::Vldri: buildVLdr(2); break;
@@ -53,6 +56,11 @@ void AsmParser::parse() {
 			case AsmTokenType::F32_VSub:
 			case AsmTokenType::F32_VMul:
 			case AsmTokenType::F32_VDiv: buildMath(5, type); break;
+
+			case AsmTokenType::F64_Add:
+			case AsmTokenType::F64_Sub:
+			case AsmTokenType::F64_Mul:
+			case AsmTokenType::F64_Div: buildMath(3, type); break;
 			
 			case AsmTokenType::ArraySet: buildArraySet(); break;
 			case AsmTokenType::ArrayAcc: buildArrayAcc(); break;
@@ -156,6 +164,44 @@ LtacFloat *AsmParser::buildFloat(std::string name, std::string val) {
 	l_flt2->name = name;
 	l_flt2->val = f;
 	return l_flt2;
+}
+
+//Builds a double declaration
+void AsmParser::buildDouble() {
+	checkData();
+
+	Token next = scan->getNext();
+	Token flt = scan->getNext();
+
+	if (next.type != AsmTokenType::Name)
+		syntax->fatalError("Expected variable name.");
+	else if (flt.type != AsmTokenType::FloatL)
+		syntax->fatalError("Expected float literal.");
+
+	buildDouble(next.id, flt.id);
+}
+
+LtacDouble *AsmParser::buildDouble(std::string name, std::string val) {
+	if (name == "") {
+		name = "FLT_" + std::to_string(flt_count);
+		++flt_count;
+	}
+
+	auto *l_dbl = new LtacDouble;
+
+	double d = std::stod(val);
+	char buf[64];
+	sprintf(buf, "%lu", *(uint64_t*)&d);
+	l_dbl->i_val = std::string(buf);
+
+	l_dbl->val = d;
+	l_dbl->name = name;
+	file->data->children.push_back(l_dbl);
+
+	auto *l_dbl2 = new LtacDouble;
+	l_dbl2->name = name;
+	l_dbl2->val = d;
+	return l_dbl2;
 }
 
 //Builds a variable declaration
@@ -299,6 +345,19 @@ LtacNode *AsmParser::addChildren(LtacNode *parent, bool inc_stack) {
 		case AsmTokenType::FloatL: {
 			ret = buildFloat("", name.id);
 			if (inc_stack) stack_pos += 4;
+		} break;
+
+		//Double float literals
+		case AsmTokenType::Double: {
+			if (name.type == AsmTokenType::Name) {
+				auto *d = new LtacDouble;
+				d->name = name.id;
+				ret = d;
+			} else {
+				ret = buildDouble("", name.id);
+			}
+
+			if (inc_stack) stack_pos += 8;
 		} break;
 		
 		//Floats

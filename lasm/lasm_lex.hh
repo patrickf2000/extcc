@@ -16,6 +16,7 @@ namespace LtacAsm {
 		Int,
 		String,
 		Float,
+		Double,
 		Void,
 		Any,
 		Var,
@@ -35,6 +36,8 @@ namespace LtacAsm {
 		FLdr,
 		FStr,
 		StrRet,
+		F64_Ldr,
+		F64_Str,
 		
 		//Array operations
 		ArraySet,
@@ -69,6 +72,12 @@ namespace LtacAsm {
 		F32_VSub,
 		F32_VMul,
 		F32_VDiv,
+
+		//Float-64 math operations
+		F64_Add,
+		F64_Sub,
+		F64_Mul,
+		F64_Div,
 		
 		//Identifiers
 		Name,

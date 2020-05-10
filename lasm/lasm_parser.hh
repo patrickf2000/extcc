@@ -54,6 +54,8 @@ private:
 	void buildString();
 	void buildFloat();
 	LtacFloat *buildFloat(std::string name, std::string val);
+	void buildDouble();
+	LtacDouble *buildDouble(std::string name, std::string val);
 	
 	void buildVar(bool is_ptr = false);
 	void buildLdr(RegType rtype = RegType::Gp);

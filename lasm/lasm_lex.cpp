@@ -83,6 +83,13 @@ void AsmScanner::initTokens() {
 	tokens["f32.vmul"] = AsmTokenType::F32_VMul;
 	tokens["f32.vdiv"] = AsmTokenType::F32_VDiv;
 	tokens["vldri"] = AsmTokenType::Vldri;
+	tokens["double"] = AsmTokenType::Double;
+	tokens["f64.ldr"] = AsmTokenType::F64_Ldr;
+	tokens["f64.str"] = AsmTokenType::F64_Str;
+	tokens["f64.add"] = AsmTokenType::F64_Add;
+	tokens["f64.sub"] = AsmTokenType::F64_Sub;
+	tokens["f64.mul"] = AsmTokenType::F64_Mul;
+	tokens["f64.div"] = AsmTokenType::F64_Div;
 	
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;

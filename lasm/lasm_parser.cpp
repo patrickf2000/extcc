@@ -222,6 +222,7 @@ void AsmParser::buildVar(bool is_ptr) {
 	switch (type.type) {
 		case AsmTokenType::Int: dt = DataType::Int; break;
 		case AsmTokenType::Float: dt = DataType::Float; break;
+		case AsmTokenType::Double: dt = DataType::Double; break;
 		case AsmTokenType::String: dt = DataType::Str; break;
 		
 		//TODO: Add rest		

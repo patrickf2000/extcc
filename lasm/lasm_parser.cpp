@@ -268,6 +268,8 @@ void AsmParser::buildMath(int type, int op) {
 		math = new LtacIMath;
 	else if (type == 2)
 		math = new LtacF32Math;
+	else if (type == 3)
+		math = new LtacF64Math;
 	else if (type == 4)
 		math = new LtacVIMath;
 	else if (type == 5)
@@ -277,22 +279,26 @@ void AsmParser::buildMath(int type, int op) {
 		case AsmTokenType::IAdd:
 		case AsmTokenType::VIAdd:
 		case AsmTokenType::F32_Add: 
-		case AsmTokenType::F32_VAdd: math->op = Operator::Add; break;
+		case AsmTokenType::F32_VAdd: 
+		case AsmTokenType::F64_Add: math->op = Operator::Add; break;
 		
 		case AsmTokenType::ISub:
 		case AsmTokenType::VISub: 
 		case AsmTokenType::F32_Sub: 
-		case AsmTokenType::F32_VSub: math->op = Operator::Sub; break;
+		case AsmTokenType::F32_VSub:
+		case AsmTokenType::F64_Sub: math->op = Operator::Sub; break;
 		
 		case AsmTokenType::IMul:
 		case AsmTokenType::VIMul:
 		case AsmTokenType::F32_Mul:
-		case AsmTokenType::F32_VMul: math->op = Operator::Mul; break;
+		case AsmTokenType::F32_VMul: 
+		case AsmTokenType::F64_Mul: math->op = Operator::Mul; break;
 		
 		case AsmTokenType::IDiv:
 		case AsmTokenType::VIDiv:
 		case AsmTokenType::F32_Div: 
-		case AsmTokenType::F32_VDiv: math->op = Operator::Div; break;
+		case AsmTokenType::F32_VDiv:
+		case AsmTokenType::F64_Div: math->op = Operator::Div; break;
 		
 		case AsmTokenType::IMod: math->op = Operator::Mod; break;
 	}

@@ -35,7 +35,7 @@ protected:
 	
 	void build_imath(LtacNode *node);
 	void build_idiv(LtacIMath *math);
-	void build_f32math(LtacNode *node);
+	void build_fmath(LtacNode *node, bool dbl);
 	
 	void build_vload(LtacNode *node);
 	void build_vloadi(LtacNode *node);

@@ -144,20 +144,37 @@ void Asm_x64::build_idiv(LtacIMath *math) {
 		writer << "\tmov " << loco << ", eax" << std::endl;
 }
 
-//Build 32-bit floating-point math
-void Asm_x64::build_f32math(LtacNode *node) {
+//Build floating-point math
+void Asm_x64::build_fmath(LtacNode *node, bool dbl) {
 	auto math = static_cast<LtacF32Math *>(node);
 	
 	auto dest = math->children[0];
 	auto src = math->children[1];
 	bool src_mem = false;
+
+	//Instructions- they differ slightly depending on type
+	std::string mov = "movss";
+	std::string add = "addss";
+	std::string sub = "subss";
+	std::string mul = "mulss";
+	std::string div = "divss";
+	std::string prefix = "DWORD PTR";
+
+	if (dbl) {
+		mov = "movsd";
+		add = "addsd";
+		sub = "subsd";
+		mul = "mulsd";
+		div = "divsd";
+		prefix = "QWORD PTR";
+	}
 	
 	//Floating-point instructions only work on registers
 	if (dest->type == ltac::Var) {
 		src_mem = true;
 		auto var = static_cast<LtacVar *>(dest);
 		
-		writer << "\tmovss xmm8, [rbp-" << var->pos;
+		writer << "\t" << mov << " xmm8, [rbp-" << var->pos;
 		writer << "]" << std::endl;
 	}
 	
@@ -165,13 +182,13 @@ void Asm_x64::build_f32math(LtacNode *node) {
 	if (src->type == ltac::Var) {
 		auto var = static_cast<LtacVar *>(src);
 		
-		writer << "\tmovss xmm7, [rbp-" << var->pos;
+		writer << "\t" << mov << " xmm7, [rbp-" << var->pos;
 		writer << "]" << std::endl;
 		
 	//Float constants
 	} else if (src->type == ltac::Float) {
 		auto flt = static_cast<LtacFloat *>(src);
-		writer << "\tmovss xmm7, DWORD PTR " << flt->name << "[rip]" << std::endl;
+		writer << "\t" << mov << " xmm7, " << prefix << " " << flt->name << "[rip]" << std::endl;
 	}
 	
 	//If the source is a function call, that must be built first
@@ -180,10 +197,10 @@ void Asm_x64::build_f32math(LtacNode *node) {
 	
 	//Determine the instruction
 	switch (math->op) {
-		case Operator::Add: writer << "\taddss "; break;
-		case Operator::Sub: writer << "\tsubss "; break;
-		case Operator::Mul: writer << "\tmulss "; break;
-		case Operator::Div: writer << "\tdivss "; break;
+		case Operator::Add: writer << "\t" << add << " "; break;
+		case Operator::Sub: writer << "\t" << sub << " "; break;
+		case Operator::Mul: writer << "\t" << mul << " "; break;
+		case Operator::Div: writer << "\t" << div << " "; break;
 	}
 	
 	//Build the destination
@@ -228,7 +245,7 @@ void Asm_x64::build_f32math(LtacNode *node) {
 	if (src_mem) {
 		auto var = static_cast<LtacVar *>(dest);
 			
-		writer << "\tmovss DWORD PTR [rbp-" << var->pos;
+		writer << "\t" << mov << " " << prefix << " [rbp-" << var->pos;
 		writer << "], xmm8" << std::endl;
 	}
 }

@@ -65,7 +65,8 @@ void Asm_x64::build_code(LtacCodeSec *code) {
 			case ltac::Jmp: build_jmp(ln); break;
 			
 			case ltac::IMath: build_imath(ln); break;
-			case ltac::F32Math: build_f32math(ln); break;
+			case ltac::F32Math: build_fmath(ln, false); break;
+			case ltac::F64Math: build_fmath(ln, true); break;
 			
 			case ltac::VLoad: build_vload(ln); break;
 			case ltac::VLoadI: build_vloadi(ln); break;

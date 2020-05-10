@@ -24,6 +24,12 @@ void Asm_x64::build_reg(LtacNode *node) {
 					writer << "\tmovss " << float_registers[pos] << ", ";
 					writer << "[rbp-" << var->pos << "]" << std::endl;
 				} break;
+
+				//Double registers
+				case RegType::Flt64: {
+					writer << "\tmovsd " << float_registers[pos] << ", ";
+					writer << "[rbp-" << var->pos << "]" << std::endl;
+				} break;
 			}
 			
 		} break;
@@ -138,6 +144,12 @@ void Asm_x64::build_var(LtacNode *node) {
 				//Floating-point
 				case RegType::Flt: {
 					writer << "\tmovss DWORD PTR [rbp-" << var->pos;
+					writer << "], " << float_registers[pos] << std::endl;
+				} break;
+
+				//Double
+				case RegType::Flt64: {
+					writer << "\tmovsd QWORD PTR [rbp-" << var->pos;
 					writer << "], " << float_registers[pos] << std::endl;
 				} break;
 			}

@@ -90,6 +90,7 @@ void AsmParser::buildLdArg() {
 	}
 
 	vars[name.id] = stack_pos;
+	types[name.id] = arg->d_type;
 	arg->pos = stack_pos;
 	arg->is_ptr = false;
 	arg->is_ref = false;

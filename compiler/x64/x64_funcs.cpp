@@ -85,6 +85,8 @@ void Asm_x64::build_func(LtacNode *node) {
 		if (arg->is_ptr) {
 			writer << "\tmov QWORD PTR [rbp-" << arg->pos;
 			writer << "], " << call_regs[call_index] << std::endl;
+
+			++call_index;
 		} else {
 			switch (arg->d_type) {
 				//Integers
@@ -96,8 +98,21 @@ void Asm_x64::build_func(LtacNode *node) {
 						writer <<"[rbp-" << arg->pos << "], ";
 					}
 					writer << call_regs32[call_index] << std::endl;
+
+					++call_index;
 				} break;
 				
+				//Floats
+				case DataType::Float: {
+					std::string reg = call_flt_regs[call_index_flt];
+
+					writer << "\tcvtsd2ss " << reg << ", " << reg << std::endl;
+					writer << "\tmovss DWORD PTR [rbp-" << arg->pos;
+					writer << "], " << reg << std::endl;
+
+					++call_index_flt;
+				} break;
+
 				//Strings
 				case DataType::Str: {
 					writer << "\tmov QWORD PTR ";
@@ -107,11 +122,11 @@ void Asm_x64::build_func(LtacNode *node) {
 						writer <<"[rbp-" << arg->pos << "], ";
 					}
 					writer << call_regs[call_index] << std::endl;
+
+					++call_index;
 				} break;
 			}
 		}
-		
-		++call_index;
 	}
 	
 	if (fd->children.size() > 0)

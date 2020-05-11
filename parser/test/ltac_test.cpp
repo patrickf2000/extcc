@@ -44,7 +44,8 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 	
-	print_ltac(file);
-	
+	//print_ltac(file);
+	output_ltac(file);
+
 	return 0;
 }

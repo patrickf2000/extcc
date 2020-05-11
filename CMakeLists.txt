@@ -17,6 +17,7 @@ set(PARSER_SRC
 	parser/ltac/ltac_math.cpp
 	parser/ltac/ltac_struct.cpp
 	parser/ltac/ltac_vars.cpp
+	parser/ltac/ltac_writer.cpp
 )
 
 set(C_SRC

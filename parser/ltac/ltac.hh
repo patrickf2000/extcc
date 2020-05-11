@@ -417,4 +417,5 @@ public:
 
 //Useful functions
 void print_ltac(LtacFile *file);
+void output_ltac(LtacFile *file);
 

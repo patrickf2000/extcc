@@ -60,6 +60,43 @@ void AsmParser::buildExtern() {
 	}
 }
 
+//Builds a load-arg statement
+void AsmParser::buildLdArg() {
+	checkCode();
+	auto *arg = new LtacVar;
+
+	Token name = scan->getNext();
+	Token type = scan->getNext();
+
+	if (name.type != AsmTokenType::Name)
+		syntax->fatalError("Expected variable name in ldarg.");
+
+	//Determine the type and increment the stack
+	switch (type.type) {
+		case AsmTokenType::Int: {
+			stack_pos += 4;
+			arg->d_type = DataType::Int;
+		} break;
+
+		case AsmTokenType::Float: {
+			stack_pos += 4;
+			arg->d_type = DataType::Float;
+		} break;
+
+		case AsmTokenType::Double: {
+			stack_pos += 8;
+			arg->d_type = DataType::Double;
+		} break;
+	}
+
+	vars[name.id] = stack_pos;
+	arg->pos = stack_pos;
+	arg->is_ptr = false;
+	arg->is_ref = false;
+
+	topNode.top()->children.push_back(arg);
+}
+
 //Builds a push-arg statement
 void AsmParser::buildPushArg() {
 	auto *push = new LtacPushArg;

@@ -47,6 +47,7 @@ private:
 	void buildFunc();
 	void calcStackSize();
 	void buildExtern();
+	void buildLdArg();
 	void buildPushArg();
 	void buildFuncCall();
 	void buildRet();

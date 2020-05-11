@@ -27,6 +27,7 @@ namespace LtacAsm {
 		Func,
 		Extern,
 		Ret,
+		LdArg,
 		PushArg,
 		Call,
 		

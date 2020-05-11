@@ -18,6 +18,7 @@ void AsmParser::parse() {
 			case AsmTokenType::Extern: buildExtern(); break;
 			case AsmTokenType::Call: buildFuncCall(); break;
 			case AsmTokenType::Ret: buildRet(); break;
+			case AsmTokenType::LdArg: buildLdArg(); break;
 			case AsmTokenType::PushArg: buildPushArg(); break;
 			case AsmTokenType::String: buildString(); break;
 			case AsmTokenType::Float: buildFloat(); break;

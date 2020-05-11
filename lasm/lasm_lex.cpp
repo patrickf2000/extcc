@@ -90,7 +90,8 @@ void AsmScanner::initTokens() {
 	tokens["f64.sub"] = AsmTokenType::F64_Sub;
 	tokens["f64.mul"] = AsmTokenType::F64_Mul;
 	tokens["f64.div"] = AsmTokenType::F64_Div;
-	
+	tokens["ldarg"] = AsmTokenType::LdArg;
+
 	//Symbols
 	tokens["\n"] = AsmTokenType::NewLn;
 	tokens[")"] = AsmTokenType::Comma;

@@ -31,6 +31,11 @@ namespace LtacAsm {
 		PushArg,
 		Call,
 		
+		//Variable operations
+		IVar,
+		F32Var,
+		F64Var,
+		
 		//Register operations
 		Ldr,
 		Str,

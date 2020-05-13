@@ -31,6 +31,7 @@ ptr <name> <type>                Create a pointer variable of a type
 lbl <name>                       Declares a label
 func <name>                      Declares a function
 pusharg <type> <value>           Push an argument to be used in a function call
+ldarg <name> <type>              Load a function argument to a variable
 call <name>                      Call a function
 ret <?value>                     Return from a function, optionally with a value
 

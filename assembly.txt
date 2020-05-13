@@ -25,8 +25,9 @@ ptr -> Refers to a pointer
 ==================================================================
 Code
 ==================================================================
-var <name> <type> <value>        Create a variable and set an initial value
-ptr <name> <type>                Create a pointer variable of a type
+i.var <name>           Create a new integer variable
+f32.var <name>         Create a new 32-bit floating-point variable
+f64.var <name>         Create a new 64-bit floating-point variable
 
 lbl <name>                       Declares a label
 func <name>                      Declares a function

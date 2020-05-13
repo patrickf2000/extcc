@@ -22,13 +22,15 @@ void AsmParser::parse() {
 			case AsmTokenType::PushArg: buildPushArg(); break;
 			case AsmTokenType::String: buildString(); break;
 			case AsmTokenType::Float: buildFloat(); break;
-			case AsmTokenType::Var: buildVar(); break;
-			case AsmTokenType::Ptr: buildVar(true); break;
 			case AsmTokenType::Ldr: buildLdr(); break;
 			case AsmTokenType::FLdr: buildLdr(RegType::Flt); break;
 			case AsmTokenType::Str: buildStr(); break;
 			case AsmTokenType::FStr: buildStr(RegType::Flt); break;
 			case AsmTokenType::StrRet: buildStr(RegType::Ret); break;
+			
+			case AsmTokenType::IVar: buildVar(DataType::Int); break;
+			case AsmTokenType::F32Var: buildVar(DataType::Float); break;
+			case AsmTokenType::F64Var: buildVar(DataType::Double); break;
 
 			case AsmTokenType::F64_Ldr: buildLdr(RegType::Flt64); break;
 			case AsmTokenType::F64_Str: buildStr(RegType::Flt64); break;
@@ -207,54 +209,23 @@ LtacDouble *AsmParser::buildDouble(std::string name, std::string val) {
 	return l_dbl2;
 }
 
-//Builds a variable declaration
-void AsmParser::buildVar(bool is_ptr) {
-	auto *var = new LtacVar;
-	var->is_ptr = is_ptr;
-	file->code->children.push_back(var);
+//Builds variable declarations
+void AsmParser::buildVar(DataType type) {
+	Token next = scan->getNext();
 	
-	Token name = scan->getNext();
-	
-	if (name.type != AsmTokenType::Name)
+	//Syntax check
+	if (next.type != AsmTokenType::Name)
 		syntax->fatalError("Expected variable name.");
-	
-	//Build the type
-	Token type = scan->getNext();
-	DataType dt = DataType::None;
-	
-	switch (type.type) {
-		case AsmTokenType::Int: dt = DataType::Int; break;
-		case AsmTokenType::Float: dt = DataType::Float; break;
-		case AsmTokenType::Double: dt = DataType::Double; break;
-		case AsmTokenType::String: dt = DataType::Str; break;
 		
-		//TODO: Add rest		
+	//Build the data
+	switch (type) {
+		case DataType::Int:
+		case DataType::Float: stack_pos += 4; break;
+		case DataType::Double: stack_pos += 8; break;
 	}
 	
-	if (vars[name.id] == 0) {
-		types[name.id] = dt;
-		pointers[name.id] = is_ptr;
-
-		//Build the rest
-		if (!is_ptr) {
-			scan->unget(type);
-			addChildren(var, true);
-		} else {
-			stack_pos += 8;
-		}
-
-		vars[name.id] = stack_pos;
-		var->pos = stack_pos;
-	} else {
-		if (!is_ptr) {
-			scan->unget(type);
-			addChildren(var, false);
-		}
-		
-		var->pos = vars[name.id];
-	}
-	
-	var->d_type = dt;
+	vars[next.id] = stack_pos;
+	types[next.id] = type;
 }
 
 //Builds a single math command

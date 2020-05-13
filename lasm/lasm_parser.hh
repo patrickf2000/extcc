@@ -58,11 +58,12 @@ private:
 	void buildDouble();
 	LtacDouble *buildDouble(std::string name, std::string val);
 	
-	void buildVar(bool is_ptr = false);
 	void buildLdr(RegType rtype = RegType::Gp);
 	void buildStr(RegType rtype = RegType::Gp);
 	void buildVLdr(int type);
 	void buildMath(int type, int op);
+	
+	void buildVar(DataType type);
 	
 	void buildIStoreI();
 	

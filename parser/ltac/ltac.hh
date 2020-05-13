@@ -30,6 +30,8 @@ enum class ltac {
 	
 	PushArg,
 	
+	IStrImm,
+	
 	Int,
 	Byte,
 	Float,
@@ -206,6 +208,20 @@ public:
 class LtacRetReg : public LtacReg {
 public:
 	explicit LtacRetReg() { type = ltac::RetReg; }
+};
+
+//The integer store instruction (immediate-> memory)
+class LtacIStrImm : public LtacNode {
+public:
+	explicit LtacIStrImm() { type = ltac::IStrImm; }
+	explicit LtacIStrImm(int pos, int val) {
+		type = ltac::IStrImm;
+		this->pos = pos;
+		this->val = val;
+	}
+	
+	int pos;
+	int val;
 };
 
 //Push argument operation

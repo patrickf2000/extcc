@@ -61,6 +61,8 @@ void Asm_x64::build_code(LtacCodeSec *code) {
 			case ltac::Reg: build_reg(ln); break;
 			case ltac::Var: build_var(ln); break;
 			
+			case ltac::IStrImm: build_istore_imm(ln); break;
+			
 			case ltac::ICmp: build_icmp(ln); break;
 			case ltac::Jmp: build_jmp(ln); break;
 			

@@ -40,6 +40,9 @@ namespace LtacAsm {
 		F64_Ldr,
 		F64_Str,
 		
+		//Store operations
+		IStoreI,
+		
 		//Array operations
 		ArraySet,
 		ArrayAcc,

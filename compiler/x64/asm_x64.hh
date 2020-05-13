@@ -26,6 +26,8 @@ protected:
 	void build_float_math(LtacVar *var, LtacNode *src, bool store=true);
 	void build_vector_math(LtacVar *var, LtacNode *src);
 	
+	void build_istore_imm(LtacNode *node);
+	
 	void build_array(LtacNode *node);
 	void build_array_acc(LtacNode *node);
 	void build_array_set(LtacNode *node);

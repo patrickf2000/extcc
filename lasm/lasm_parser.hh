@@ -64,6 +64,8 @@ private:
 	void buildVLdr(int type);
 	void buildMath(int type, int op);
 	
+	void buildIStoreI();
+	
 	void buildArraySet();
 	void buildArrayAcc();
 	

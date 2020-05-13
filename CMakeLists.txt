@@ -36,6 +36,7 @@ set(LASM_SRC
 	lasm/lasm_lex.cpp
 	lasm/lasm_parser.cpp
 	lasm/lasm_register.cpp
+	lasm/lasm_store.cpp
 )
 
 set(QK_SRC
@@ -58,6 +59,7 @@ set(COMPILER_SRC
 	compiler/x64/x64_flow.cpp
 	compiler/x64/x64_funcs.cpp
 	compiler/x64/x64_math.cpp
+	compiler/x64/x64_store.cpp
 	compiler/x64/x64_vars.cpp
 	compiler/x64/x64_vector.cpp
 	

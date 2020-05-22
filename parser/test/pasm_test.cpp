@@ -22,6 +22,9 @@ int main(int argc, char *argv[]) {
 	file->code.push_back(arg2);
 	file->code.push_back(syscall);
 	
+	std::string output = unwrite(file);
+	std::cout << output << std::endl;
+	
 	auto writer = new X64("/tmp/out.asm");
 	writer->build_code(file);
 	writer->write();

@@ -115,4 +115,7 @@ public:
 	explicit SysCall() { type = pasm::Syscall; }
 };
 
+//Useful functions
+std::string unwrite(PasmFile *file);
+
 }

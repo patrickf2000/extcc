@@ -10,6 +10,7 @@ set(PARSER_SRC
 	parser/ast.cpp
 	parser/lex.cpp
 	parser/syntax.cpp
+	
 	parser/ltac/ltac.cpp
 	parser/ltac/ltac_array.cpp
 	parser/ltac/ltac_build.cpp
@@ -19,6 +20,8 @@ set(PARSER_SRC
 	parser/ltac/ltac_struct.cpp
 	parser/ltac/ltac_vars.cpp
 	parser/ltac/ltac_writer.cpp
+	
+	parser/pasm/unwriter.cpp
 )
 
 set(C_SRC

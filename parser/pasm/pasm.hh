@@ -32,7 +32,7 @@ enum class pasm {
 };
 
 //Represents data types
-enum DataType {
+/*enum DataType {
 	Byte,
 	Short,
 	Int,
@@ -40,7 +40,7 @@ enum DataType {
 	Float64,
 	String,
 	Ptr
-};
+};*/
 
 //The base of all PASM nodes
 class PasmNode {
@@ -58,7 +58,7 @@ class PasmFile {
 public:
 	PasmFile() { }
 	
-	std::string path = "";
+	std::string name = "";
 	std::vector<PasmNode *> data;
 	std::vector<PasmNode *> code;
 };
@@ -119,3 +119,4 @@ public:
 std::string unwrite(PasmFile *file);
 
 }
+

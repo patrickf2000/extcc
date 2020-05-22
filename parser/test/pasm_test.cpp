@@ -9,7 +9,7 @@ using namespace PASM;
 
 int main(int argc, char *argv[]) {
 	auto *file = new PasmFile;
-	file->path = "output.asm";
+	file->name = "output.asm";
 	
 	auto *main_fc = new Func("_start");
 	file->code.push_back(main_fc);

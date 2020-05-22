@@ -6,13 +6,22 @@
 #include <ltac/ltac.hh>
 #include <ltac/ltac_build.hh>
 
+#ifdef BUILD_PASM
+#include <pasm/pasm.hh>
+#include <pasm/pasm_builder.hh>
+#endif
+
 #include "compiler.hh"
 #include "utils.hh"
 
+#ifdef BUILD_PASM
+#include "x86-64/asm_x64.hh"
+#else
 #include "x64/asm_x64.hh"
 #include "i386/asm_i386.hh"
 #include "arm7/asm_arm7.hh"
 #include "llvm/asm_llvm.hh"
+#endif
 
 #ifdef BUILD_CLANG
 #include <c_parser.hh>
@@ -56,7 +65,9 @@ void Compiler::assemble() {
 		parser.parse();
 		LtacFile *file = parser.getFile();
 #else
+#ifndef BUILD_PASM
 #error Unknown Compiler
+#endif
 #endif
 
 		int ptr_size = 8;
@@ -64,22 +75,34 @@ void Compiler::assemble() {
 			ptr_size = 4;
 		
 #ifndef BUILD_ASM
+#ifdef BUILD_PASM
+		PasmBuilder *builder = new PasmBuilder("out.asm");
+		PasmFile *file = builder->buildFile(top);
+#else
 		LTAC_Builder *builder = new LTAC_Builder;
 		builder->set_ptr_size(ptr_size);
 		LtacFile *file = builder->build_file(top);
+#endif
 #endif
 		file->name = asm_files[i];
 		
 		switch (config.arch) {
 			case CpuArch::Intel64: {
+#ifdef BUILD_PASM
+				X64 asm_builder(file->name);
+				asm_builder.build_code(file);
+				asm_builder.write();
+#else
 				Asm_x64 asm_builder(file);
 				
 				if (config.out_type == BuildType::DynLib)
 					asm_builder.build_PIC();
 				
 				asm_builder.write();
+#endif
 			} break;
 			
+#ifndef BUILD_PASM
 			case CpuArch::Intel32: {
 				Asm_i386 asm_builder(file);
 				
@@ -103,6 +126,7 @@ void Compiler::assemble() {
 				Asm_LLVM llvm_builder(file);
 				llvm_builder.write(false, true);
 			} break;
+#endif
 		}
 		
 #ifndef BUILD_ASM
@@ -153,23 +177,29 @@ void Compiler::link() {
 			ld_line += "/usr/lib32/crtn.o ";
 			ld_line += "/usr/lib32/crt1.o ";
 		} else {
+#ifndef BUILD_PASM
 			ld_line += "/usr/lib/x86_64-linux-gnu/crti.o ";
 			ld_line += "/usr/lib/x86_64-linux-gnu/crtn.o ";
 			ld_line += "/usr/lib/x86_64-linux-gnu/crt1.o ";
+#endif
 		}
 		
+#ifndef BUILD_PASM
 		ld_line += "-lc ";
+#endif
 
 		for (auto obj : obj_files) {
 			ld_line += obj + " ";
 		}
 		
+#ifndef BUILD_PASM
 		if (config.arch == CpuArch::Arm7)
 			ld_line += "-dynamic-linker /lib/ld-linux-armhf.so.3 ";
 		else if (config.arch == CpuArch::Intel32)
 			ld_line += "-dynamic-linker /lib32/ld-linux.so.2 ";
 		else
 			ld_line += "-dynamic-linker /lib64/ld-linux-x86-64.so.2 ";
+#endif
 		
 		ld_line += "-o " + config.output;
 		

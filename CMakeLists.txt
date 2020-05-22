@@ -21,6 +21,7 @@ set(PARSER_SRC
 	parser/ltac/ltac_vars.cpp
 	parser/ltac/ltac_writer.cpp
 	
+	parser/pasm/pasm_builder.cpp
 	parser/pasm/unwriter.cpp
 )
 
@@ -67,6 +68,10 @@ set(COMPILER_SRC
 	compiler/ltac/x64/x64_vars.cpp
 	compiler/ltac/x64/x64_vector.cpp
 	
+	compiler/x86-64/asm_x64.cpp
+	compiler/x86-64/x64_func.cpp
+	compiler/x86-64/x64_syscall.cpp
+	
 	compiler/ltac/base/asm_base.cpp
 	compiler/compiler.cpp
 	compiler/main.cpp
@@ -99,6 +104,9 @@ add_executable(pasm parser/test/pasm_test.cpp)
 add_executable(cc ${COMPILER_SRC})
 set_target_properties(cc PROPERTIES COMPILE_FLAGS "-DBUILD_CLANG")
 
+add_executable(cc2 ${COMPILER_SRC})
+set_target_properties(cc2 PROPERTIES COMPILE_FLAGS "-DBUILD_PASM -DBUILD_CLANG")
+
 add_executable(ltasm ${COMPILER_SRC})
 set_target_properties(ltasm PROPERTIES COMPILE_FLAGS "-DBUILD_ASM")
 
@@ -115,5 +123,6 @@ target_link_libraries(asm cparser qkparser lasm_parser)
 target_link_libraries(pasm parser cclib)
 
 target_link_libraries(cc cparser)
+target_link_libraries(cc2 cparser)
 target_link_libraries(ltasm lasm_parser)
 

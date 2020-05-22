@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.0.0)
 project(extcc)
 
 include_directories(parser quik clang lasm compiler)
+include_directories(compiler/ltac)
 
 add_compile_options(-std=c++14 -g)
 
@@ -44,26 +45,26 @@ set(QK_SRC
 )
 
 set(COMPILER_SRC
-	compiler/arm7/arm7_funcs.cpp
-	compiler/arm7/arm7_var.cpp
-	compiler/arm7/asm_arm7.cpp
+	compiler/ltac/arm7/arm7_funcs.cpp
+	compiler/ltac/arm7/arm7_var.cpp
+	compiler/ltac/arm7/asm_arm7.cpp
 	
-	compiler/i386/asm_i386.cpp
+	compiler/ltac/i386/asm_i386.cpp
 	
-	compiler/llvm/asm_llvm.cpp
-	compiler/llvm/llvm_func.cpp
-	compiler/llvm/llvm_var.cpp
+	compiler/ltac/llvm/asm_llvm.cpp
+	compiler/ltac/llvm/llvm_func.cpp
+	compiler/ltac/llvm/llvm_var.cpp
 	
-	compiler/x64/asm_x64.cpp
-	compiler/x64/x64_array.cpp
-	compiler/x64/x64_flow.cpp
-	compiler/x64/x64_funcs.cpp
-	compiler/x64/x64_math.cpp
-	compiler/x64/x64_store.cpp
-	compiler/x64/x64_vars.cpp
-	compiler/x64/x64_vector.cpp
+	compiler/ltac/x64/asm_x64.cpp
+	compiler/ltac/x64/x64_array.cpp
+	compiler/ltac/x64/x64_flow.cpp
+	compiler/ltac/x64/x64_funcs.cpp
+	compiler/ltac/x64/x64_math.cpp
+	compiler/ltac/x64/x64_store.cpp
+	compiler/ltac/x64/x64_vars.cpp
+	compiler/ltac/x64/x64_vector.cpp
 	
-	compiler/base/asm_base.cpp
+	compiler/ltac/base/asm_base.cpp
 	compiler/compiler.cpp
 	compiler/main.cpp
 	compiler/utils.cpp

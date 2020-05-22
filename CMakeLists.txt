@@ -70,11 +70,17 @@ set(COMPILER_SRC
 	compiler/utils.cpp
 )
 
+#TEMPORARY
+set(COMPILER_LIB
+	compiler/x86-64/asm_x64.cpp
+)
+
 # Build all the frontend libraries
 add_library(parser ${PARSER_SRC})
 add_library(cparser ${C_SRC})
 add_library(lasm_parser ${LASM_SRC})
 add_library(qkparser ${QK_SRC})
+add_library(cclib ${COMPILER_LIB})
 
 # Build the utilities
 add_executable(clex clang/test/c_lex_test.cpp)
@@ -101,7 +107,7 @@ target_link_libraries(qklex qkparser)
 
 target_link_libraries(ast cparser qkparser)
 target_link_libraries(asm cparser qkparser lasm_parser)
-target_link_libraries(pasm parser)
+target_link_libraries(pasm parser cclib)
 
 target_link_libraries(cc cparser)
 target_link_libraries(ltasm lasm_parser)

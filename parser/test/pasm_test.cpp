@@ -2,6 +2,8 @@
 
 #include <pasm/pasm.hh>
 
+#include <x86-64/asm_x64.hh>
+
 using namespace PASM;
 
 int main(int argc, char *argv[]) {
@@ -18,6 +20,9 @@ int main(int argc, char *argv[]) {
 	file->code.push_back(arg1);
 	file->code.push_back(arg2);
 	file->code.push_back(syscall);
+	
+	auto writer = new X64("/tmp/out.asm");
+	writer->write();
 	
 	return 0;
 }

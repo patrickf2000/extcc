@@ -13,6 +13,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 namespace PASM {
 
@@ -22,11 +23,11 @@ enum pasm {
 	
 	//Function stuff
 	Func,
-	Lbl
+	Lbl,
 	
 	//System class stuff
 	ISysarg,
-	StrSysarg
+	StrSysarg,
 	Syscall
 };
 
@@ -49,7 +50,17 @@ public:
 		this->type = type;
 	}
 	
-	pasm types = pasm::None;
+	pasm type = pasm::None;
+};
+
+//Represents a PASM file
+class PasmFile {
+public:
+	PasmFile() { }
+	
+	std::string path = "";
+	std::vector<PasmNode *> data;
+	std::vector<PasmNode *> code;
 };
 
 //Assembly label
@@ -67,7 +78,7 @@ public:
 //Assembly function
 // On some platforms or in some cases, we may want to make a distinction
 // between labels and functions
-class Func : public PasmLabel {
+class Func : public Label {
 public:
 	explicit Func() { type = pasm::Func; }
 	explicit Func(std::string name) {
@@ -91,7 +102,7 @@ public:
 class StrSysArg : public PasmNode {
 public:
 	explicit StrSysArg(std::string arg) {
-		type = pasm::StrSysArg;
+		type = pasm::StrSysarg;
 		this->arg = arg;
 	}
 	

@@ -81,6 +81,7 @@ add_executable(qklex quik/test/qk_lex_test.cpp)
 
 add_executable(ast parser/test/ast_test.cpp)
 add_executable(asm parser/test/ltac_test.cpp)
+add_executable(pasm parser/test/pasm_test.cpp)
 
 # Build the compilers
 add_executable(cc ${COMPILER_SRC})
@@ -99,6 +100,7 @@ target_link_libraries(qklex qkparser)
 
 target_link_libraries(ast cparser qkparser)
 target_link_libraries(asm cparser qkparser lasm_parser)
+target_link_libraries(pasm parser)
 
 target_link_libraries(cc cparser)
 target_link_libraries(ltasm lasm_parser)

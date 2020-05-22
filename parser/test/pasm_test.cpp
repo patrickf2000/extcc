@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 
 #include <pasm/pasm.hh>
 
@@ -24,6 +25,9 @@ int main(int argc, char *argv[]) {
 	auto writer = new X64("/tmp/out.asm");
 	writer->build_code(file);
 	writer->write();
+	
+	system("as /tmp/out.asm -o /tmp/out.o");
+	system("ld -melf_x86_64 /tmp/out.o -o out");
 	
 	return 0;
 }

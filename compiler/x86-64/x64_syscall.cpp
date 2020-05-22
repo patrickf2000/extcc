@@ -1,6 +1,7 @@
 #include "asm_x64.hh"
 
 std::string sysargs[] = {
+	"rax",
 	"rdi",
 	"rsi",
 	"rdx",
@@ -10,6 +11,7 @@ std::string sysargs[] = {
 };
 
 std::string sysargs32[] = {
+	"eax",
 	"edi",
 	"esi",
 	"edx",

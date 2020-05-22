@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
 	file->code.push_back(syscall);
 	
 	auto writer = new X64("/tmp/out.asm");
+	writer->build_code(file);
 	writer->write();
 	
 	return 0;

@@ -18,7 +18,7 @@
 namespace PASM {
 
 //Represents PASM types
-enum pasm {
+enum class pasm {
 	None,
 	
 	//Function stuff

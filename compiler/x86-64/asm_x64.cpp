@@ -15,7 +15,7 @@ void X64::build_code(PasmFile *file) {
 	for (auto ln : file->code) {
 		switch (ln->type) {
 			//Functions
-			case pasm::Func: break;
+			case pasm::Func: build_func(ln); break;
 			
 			//Syscall arguments
 			case pasm::ISysarg: break;

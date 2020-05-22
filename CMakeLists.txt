@@ -73,6 +73,7 @@ set(COMPILER_SRC
 #TEMPORARY
 set(COMPILER_LIB
 	compiler/x86-64/asm_x64.cpp
+	compiler/x86-64/x64_func.cpp
 )
 
 # Build all the frontend libraries

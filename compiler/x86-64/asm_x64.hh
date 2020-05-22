@@ -12,6 +12,8 @@ public:
 	explicit X64(std::string name);
 	void build_code(PasmFile *file);
 	void write();
+	
+	void build_func(PasmNode *ln);
 private:
 	std::ofstream writer;
 };

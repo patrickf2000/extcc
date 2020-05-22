@@ -18,11 +18,11 @@ void X64::build_code(PasmFile *file) {
 			case pasm::Func: build_func(ln); break;
 			
 			//Syscall arguments
-			case pasm::ISysarg: break;
-			case pasm::StrSysarg: break;
+			case pasm::ISysarg: build_isysarg(ln); break;
+			case pasm::StrSysarg: build_str_sysarg(ln); break;
 			
 			//Syscalls
-			case pasm::Syscall: break;
+			case pasm::Syscall: build_syscall(ln); break;
 		}
 	}
 }

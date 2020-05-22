@@ -74,6 +74,7 @@ set(COMPILER_SRC
 set(COMPILER_LIB
 	compiler/x86-64/asm_x64.cpp
 	compiler/x86-64/x64_func.cpp
+	compiler/x86-64/x64_syscall.cpp
 )
 
 # Build all the frontend libraries

@@ -4,6 +4,9 @@ using namespace PASM;
 
 //Builds an integer math chain
 void PasmBuilder::buildIMath(AstMath *math, VarInfo dest) {
+	//Add a formatting space
+	file->code.push_back(new PasmSpace);
+
 	//Load the first element
 	auto op1 = math->children[0];
 	
@@ -48,4 +51,6 @@ void PasmBuilder::buildIMath(AstMath *math, VarInfo dest) {
 	auto str = new Str(1, dest.pos);
 	str->dType = dest.type;
 	file->code.push_back(str);
+	file->code.push_back(new PasmSpace);
 }
+

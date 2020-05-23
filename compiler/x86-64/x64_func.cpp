@@ -125,9 +125,6 @@ void X64::build_ret() {
 //Push string argument
 void X64::build_str_pusharg(PasmNode *ln) {
 	auto pusharg = static_cast<StrPushArg *>(ln);
-	
-	if (call_pos == 0)
-		writer << std::endl;
 		
 	auto reg = call_regs[call_pos];
 	++call_pos;
@@ -140,9 +137,6 @@ void X64::build_str_pusharg(PasmNode *ln) {
 void X64::build_ipusharg(PasmNode *ln) {
 	auto pusharg = static_cast<IPushArg *>(ln);
 	int val = pusharg->val;
-	
-	if (call_pos == 0)
-		writer << std::endl;
 		
 	auto reg = call_regs32[call_pos];
 	++call_pos;
@@ -169,7 +163,6 @@ void X64::build_ipusharg(PasmNode *ln) {
 void X64::build_call(PasmNode *ln) {
 	auto fc = static_cast<FuncCall *>(ln);
 	writer << "\tcall " << fc->name << std::endl;
-	writer << std::endl;
 
 	call_pos = 0;
 	flt_call_pos = 0;

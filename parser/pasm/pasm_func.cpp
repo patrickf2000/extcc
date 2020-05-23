@@ -37,9 +37,14 @@ Func *PasmBuilder::buildFunc(AstNode *node) {
 //Builds a function call
 void PasmBuilder::buildFuncCall(AstNode *node) {
 	auto *fc = static_cast<AstFuncCall *>(node);
+	int arg_pos = 0;
 	
 	if (fc->get_name() == "syscall") {
 		for (auto arg : fc->children) {
+			if (arg_pos == 0)
+				file->code.push_back(new PasmSpace);
+			++arg_pos;
+				
 			switch (arg->type) {
 				//Raw integers
 				case AstType::Int: {
@@ -73,6 +78,10 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 		file->code.push_back(syscall);
 	} else {
 		for (auto arg : fc->children) {
+			if (arg_pos == 0)
+				file->code.push_back(new PasmSpace);
+			++arg_pos;
+		
 			switch (arg->type) {
 				//Raw strings
 				case AstType::Str: {
@@ -112,6 +121,9 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 		auto call = new FuncCall(fc->get_name());
 		file->code.push_back(call);
 	}
+	
+	arg_pos = 0;
+	file->code.push_back(new PasmSpace);
 }
 
 //Builds a return statement

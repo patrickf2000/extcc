@@ -35,6 +35,9 @@ void X64::build_code(PasmFile *file) {
 
 	for (auto ln : file->code) {
 		switch (ln->type) {
+			//Formatting
+			case pasm::Space: writer << std::endl; break;
+		
 			//Functions
 			case pasm::Func: build_func(ln); break;
 			case pasm::ILdArg: build_ildarg(ln); break;

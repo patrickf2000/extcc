@@ -20,6 +20,7 @@ namespace PASM {
 //Represents PASM types
 enum class pasm {
 	None,
+	Space,
 	
 	//Data elements
 	String,
@@ -113,6 +114,12 @@ public:
 	
 	std::string name = "";
 	std::string val = "";
+};
+
+//Represents an empty line- for formatting purposes
+class PasmSpace : public PasmNode {
+public:
+	explicit PasmSpace() { type = pasm::Space; }
 };
 
 //Assembly label

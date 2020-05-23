@@ -21,7 +21,7 @@ public:
 protected:
 	void assemble(AstNode *top);
 	
-	void buildFunc(AstNode *node);
+	Func *buildFunc(AstNode *node);
 	void buildFuncCall(AstNode *node);
 	
 	void buildVarDec(AstNode *node);

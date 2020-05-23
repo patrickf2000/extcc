@@ -21,8 +21,17 @@ void PasmBuilder::assemble(AstNode *top) {
 			case AstType::Scope: assemble(node); break;
 			
 			case AstType::FuncDec: {
-				buildFunc(node); 
+				auto func = buildFunc(node); 
 				assemble(node);
+				
+				int stackSize = 0;
+				if (stackPos > 0) {
+					while (stackSize < (stackPos + 1))
+						stackSize += 16;
+				}
+				
+				func->stackSize = stackSize;
+				stackPos = 0;
 			} break;
 			
 			case AstType::FuncCall: buildFuncCall(node); break;
@@ -34,10 +43,11 @@ void PasmBuilder::assemble(AstNode *top) {
 }
 
 //Builds a function declaration
-void PasmBuilder::buildFunc(AstNode *node) {
+Func *PasmBuilder::buildFunc(AstNode *node) {
 	auto *fd = static_cast<AstFuncDec *>(node);
 	auto *func = new Func(fd->get_name());
 	file->code.push_back(func);
+	return func;
 }
 
 //Builds a function call

@@ -11,7 +11,12 @@ std::string unwrite(PasmFile *file) {
 			//Functions
 			case pasm::Func: {
 				auto func = static_cast<Func *>(ln);
-				ret += "func " + func->name + "\n";
+				ret += "func " + func->name;
+				
+				if (func->stackSize > 0)
+					ret += "(" + std::to_string(func->stackSize) + ")";
+					
+				ret += "\n";
 			} break;
 			
 			//Load/Store

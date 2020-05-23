@@ -98,6 +98,8 @@ public:
 		type = pasm::Func;
 		this->name = name;
 	}
+	
+	int stackSize = 0;
 };
 
 //Stores a constant to a variable

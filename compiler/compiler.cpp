@@ -141,7 +141,7 @@ void Compiler::assemble() {
 //TODO: Update not to use system calls
 void Compiler::compile() {
 	for (int i = 0; i<asm_files.size(); i++) {
-		std::string cmd = "as " + asm_files[i] + " -o ";
+		std::string cmd = "as -g " + asm_files[i] + " -o ";
 		cmd += obj_files[i];
 		
 		if (config.arch == CpuArch::LLVM) {
@@ -149,7 +149,7 @@ void Compiler::compile() {
 			cmd += asm_files[i] + ".asm";
 			system(cmd.c_str());
 			
-			cmd = "as " + asm_files[i] + ".asm -o ";
+			cmd = "as -g " + asm_files[i] + ".asm -o ";
 			cmd += obj_files[i];
 		}
 		
@@ -177,29 +177,23 @@ void Compiler::link() {
 			ld_line += "/usr/lib32/crtn.o ";
 			ld_line += "/usr/lib32/crt1.o ";
 		} else {
-#ifndef BUILD_PASM
 			ld_line += "/usr/lib/x86_64-linux-gnu/crti.o ";
 			ld_line += "/usr/lib/x86_64-linux-gnu/crtn.o ";
 			ld_line += "/usr/lib/x86_64-linux-gnu/crt1.o ";
-#endif
 		}
 		
-#ifndef BUILD_PASM
 		ld_line += "-lc ";
-#endif
 
 		for (auto obj : obj_files) {
 			ld_line += obj + " ";
 		}
-		
-#ifndef BUILD_PASM
+
 		if (config.arch == CpuArch::Arm7)
 			ld_line += "-dynamic-linker /lib/ld-linux-armhf.so.3 ";
 		else if (config.arch == CpuArch::Intel32)
 			ld_line += "-dynamic-linker /lib32/ld-linux.so.2 ";
 		else
 			ld_line += "-dynamic-linker /lib64/ld-linux-x86-64.so.2 ";
-#endif
 		
 		ld_line += "-o " + config.output;
 		

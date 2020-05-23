@@ -22,6 +22,9 @@ set(PARSER_SRC
 	parser/ltac/ltac_writer.cpp
 	
 	parser/pasm/pasm_builder.cpp
+	parser/pasm/pasm_func.cpp
+	parser/pasm/pasm_math.cpp
+	parser/pasm/pasm_var.cpp
 	parser/pasm/unwriter.cpp
 )
 

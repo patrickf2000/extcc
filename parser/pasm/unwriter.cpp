@@ -16,6 +16,17 @@ std::string getType(DType type) {
 	return "";
 }
 
+std::string getMath(MathType type) {
+	switch (type) {
+		case MathType::Add: return "add";
+		case MathType::Sub: return "sub";
+		case MathType::Mul: return "mul";
+		case MathType::Div: return "div";
+	}
+	
+	return "";
+}
+
 //Generates a string from PASM tree
 std::string unwrite(PasmFile *file) {
 	std::string ret = "";
@@ -121,6 +132,13 @@ std::string unwrite(PasmFile *file) {
 				}
 				
 				ret += std::to_string(store->val) + "\n";
+			} break;
+			
+			//Math- register <- immediate
+			case pasm::IMathRI: {
+				auto math = static_cast<IMathRI *>(ln);
+				ret += "\ti." + getMath(math->mType)  + "_ri r" + std::to_string(math->reg);
+				ret += " " + std::to_string(math->val) + "\n";
 			} break;
 			
 			//System call arguments

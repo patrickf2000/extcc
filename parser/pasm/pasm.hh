@@ -39,6 +39,9 @@ enum class pasm {
 	LdrV,
 	Str,
 	
+	//Math stuff
+	IMathRI,
+	
 	//System class stuff
 	ISysarg,
 	StrSysarg,
@@ -63,6 +66,15 @@ enum class DType {
 	Float64,
 	String,
 	Ptr
+};
+
+//Represents a math type
+enum class MathType {
+	None,
+	Add,
+	Sub,
+	Mul,
+	Div
 };
 
 //The base of all PASM nodes
@@ -223,6 +235,21 @@ public:
 	}
 	
 	int val;
+};
+
+//Math operations
+class IMathRI : public PasmNode {
+public:
+	explicit IMathRI(MathType mType, int reg, int val) {
+		type = pasm::IMathRI;
+		this->mType = mType;
+		this->reg = reg;
+		this->val = val;
+	}
+	
+	MathType mType = MathType::None;
+	int reg = 0;
+	int val = 0;
 };
 
 //Integer system call arguments

@@ -44,6 +44,15 @@ void PasmBuilder::buildIMath(AstMath *math, VarInfo dest) {
 				auto math = new IMathRI(mType, 1, i->get_val());
 				file->code.push_back(math);
 			} break;
+			
+			//Variable
+			case AstType::Id: {
+				auto id = static_cast<AstID *>(next);
+				int pos = varPos[id->get_name()];
+				
+				auto math = new IMathRV(mType, 1, pos);
+				file->code.push_back(math);
+			} break;
 		}
 	}
 	

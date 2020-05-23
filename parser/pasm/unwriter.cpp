@@ -93,6 +93,14 @@ std::string unwrite(PasmFile *file) {
 				ret += "\n";
 			} break;
 			
+			//Load variable to register
+			case pasm::LdrV: {
+				auto ldrv = static_cast<LdrV *>(ln);
+				ret += "\t" + getType(ldrv->dType) + ".ldr_v r";
+				ret += std::to_string(ldrv->reg) + " VAR" + std::to_string(ldrv->pos);
+				ret += "\n";
+			} break;
+			
 			//Store integer to return register
 			case pasm::ILdRet: {
 				auto store = static_cast<ILdRet *>(ln);

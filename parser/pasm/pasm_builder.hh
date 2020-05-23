@@ -29,6 +29,8 @@ protected:
 	void buildVarDec(AstNode *node);
 	void buildVarAssign(AstNode *node);
 	void buildVarAssign(AstVarAssign *node);
+	
+	void buildIMath(AstMath *math, int destPos);
 private:
 	PasmFile *file;
 	

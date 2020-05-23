@@ -89,6 +89,17 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 			file->code.push_back(move);
 		} break;
 		
+		//Math
+		case AstType::Math: {
+			auto math = static_cast<AstMath *>(child);
+			
+			switch (node->get_type()) {
+				case DataType::Int: buildIMath(math, pos); break;
+				
+				//TODO: Add rest
+			}
+		} break;
+		
 		//TODO: Add the rest
 	}
 }

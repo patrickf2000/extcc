@@ -36,6 +36,7 @@ enum class pasm {
 	IStoreC,
 	ILdRet,
 	MoveVV,
+	LdrV,
 	
 	//System class stuff
 	ISysarg,
@@ -187,6 +188,20 @@ public:
 	
 	int pos1 = 0;
 	int pos2 = 0;
+	DType dType = DType::None;
+};
+
+//Load a variable from memory
+class LdrV : public PasmNode {
+public:
+	explicit LdrV(int reg, int pos) {
+		type = pasm::LdrV;
+		this->reg = reg;
+		this->pos = pos;
+	}
+	
+	int reg = 0;
+	int pos = 0;
 	DType dType = DType::None;
 };
 

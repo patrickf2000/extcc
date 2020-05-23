@@ -2,6 +2,20 @@
 
 namespace PASM {
 
+std::string getType(DType type) {
+	switch (type) {
+		case DType::Byte: return "b";
+		case DType::Short: return "s";
+		case DType::Int: return "i";
+		case DType::Float32: return "f32";
+		case DType::Float64: return "f64";
+		case DType::String: return "str";
+		case DType::Ptr: return "ptr";
+	}
+
+	return "";
+}
+
 //Generates a string from PASM tree
 std::string unwrite(PasmFile *file) {
 	std::string ret = "";
@@ -69,6 +83,14 @@ std::string unwrite(PasmFile *file) {
 				auto store = static_cast<IStoreConst *>(ln);
 				ret += "\ti.store_c VAR" + std::to_string(store->pos);
 				ret += " " + std::to_string(store->val) + "\n";
+			} break;
+			
+			//Move one var to another
+			case pasm::MoveVV: {
+				auto move = static_cast<MoveVV *>(ln);
+				ret += "\t" + getType(move->dType) + ".move_v VAR";
+				ret += std::to_string(move->pos1) + " VAR" + std::to_string(move->pos2);
+				ret += "\n";
 			} break;
 			
 			//Store integer to return register

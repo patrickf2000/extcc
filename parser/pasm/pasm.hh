@@ -35,6 +35,7 @@ enum class pasm {
 	//Load/store stuff
 	IStoreC,
 	ILdRet,
+	MoveVV,
 	
 	//System class stuff
 	ISysarg,
@@ -173,6 +174,20 @@ public:
 	
 	int pos = 0;
 	int val = 0;
+};
+
+//Move on var to another
+class MoveVV : public PasmNode {
+public:
+	explicit MoveVV(int pos1, int pos2) {
+		type = pasm::MoveVV;
+		this->pos1 = pos1;
+		this->pos2 = pos2;
+	}
+	
+	int pos1 = 0;
+	int pos2 = 0;
+	DType dType = DType::None;
 };
 
 //Store integer to return register

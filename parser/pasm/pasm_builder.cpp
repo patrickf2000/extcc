@@ -243,6 +243,16 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 			file->code.push_back(store);
 		} break;
 		
+		//Variables
+		case AstType::Id: {
+			auto var2 = static_cast<AstID *>(child);
+			auto v2 = vars[var2->get_name()];
+			
+			auto move = new MoveVV(pos, v2.pos);
+			move->dType = v2.type;
+			file->code.push_back(move);
+		} break;
+		
 		//TODO: Add the rest
 	}
 }

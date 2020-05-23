@@ -49,6 +49,13 @@ set(QK_SRC
 )
 
 set(COMPILER_SRC
+	compiler/compiler.cpp
+	compiler/main.cpp
+	compiler/utils.cpp
+)
+
+#TEMPORARY
+set(COMPILER1
 	compiler/ltac/arm7/arm7_funcs.cpp
 	compiler/ltac/arm7/arm7_var.cpp
 	compiler/ltac/arm7/asm_arm7.cpp
@@ -69,9 +76,6 @@ set(COMPILER_SRC
 	compiler/ltac/x64/x64_vector.cpp
 	
 	compiler/ltac/base/asm_base.cpp
-	compiler/compiler.cpp
-	compiler/main.cpp
-	compiler/utils.cpp
 )
 
 #TEMPORARY
@@ -97,13 +101,13 @@ add_executable(asm parser/test/ltac_test.cpp)
 add_executable(pasm parser/test/pasm_test.cpp)
 
 # Build the compilers
-add_executable(cc ${COMPILER_SRC})
+add_executable(cc ${COMPILER_SRC} ${COMPILER1})
 set_target_properties(cc PROPERTIES COMPILE_FLAGS "-DBUILD_CLANG")
 
 add_executable(cc2 ${COMPILER_SRC} ${COMPILER2})
 set_target_properties(cc2 PROPERTIES COMPILE_FLAGS "-DBUILD_PASM -DBUILD_CLANG")
 
-add_executable(ltasm ${COMPILER_SRC})
+add_executable(ltasm ${COMPILER_SRC} ${COMPILER1})
 set_target_properties(ltasm PROPERTIES COMPILE_FLAGS "-DBUILD_ASM")
 
 # Link everything

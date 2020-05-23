@@ -39,6 +39,9 @@ void X64::build_code(PasmFile *file) {
 			case pasm::Func: build_func(ln); break;
 			case pasm::ILdRet: build_ildret(ln); break;
 			case pasm::Ret: build_ret(); break;
+			case pasm::StrPushArg: build_str_pusharg(ln); break;
+			case pasm::IPushArg: build_ipusharg(ln); break;
+			case pasm::FuncCall: build_call(ln); break;
 			
 			//Store
 			case pasm::IStoreC: build_istorec(ln); break;

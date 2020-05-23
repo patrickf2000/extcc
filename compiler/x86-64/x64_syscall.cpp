@@ -38,7 +38,8 @@ void X64::build_isysarg(PasmNode *ln) {
 		} break;
 		
 		case Operand::Var: {
-			warning("Variables not implemented in i.sysarg");
+			writer << "\tmov " << reg << ", DWORD PTR [rbp-" << arg->arg;
+			writer << "]" << std::endl;
 		} break;
 		
 		case Operand::Const: {

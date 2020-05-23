@@ -47,11 +47,28 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 	if (fc->get_name() == "syscall") {
 		for (auto arg : fc->children) {
 			switch (arg->type) {
+				//Raw integers
 				case AstType::Int: {
 					auto *i = static_cast<AstInt *>(arg);
 					auto *sysarg = new ISysArg(i->get_val());
 					sysarg->opType = Operand::Const;
 					file->code.push_back(sysarg);
+				} break;
+				
+				//Variables
+				case AstType::Id: {
+					auto *id = static_cast<AstID *>(arg);
+					auto var = vars[id->get_name()];
+					
+					if (var.type == DType::Int) {
+						auto sysarg = new ISysArg(var.pos);
+						sysarg->opType = Operand::Var;
+						file->code.push_back(sysarg);
+					} else if (var.type == DType::String) {
+					
+					} else {
+					
+					}
 				} break;
 				
 				//TODO: Add others

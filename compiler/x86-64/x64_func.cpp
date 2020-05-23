@@ -33,9 +33,13 @@ std::string call_regs_flt[] = {
 	"xmm7"
 };
 
-//The pos
+//The position for calling args
 int call_pos = 0;
 int flt_call_pos = 0;
+
+//The position for loading args
+int arg_pos = 0;
+int flt_arg_pos = 0;
 
 //Builds a function declaration
 void X64::build_func(PasmNode *ln) {
@@ -55,6 +59,19 @@ void X64::build_func(PasmNode *ln) {
 		writer << "\tsub rsp, " << func->stackSize << std::endl;
 		
 	writer << std::endl;
+	
+	arg_pos = 0;
+	flt_arg_pos = 0;
+}
+
+//Loads an integer argument parameter
+void X64::build_ildarg(PasmNode *ln) {
+	auto ldarg = static_cast<ILdArg *>(ln);
+	
+	writer << "\tmov DWORD PTR [rbp-" << ldarg->pos << "], ";
+	writer << call_regs32[arg_pos] << std::endl;
+	
+	++arg_pos;
 }
 
 //Load an integer value to a return register

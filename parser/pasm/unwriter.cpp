@@ -6,6 +6,22 @@ namespace PASM {
 std::string unwrite(PasmFile *file) {
 	std::string ret = "";
 	
+	//Build the data section
+	ret += "section data\n";
+	
+	for (auto ln : file->data) {
+		switch (ln->type) {
+			//Strings
+			case pasm::String: {
+				auto str = static_cast<PasmString *>(ln);
+				ret += "\tstring " + str->name + " \"" + str->val + "\"\n";
+			} break;
+		}
+	}
+	
+	//Build the code section
+	ret += "\nsection text\n";
+	
 	for (auto ln : file->code) {
 		switch (ln->type) {
 			//Functions

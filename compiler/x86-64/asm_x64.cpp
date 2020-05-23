@@ -10,6 +10,24 @@ X64::X64(std::string name) {
 	writer << ".intel_syntax noprefix" << std::endl;
 }
 
+//The main loop to generate code for the data section
+void X64::build_data(PasmFile *file) {
+	writer << ".data" << std::endl;
+	
+	for (auto ln : file->data) {
+		switch (ln->type) {
+			//Strings
+			case pasm::String: {
+				auto str = static_cast<PasmString *>(ln);
+				writer << "\t" << str->name << ": .string \"" << str->val;
+				writer << "\"" << std::endl;
+			} break;
+		}
+	}
+	
+	writer << std::endl;
+}
+
 //The main loop to generate code for the text section
 void X64::build_code(PasmFile *file) {
 	writer << ".text" << std::endl;

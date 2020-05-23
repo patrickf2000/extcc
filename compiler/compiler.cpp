@@ -90,6 +90,7 @@ void Compiler::assemble() {
 			case CpuArch::Intel64: {
 #ifdef BUILD_PASM
 				X64 asm_builder(file->name);
+				asm_builder.build_data(file);
 				asm_builder.build_code(file);
 				asm_builder.write();
 #else

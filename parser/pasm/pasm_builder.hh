@@ -20,6 +20,7 @@ public:
 	PasmFile *buildFile(AstNode *top);
 protected:
 	void assemble(AstNode *top);
+	std::string buildString(AstNode *node);
 	
 	Func *buildFunc(AstNode *node);
 	void buildFuncCall(AstNode *node);
@@ -35,4 +36,7 @@ private:
 	int stackPos = 0;
 	std::map<std::string, int> varPos;		//Meant for fast position lookups
 	std::map<std::string, VarInfo> vars;	//Meant for general variable information
+	
+	//String information
+	int strPos = 0;
 };

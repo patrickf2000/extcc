@@ -43,6 +43,18 @@ void PasmBuilder::assemble(AstNode *top) {
 	}
 }
 
+//Builds a string and adds to the data section
+std::string PasmBuilder::buildString(AstNode *node) {
+	auto str = static_cast<AstString *>(node);
+	auto name = "STR" + std::to_string(strPos);
+	++strPos;
+	
+	auto pstr = new PasmString(name, str->get_val());
+	file->data.push_back(pstr);
+	
+	return name;
+}
+
 //Builds a function declaration
 Func *PasmBuilder::buildFunc(AstNode *node) {
 	auto *fd = static_cast<AstFuncDec *>(node);
@@ -89,7 +101,16 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 		auto syscall = new SysCall;
 		file->code.push_back(syscall);
 	} else {
-		//TODO: Add regular function calls
+		for (auto arg : fc->children) {
+			switch (arg->type) {
+				//Raw strings
+				case AstType::Str: {
+					auto name = buildString(arg);
+				} break;
+				
+				//TODO: Add rest
+			}
+		}
 	}
 }
 

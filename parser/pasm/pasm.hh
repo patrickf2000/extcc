@@ -21,6 +21,9 @@ namespace PASM {
 enum class pasm {
 	None,
 	
+	//Data elements
+	String,
+	
 	//Function stuff
 	Func,
 	Lbl,
@@ -76,6 +79,19 @@ public:
 	std::string name = "";
 	std::vector<PasmNode *> data;
 	std::vector<PasmNode *> code;
+};
+
+//Represents a string data element
+class PasmString : public PasmNode {
+public:
+	explicit PasmString(std::string name, std::string val) {
+		type = pasm::String;
+		this->name = name;
+		this->val = val;
+	}
+	
+	std::string name = "";
+	std::string val = "";
 };
 
 //Assembly label

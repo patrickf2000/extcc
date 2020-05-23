@@ -10,6 +10,7 @@ using namespace PASM;
 class X64 {
 public:
 	explicit X64(std::string name);
+	void build_data(PasmFile *file);
 	void build_code(PasmFile *file);
 	void write();
 	

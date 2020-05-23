@@ -88,6 +88,12 @@ std::string unwrite(PasmFile *file) {
 				ret += "\tcall " + call->name + "\n\n";
 			} break;
 			
+			//Load integer function argument
+			case pasm::ILdArg: {
+				auto arg = static_cast<ILdArg *>(ln);
+				ret += "\ti.ldarg VAR" + std::to_string(arg->pos) + "\n";
+			} break;
+			
 			//Load/Store
 			//Store constant
 			case pasm::IStoreC: {

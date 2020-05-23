@@ -1,4 +1,5 @@
 #include "pasm_builder.hh"
+#include <iostream>
 
 using namespace PASM;
 
@@ -7,6 +8,29 @@ Func *PasmBuilder::buildFunc(AstNode *node) {
 	auto *fd = static_cast<AstFuncDec *>(node);
 	auto *func = new Func(fd->get_name());
 	file->code.push_back(func);
+	
+	//Arguments
+	for (auto arg : fd->args) {
+		switch (arg.type) {
+			//Integers
+			case DataType::Int: {
+				stackPos += 4;
+				VarInfo v;
+				v.pos = stackPos;
+				v.type = DType::Int;
+				v.size = 4;
+				
+				varPos[arg.name] = stackPos;
+				vars[arg.name] = v;
+				
+				auto iarg = new ILdArg(stackPos);
+				file->code.push_back(iarg);
+			} break;
+			
+			//TODO: Add rest
+		}
+	}
+	
 	return func;
 }
 

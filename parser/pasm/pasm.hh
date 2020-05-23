@@ -31,6 +31,7 @@ enum class pasm {
 	IPushArg,
 	StrPushArg,
 	FuncCall,
+	ILdArg,
 	
 	//Load/store stuff
 	IStoreC,
@@ -176,6 +177,17 @@ public:
 	}
 	
 	std::string name = "";
+};
+
+//Load an integer argument
+class ILdArg : public PasmNode {
+public:
+	explicit ILdArg(int pos) {
+		type = pasm::ILdArg;
+		this->pos = pos;
+	}
+	
+	int pos = 0;
 };
 
 //Stores a constant to a variable

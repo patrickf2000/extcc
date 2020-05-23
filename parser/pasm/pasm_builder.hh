@@ -13,6 +13,9 @@ public:
 	PasmFile *buildFile(AstNode *top);
 protected:
 	void assemble(AstNode *top);
+	
+	void buildFunc(AstNode *node);
+	void buildFuncCall(AstNode *node);
 private:
 	PasmFile *file;
 };

@@ -38,6 +38,31 @@ std::string unwrite(PasmFile *file) {
 			//Return
 			case pasm::Ret: ret += "\tret\n\n"; break;
 			
+			//Pusharg
+			case pasm::IPushArg: {
+				auto pusharg = static_cast<IPushArg *>(ln);
+				ret += "\ti.pusharg_";
+				
+				switch (pusharg->opType) {
+					case Operand::Var: ret += "v VAR"; break;
+					case Operand::Reg: ret += "r "; break;
+					case Operand::Const: ret += "c "; break;
+				}
+				
+				ret += std::to_string(pusharg->val) + "\n";
+			} break;
+			
+			case pasm::StrPushArg: {
+				auto pusharg = static_cast<StrPushArg *>(ln);
+				ret += "\tstr.pusharg " + pusharg->name + "\n";
+			} break;
+			
+			//Function call
+			case pasm::FuncCall: {
+				auto call = static_cast<FuncCall *>(ln);
+				ret += "\tcall " + call->name + "\n\n";
+			} break;
+			
 			//Load/Store
 			//Store constant
 			case pasm::IStoreC: {

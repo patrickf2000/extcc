@@ -28,6 +28,9 @@ enum class pasm {
 	Func,
 	Lbl,
 	Ret,
+	IPushArg,
+	StrPushArg,
+	FuncCall,
 	
 	//Load/store stuff
 	IStoreC,
@@ -124,6 +127,39 @@ public:
 class Ret : public PasmNode {
 public:
 	explicit Ret() { type = pasm::Ret; }
+};
+
+//Push an integer argument
+class IPushArg : public PasmNode {
+public:
+	explicit IPushArg(int val) {
+		type = pasm::IPushArg;
+		this->val = val;
+	}
+	
+	int val = 0;
+};
+
+//Push a string argument
+class StrPushArg : public PasmNode {
+public:
+	explicit StrPushArg(std::string name) {
+		type = pasm::StrPushArg;
+		this->name = name;
+	}
+	
+	std::string name = "";
+};
+
+//Function call
+class FuncCall : public PasmNode {
+public:
+	explicit FuncCall(std::string name) {
+		type = pasm::FuncCall;
+		this->name = name;
+	}
+	
+	std::string name = "";
 };
 
 //Stores a constant to a variable

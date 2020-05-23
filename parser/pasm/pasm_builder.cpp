@@ -106,11 +106,40 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 				//Raw strings
 				case AstType::Str: {
 					auto name = buildString(arg);
+					auto pusharg = new StrPushArg(name);
+					file->code.push_back(pusharg);
+				} break;
+				
+				//Raw integers
+				case AstType::Int: {
+					auto i = static_cast<AstInt *>(arg);
+					auto pusharg = new IPushArg(i->get_val());
+					pusharg->opType = Operand::Const;
+					file->code.push_back(pusharg);
+				} break;
+				
+				//Variables
+				case AstType::Id: {
+					auto id = static_cast<AstID *>(arg);
+					auto var = vars[id->get_name()];
+					
+					switch (var.type) {
+						case DType::Int: {
+							auto pusharg = new IPushArg(var.pos);
+							pusharg->opType = Operand::Var;
+							file->code.push_back(pusharg);
+						} break;
+						
+						//TODO: Add rest
+					}
 				} break;
 				
 				//TODO: Add rest
 			}
 		}
+		
+		auto call = new FuncCall(fc->get_name());
+		file->code.push_back(call);
 	}
 }
 

@@ -14,6 +14,14 @@ std::string unwrite(PasmFile *file) {
 				ret += "func " + func->name + "\n";
 			} break;
 			
+			//Load/Store
+			//Store constant
+			case pasm::IStoreC: {
+				auto store = static_cast<IStoreConst *>(ln);
+				ret += "\ti.store_c VAR" + std::to_string(store->pos);
+				ret += " " + std::to_string(store->val) + "\n";
+			} break;
+			
 			//System call arguments
 			case pasm::ISysarg: {
 				auto arg = static_cast<ISysArg *>(ln);

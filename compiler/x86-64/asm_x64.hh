@@ -15,6 +15,8 @@ public:
 	
 	void build_func(PasmNode *ln);
 	
+	void build_istorec(PasmNode *ln);
+	
 	void build_isysarg(PasmNode *ln);
 	void build_str_sysarg(PasmNode *ln);
 	void build_syscall(PasmNode *ln);

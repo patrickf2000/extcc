@@ -68,10 +68,6 @@ set(COMPILER_SRC
 	compiler/ltac/x64/x64_vars.cpp
 	compiler/ltac/x64/x64_vector.cpp
 	
-	compiler/x86-64/asm_x64.cpp
-	compiler/x86-64/x64_func.cpp
-	compiler/x86-64/x64_syscall.cpp
-	
 	compiler/ltac/base/asm_base.cpp
 	compiler/compiler.cpp
 	compiler/main.cpp
@@ -79,10 +75,11 @@ set(COMPILER_SRC
 )
 
 #TEMPORARY
-set(COMPILER_LIB
+set(COMPILER2
 	compiler/x86-64/asm_x64.cpp
 	compiler/x86-64/x64_func.cpp
 	compiler/x86-64/x64_syscall.cpp
+	compiler/x86-64/x64_var.cpp
 )
 
 # Build all the frontend libraries
@@ -90,7 +87,6 @@ add_library(parser ${PARSER_SRC})
 add_library(cparser ${C_SRC})
 add_library(lasm_parser ${LASM_SRC})
 add_library(qkparser ${QK_SRC})
-add_library(cclib ${COMPILER_LIB})
 
 # Build the utilities
 add_executable(clex clang/test/c_lex_test.cpp)
@@ -104,7 +100,7 @@ add_executable(pasm parser/test/pasm_test.cpp)
 add_executable(cc ${COMPILER_SRC})
 set_target_properties(cc PROPERTIES COMPILE_FLAGS "-DBUILD_CLANG")
 
-add_executable(cc2 ${COMPILER_SRC})
+add_executable(cc2 ${COMPILER_SRC} ${COMPILER2})
 set_target_properties(cc2 PROPERTIES COMPILE_FLAGS "-DBUILD_PASM -DBUILD_CLANG")
 
 add_executable(ltasm ${COMPILER_SRC})
@@ -120,7 +116,7 @@ target_link_libraries(qklex qkparser)
 
 target_link_libraries(ast cparser qkparser)
 target_link_libraries(asm cparser qkparser lasm_parser)
-target_link_libraries(pasm cparser cclib)
+target_link_libraries(pasm cparser)
 
 target_link_libraries(cc cparser)
 target_link_libraries(cc2 cparser)

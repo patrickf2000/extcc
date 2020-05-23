@@ -25,6 +25,9 @@ enum class pasm {
 	Func,
 	Lbl,
 	
+	//Load/store stuff
+	IStoreC,
+	
 	//System class stuff
 	ISysarg,
 	StrSysarg,
@@ -37,6 +40,18 @@ enum class Operand {
 	Reg,
 	Var,
 	Const
+};
+
+//Represents PASM data types
+enum class DType {
+	None,
+	Byte,
+	Short,
+	Int,
+	Float32,
+	Float64,
+	String,
+	Ptr
 };
 
 //The base of all PASM nodes
@@ -83,6 +98,19 @@ public:
 		type = pasm::Func;
 		this->name = name;
 	}
+};
+
+//Stores a constant to a variable
+class IStoreConst : public PasmNode {
+public:
+	explicit IStoreConst(int pos, int val) {
+		type = pasm::IStoreC;
+		this->pos = pos;
+		this->val = val;
+	}
+	
+	int pos = 0;
+	int val = 0;
 };
 
 //Integer system call arguments

@@ -20,6 +20,9 @@ void X64::build_code(PasmFile *file) {
 			//Functions
 			case pasm::Func: build_func(ln); break;
 			
+			//Store
+			case pasm::IStoreC: build_istorec(ln); break;
+			
 			//Syscall arguments
 			case pasm::ISysarg: build_isysarg(ln); break;
 			case pasm::StrSysarg: build_str_sysarg(ln); break;

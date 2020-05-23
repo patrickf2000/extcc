@@ -126,7 +126,7 @@ std::string unwrite(PasmFile *file) {
 				ret += "\n";
 			} break;
 			
-			//Store integer to return register
+			//Load integer to return register
 			case pasm::ILdRet: {
 				auto store = static_cast<ILdRet *>(ln);
 				ret += "\ti.ldret_";
@@ -135,6 +135,19 @@ std::string unwrite(PasmFile *file) {
 					case Operand::Var: ret += "v VAR"; break;
 					case Operand::Reg: ret += "r "; break;
 					case Operand::Const: ret += "c "; break;
+				}
+				
+				ret += std::to_string(store->val) + "\n";
+			} break;
+			
+			//Store integer from return register
+			case pasm::IStrRet: {
+				auto store = static_cast<IStrRet *>(ln);
+				ret += "\ti.stret_";
+				
+				switch (store->opType) {
+					case Operand::Var: ret += "v VAR"; break;
+					case Operand::Reg: ret += "r r"; break;
 				}
 				
 				ret += std::to_string(store->val) + "\n";

@@ -1,4 +1,5 @@
 #include "asm_x64.hh"
+#include "x64_registers.hh"
 
 //Call registers
 //64-bit
@@ -93,6 +94,24 @@ void X64::build_ildret(PasmNode *ln) {
 		} break;
 		
 		default: fatalError("Unknown command.");
+	}
+}
+
+//Store a return value to integer
+void X64::build_istret(PasmNode *ln) {
+	auto store = static_cast<IStrRet *>(ln);
+	int val = store->val;
+	
+	switch (store->opType) {
+		case Operand::Var: {
+			writer << "\tmov DWORD PTR [rbp-" << val << "], eax" << std::endl;
+		} break;
+		
+		case Operand::Reg: {
+			writer << "\tmov " << registers32[val] << ", eax" << std::endl;
+		} break;
+		
+		default: fatalError("Unknown i.stret instruction.");
 	}
 }
 

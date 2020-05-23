@@ -128,6 +128,14 @@ void PasmBuilder::buildRet(AstNode *node) {
 				} break;
 				
 				//Variables
+				case AstType::Id: {
+					auto id = static_cast<AstID *>(child);
+					int pos = varPos[id->get_name()];
+					
+					auto arg = new ILdRet(pos);
+					arg->opType = Operand::Var;
+					file->code.push_back(arg);
+				} break;
 				
 				//TODO: Add rest
 			}

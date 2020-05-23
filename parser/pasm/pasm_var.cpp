@@ -101,6 +101,21 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 			}
 		} break;
 		
+		//Function call
+		case AstType::FuncCall: {
+			buildFuncCall(child);
+			
+			switch (node->get_type()) {
+				case DataType::Int: {
+					auto store = new IStrRet(pos);
+					store->opType = Operand::Var;
+					file->code.push_back(store);
+				} break;
+				
+				//TODO: Add rest
+			}
+		} break;
+		
 		//TODO: Add the rest
 	}
 }

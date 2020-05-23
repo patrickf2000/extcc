@@ -26,6 +26,8 @@ public:
 	void build_ldrv(PasmNode *ln);
 	void build_str(PasmNode *ln);
 	
+	void build_imath_ri(PasmNode *ln);
+	
 	void build_isysarg(PasmNode *ln);
 	void build_str_sysarg(PasmNode *ln);
 	void build_syscall(PasmNode *ln);

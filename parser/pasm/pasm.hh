@@ -239,9 +239,10 @@ public:
 };
 
 //Math operations
-class IMath : public PasmNode {
+class IMathRI : public PasmNode {
 public:
-	explicit IMath(MathType mType, int reg, int val) {
+	explicit IMathRI(MathType mType, int reg, int val) {
+		type = pasm::IMathRI;
 		this->mType = mType;
 		this->reg = reg;
 		this->val = val;
@@ -250,22 +251,6 @@ public:
 	MathType mType = MathType::None;
 	int reg = 0;
 	int val = 0;
-};
-
-class IMathRI : public IMath {
-public:
-	explicit IMathRI(MathType mType, int reg, int val)
-		: IMath(mType, reg, val) {
-		type = pasm::IMathRI;
-	}
-};
-
-class IMathVI : public IMath {
-public:
-	explicit IMathVI(MathType mType, int reg, int val)
-		: IMath(mType, reg, val) {
-		type = pasm::IMathVI;
-	}
 };
 
 //Integer system call arguments

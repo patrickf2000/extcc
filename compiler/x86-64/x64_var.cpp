@@ -1,29 +1,5 @@
 #include "asm_x64.hh"
-
-//Operation registers
-std::string registers[] = {
-	"rax",
-	"rbx",
-	"rcx",
-	"r10",
-	"r11",
-	"r12",
-	"r13",
-	"r14",
-	"r15"
-};
-
-std::string registers32[] = {
-	"eax",
-	"ebx",
-	"ecx",
-	"r10d",
-	"r11d",
-	"r12d",
-	"r13d",
-	"r14d",
-	"r15d"
-};
+#include "x64_registers.hh"
 
 //Store an integer constant to a memory location
 void X64::build_istorec(PasmNode *ln) {

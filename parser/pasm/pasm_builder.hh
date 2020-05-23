@@ -23,6 +23,7 @@ protected:
 	
 	Func *buildFunc(AstNode *node);
 	void buildFuncCall(AstNode *node);
+	void buildRet(AstNode *node);
 	
 	void buildVarDec(AstNode *node);
 	void buildVarAssign(AstNode *node);

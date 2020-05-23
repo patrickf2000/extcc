@@ -35,6 +35,7 @@ void PasmBuilder::assemble(AstNode *top) {
 			} break;
 			
 			case AstType::FuncCall: buildFuncCall(node); break;
+			case AstType::Return: buildRet(node); break;
 			
 			case AstType::VarDec: buildVarDec(node); break;
 			case AstType::VarAssign: buildVarAssign(node); break;
@@ -90,6 +91,29 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 	} else {
 		//TODO: Add regular function calls
 	}
+}
+
+//Builds a return statement
+void PasmBuilder::buildRet(AstNode *node) {
+	if (node->children.size() > 0) {
+		for (auto child : node->children) {
+			switch (child->type) {
+				//Raw integers
+				case AstType::Int: {
+					auto i = static_cast<AstInt *>(child);
+					auto arg = new IStrRet(i->get_val());
+					arg->opType = Operand::Const;
+					file->code.push_back(arg);
+				} break;
+				
+				//Variables
+				
+				//TODO: Add rest
+			}
+		}
+	}
+	
+	file->code.push_back(new Ret);
 }
 
 //Builds a variable declaration

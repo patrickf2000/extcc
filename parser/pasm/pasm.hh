@@ -24,9 +24,11 @@ enum class pasm {
 	//Function stuff
 	Func,
 	Lbl,
+	Ret,
 	
 	//Load/store stuff
 	IStoreC,
+	IStrRet,
 	
 	//System class stuff
 	ISysarg,
@@ -102,6 +104,12 @@ public:
 	int stackSize = 0;
 };
 
+//Return
+class Ret : public PasmNode {
+public:
+	explicit Ret() { type = pasm::Ret; }
+};
+
 //Stores a constant to a variable
 class IStoreConst : public PasmNode {
 public:
@@ -113,6 +121,17 @@ public:
 	
 	int pos = 0;
 	int val = 0;
+};
+
+//Store integer to return register
+class IStrRet : public PasmNode {
+public:
+	explicit IStrRet(int val) {
+		type = pasm::IStrRet;
+		this->val = val;
+	}
+	
+	int val;
 };
 
 //Integer system call arguments

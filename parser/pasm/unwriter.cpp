@@ -19,12 +19,29 @@ std::string unwrite(PasmFile *file) {
 				ret += "\n";
 			} break;
 			
+			//Return
+			case pasm::Ret: ret += "ret\n\n"; break;
+			
 			//Load/Store
 			//Store constant
 			case pasm::IStoreC: {
 				auto store = static_cast<IStoreConst *>(ln);
 				ret += "\ti.store_c VAR" + std::to_string(store->pos);
 				ret += " " + std::to_string(store->val) + "\n";
+			} break;
+			
+			//Store integer to return register
+			case pasm::IStrRet: {
+				auto store = static_cast<IStrRet *>(ln);
+				ret += "\ti.stret_";
+				
+				switch (store->opType) {
+					case Operand::Var: ret += "v VAR"; break;
+					case Operand::Reg: ret += "r "; break;
+					case Operand::Const: ret += "c "; break;
+				}
+				
+				ret += std::to_string(store->val) + "\n";
 			} break;
 			
 			//System call arguments

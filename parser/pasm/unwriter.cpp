@@ -20,7 +20,7 @@ std::string unwrite(PasmFile *file) {
 			} break;
 			
 			//Return
-			case pasm::Ret: ret += "ret\n\n"; break;
+			case pasm::Ret: ret += "\tret\n\n"; break;
 			
 			//Load/Store
 			//Store constant

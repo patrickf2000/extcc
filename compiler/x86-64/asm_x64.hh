@@ -14,6 +14,8 @@ public:
 	void write();
 	
 	void build_func(PasmNode *ln);
+	void build_istret(PasmNode *ln);
+	void build_ret();
 	
 	void build_istorec(PasmNode *ln);
 	

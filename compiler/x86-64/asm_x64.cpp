@@ -19,6 +19,8 @@ void X64::build_code(PasmFile *file) {
 		switch (ln->type) {
 			//Functions
 			case pasm::Func: build_func(ln); break;
+			case pasm::IStrRet: build_istret(ln); break;
+			case pasm::Ret: build_ret(); break;
 			
 			//Store
 			case pasm::IStoreC: build_istorec(ln); break;

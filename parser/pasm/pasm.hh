@@ -41,6 +41,7 @@ enum class pasm {
 	
 	//Math stuff
 	IMathRI,
+	IMathVI,
 	
 	//System class stuff
 	ISysarg,
@@ -238,10 +239,9 @@ public:
 };
 
 //Math operations
-class IMathRI : public PasmNode {
+class IMath : public PasmNode {
 public:
-	explicit IMathRI(MathType mType, int reg, int val) {
-		type = pasm::IMathRI;
+	explicit IMath(MathType mType, int reg, int val) {
 		this->mType = mType;
 		this->reg = reg;
 		this->val = val;
@@ -250,6 +250,22 @@ public:
 	MathType mType = MathType::None;
 	int reg = 0;
 	int val = 0;
+};
+
+class IMathRI : public IMath {
+public:
+	explicit IMathRI(MathType mType, int reg, int val)
+		: IMath(mType, reg, val) {
+		type = pasm::IMathRI;
+	}
+};
+
+class IMathVI : public IMath {
+public:
+	explicit IMathVI(MathType mType, int reg, int val)
+		: IMath(mType, reg, val) {
+		type = pasm::IMathVI;
+	}
 };
 
 //Integer system call arguments

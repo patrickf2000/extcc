@@ -1,36 +1,30 @@
 #include <iostream>
 #include <stdlib.h>
 
+#include <c_parser.hh>
+#include <ast.hh>
 #include <pasm/pasm.hh>
+#include <pasm/pasm_builder.hh>
 
 #include <x86-64/asm_x64.hh>
 
 using namespace PASM;
 
 int main(int argc, char *argv[]) {
-	auto *file = new PasmFile;
-	file->name = "output.asm";
+	if (argc == 1) {
+		std::cout << "Error: No input file." << std::endl;
+		return 1;
+	}
 	
-	auto *main_fc = new Func("_start");
-	file->code.push_back(main_fc);
+	CParser parser(argv[1]);
+	parser.parse();
+	AstNode *top = parser.getTree();
 	
-	auto *arg1 = new ISysArg(60);
-	auto *arg2 = new ISysArg(23);
-	auto *syscall = new SysCall;
+	auto builder = new PasmBuilder("");
+	auto file = builder->buildFile(top);
 	
-	file->code.push_back(arg1);
-	file->code.push_back(arg2);
-	file->code.push_back(syscall);
-	
-	std::string output = unwrite(file);
-	std::cout << output << std::endl;
-	
-	auto writer = new X64("/tmp/out.asm");
-	writer->build_code(file);
-	writer->write();
-	
-	system("as /tmp/out.asm -o /tmp/out.o");
-	system("ld -melf_x86_64 /tmp/out.o -o out");
+	std::string code = unwrite(file);
+	std::cout << code << std::endl;
 	
 	return 0;
 }

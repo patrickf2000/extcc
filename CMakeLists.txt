@@ -120,7 +120,7 @@ target_link_libraries(qklex qkparser)
 
 target_link_libraries(ast cparser qkparser)
 target_link_libraries(asm cparser qkparser lasm_parser)
-target_link_libraries(pasm parser cclib)
+target_link_libraries(pasm cparser cclib)
 
 target_link_libraries(cc cparser)
 target_link_libraries(cc2 cparser)

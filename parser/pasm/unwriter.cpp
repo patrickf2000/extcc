@@ -49,6 +49,11 @@ std::string unwrite(PasmFile *file) {
 	
 	for (auto ln : file->code) {
 		switch (ln->type) {
+			//Space
+			case pasm::Space: {
+				ret += "\n";
+			} break;
+		
 			//Functions
 			case pasm::Func: {
 				auto func = static_cast<Func *>(ln);
@@ -85,7 +90,7 @@ std::string unwrite(PasmFile *file) {
 			//Function call
 			case pasm::FuncCall: {
 				auto call = static_cast<FuncCall *>(ln);
-				ret += "\tcall " + call->name + "\n\n";
+				ret += "\tcall " + call->name + "\n";
 			} break;
 			
 			//Load integer function argument

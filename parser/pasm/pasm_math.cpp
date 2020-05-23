@@ -3,7 +3,7 @@
 using namespace PASM;
 
 //Builds an integer math chain
-void PasmBuilder::buildIMath(AstMath *math, int destPos) {
+void PasmBuilder::buildIMath(AstMath *math, VarInfo dest) {
 	//Load the first element
 	auto op1 = math->children[0];
 	
@@ -20,4 +20,9 @@ void PasmBuilder::buildIMath(AstMath *math, int destPos) {
 		
 		//TODO: Add rest
 	}
+	
+	//Store back to the destination
+	auto str = new Str(1, dest.pos);
+	str->dType = dest.type;
+	file->code.push_back(str);
 }

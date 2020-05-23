@@ -37,6 +37,7 @@ enum class pasm {
 	ILdRet,
 	MoveVV,
 	LdrV,
+	Str,
 	
 	//System class stuff
 	ISysarg,
@@ -203,6 +204,14 @@ public:
 	int reg = 0;
 	int pos = 0;
 	DType dType = DType::None;
+};
+
+//Store register value to memory
+class Str : public LdrV {
+public:
+	explicit Str(int reg, int pos) : LdrV(reg, pos) {
+		type = pasm::Str;
+	}
 };
 
 //Store integer to return register

@@ -30,7 +30,7 @@ protected:
 	void buildVarAssign(AstNode *node);
 	void buildVarAssign(AstVarAssign *node);
 	
-	void buildIMath(AstMath *math, int destPos);
+	void buildIMath(AstMath *math, VarInfo dest);
 private:
 	PasmFile *file;
 	

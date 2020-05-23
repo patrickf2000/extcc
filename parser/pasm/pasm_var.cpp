@@ -92,9 +92,10 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 		//Math
 		case AstType::Math: {
 			auto math = static_cast<AstMath *>(child);
+			auto info = vars[node->get_name()];
 			
 			switch (node->get_type()) {
-				case DataType::Int: buildIMath(math, pos); break;
+				case DataType::Int: buildIMath(math, info); break;
 				
 				//TODO: Add rest
 			}

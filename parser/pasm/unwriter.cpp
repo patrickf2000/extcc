@@ -101,6 +101,14 @@ std::string unwrite(PasmFile *file) {
 				ret += "\n";
 			} break;
 			
+			//Store a register to variable
+			case pasm::Str: {
+				auto str = static_cast<Str *>(ln);
+				ret += "\t" + getType(str->dType) + ".str VAR";
+				ret += std::to_string(str->pos) + " r" + std::to_string(str->reg);
+				ret += "\n";
+			} break;
+			
 			//Store integer to return register
 			case pasm::ILdRet: {
 				auto store = static_cast<ILdRet *>(ln);

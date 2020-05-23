@@ -85,6 +85,7 @@ set(COMPILER1
 set(COMPILER2
 	compiler/x86-64/asm_x64.cpp
 	compiler/x86-64/x64_func.cpp
+	compiler/x86-64/x64_math.cpp
 	compiler/x86-64/x64_syscall.cpp
 	compiler/x86-64/x64_var.cpp
 )

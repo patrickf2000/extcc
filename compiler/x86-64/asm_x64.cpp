@@ -46,6 +46,8 @@ void X64::build_code(PasmFile *file) {
 			//Store
 			case pasm::IStoreC: build_istorec(ln); break;
 			case pasm::MoveVV: build_move_vv(ln); break;
+			case pasm::LdrV: build_ldrv(ln); break;
+			case pasm::Str: build_str(ln); break;
 			
 			//Syscall arguments
 			case pasm::ISysarg: build_isysarg(ln); break;

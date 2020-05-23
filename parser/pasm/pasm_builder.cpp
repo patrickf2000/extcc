@@ -101,7 +101,7 @@ void PasmBuilder::buildRet(AstNode *node) {
 				//Raw integers
 				case AstType::Int: {
 					auto i = static_cast<AstInt *>(child);
-					auto arg = new IStrRet(i->get_val());
+					auto arg = new ILdRet(i->get_val());
 					arg->opType = Operand::Const;
 					file->code.push_back(arg);
 				} break;

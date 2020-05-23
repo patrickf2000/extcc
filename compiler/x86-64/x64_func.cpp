@@ -20,9 +20,9 @@ void X64::build_func(PasmNode *ln) {
 	writer << std::endl;
 }
 
-//Store an integer value to a return register
-void X64::build_istret(PasmNode *ln) {
-	auto store = static_cast<IStrRet *>(ln);
+//Load an integer value to a return register
+void X64::build_ildret(PasmNode *ln) {
+	auto store = static_cast<ILdRet *>(ln);
 	int val = store->val;
 	
 	switch (store->opType) {

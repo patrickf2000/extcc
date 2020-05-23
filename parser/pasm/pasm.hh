@@ -28,7 +28,7 @@ enum class pasm {
 	
 	//Load/store stuff
 	IStoreC,
-	IStrRet,
+	ILdRet,
 	
 	//System class stuff
 	ISysarg,
@@ -124,10 +124,10 @@ public:
 };
 
 //Store integer to return register
-class IStrRet : public PasmNode {
+class ILdRet : public PasmNode {
 public:
-	explicit IStrRet(int val) {
-		type = pasm::IStrRet;
+	explicit ILdRet(int val) {
+		type = pasm::ILdRet;
 		this->val = val;
 	}
 	

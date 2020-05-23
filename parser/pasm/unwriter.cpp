@@ -31,9 +31,9 @@ std::string unwrite(PasmFile *file) {
 			} break;
 			
 			//Store integer to return register
-			case pasm::IStrRet: {
-				auto store = static_cast<IStrRet *>(ln);
-				ret += "\ti.stret_";
+			case pasm::ILdRet: {
+				auto store = static_cast<ILdRet *>(ln);
+				ret += "\ti.ldret_";
 				
 				switch (store->opType) {
 					case Operand::Var: ret += "v VAR"; break;

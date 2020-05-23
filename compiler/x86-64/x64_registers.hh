@@ -4,7 +4,6 @@
 
 //Operation registers
 static std::string registers[] = {
-	"rax",
 	"rbx",
 	"rcx",
 	"r10",
@@ -16,7 +15,6 @@ static std::string registers[] = {
 };
 
 static std::string registers32[] = {
-	"eax",
 	"ebx",
 	"ecx",
 	"r10d",

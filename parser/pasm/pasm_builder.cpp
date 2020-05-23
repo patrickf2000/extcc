@@ -47,6 +47,7 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 				case AstType::Int: {
 					auto *i = static_cast<AstInt *>(arg);
 					auto *sysarg = new ISysArg(i->get_val());
+					sysarg->opType = Operand::Const;
 					file->code.push_back(sysarg);
 				} break;
 				

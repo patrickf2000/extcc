@@ -31,16 +31,13 @@ enum class pasm {
 	Syscall
 };
 
-//Represents data types
-/*enum DataType {
-	Byte,
-	Short,
-	Int,
-	Float32,
-	Float64,
-	String,
-	Ptr
-};*/
+//Represents operand type
+enum class Operand {
+	None,
+	Reg,
+	Var,
+	Const
+};
 
 //The base of all PASM nodes
 class PasmNode {
@@ -51,6 +48,7 @@ public:
 	}
 	
 	pasm type = pasm::None;
+	Operand opType = Operand::None;
 };
 
 //Represents a PASM file

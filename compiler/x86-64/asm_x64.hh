@@ -18,6 +18,9 @@ public:
 	void build_isysarg(PasmNode *ln);
 	void build_str_sysarg(PasmNode *ln);
 	void build_syscall(PasmNode *ln);
+protected:
+	void fatalError(std::string msg);
+	void warning(std::string msg);
 private:
 	std::ofstream writer;
 };

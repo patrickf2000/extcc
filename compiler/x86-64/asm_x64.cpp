@@ -1,3 +1,6 @@
+#include <iostream>
+#include <cstdlib>
+
 #include "asm_x64.hh"
 
 //Opens the file
@@ -30,4 +33,15 @@ void X64::build_code(PasmFile *file) {
 //Close out the file
 void X64::write() {
 	writer.close();
+}
+
+//Throws a fatal error
+void X64::fatalError(std::string msg) {
+	std::cout << "[Fatal] " << msg << std::endl;
+	std::exit(1);
+}
+
+//Displays a warning
+void X64::warning(std::string msg) {
+	std::cout << "[Warning] " << msg << std::endl;
 }

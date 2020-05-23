@@ -32,7 +32,23 @@ void X64::build_isysarg(PasmNode *ln) {
 	std::string reg = sysargs32[sysarg_pos];
 	++sysarg_pos;
 	
-	writer << "\tmov " << reg << ", " << arg->arg << std::endl;
+	switch (arg->opType) {
+		case Operand::Reg: {
+			warning("Registers not implemented in i.sysarg");
+		} break;
+		
+		case Operand::Var: {
+			warning("Variables not implemented in i.sysarg");
+		} break;
+		
+		case Operand::Const: {
+			writer << "\tmov " << reg << ", " << arg->arg << std::endl;
+		} break;
+		
+		default: {
+			fatalError("Unknown operand in i.sysarg");
+		}
+	}
 }
 
 //String system call argument

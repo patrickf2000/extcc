@@ -11,30 +11,12 @@ enum class DataType {
 	Void,
 	Bool,
 	Byte,
-	UByte,
 	Short,
-	UShort,
 	Int,
-	UInt,
 	Long,
-	ULong,
 	Float,
 	Double,
 	Char,
-	Char16,
-	Char32,
-	Int64,
-	Int128,
-	Int256,
-	UInt64,
-	UInt128,
-	UInt256,
-	Float64,
-	Float128,
-	Float256,
-	Double128,
-	Double256,
-	Matrix,
 	Str,
 	Pointer,
 	Any
@@ -83,20 +65,12 @@ enum class AstType {
 	//Variable stuff
 	VarDec,
 	VarAssign,
-	MultiVarAssign,
 	Id,
 	Int,
 	Hex,
 	Char,
 	Bool,
 	Float,
-	Int64,
-	Int128,
-	Int256,
-	Float64,
-	Float80,
-	Float128,
-	Float256,
 	Double,
 	Str,
 	ArrayDec,
@@ -443,78 +417,6 @@ protected:
 	double no = 0;
 };
 
-//The int-64 type
-//Holds two integer types
-class AstInt64 : public AstVarDec {
-public:
-	explicit AstInt64() { 
-		type = AstType::Int64;
-		dtype = DataType::Int64;
-	}
-};
-
-//The int-128 type
-//Tells the compiler to use SSE extensions (with integers)
-class AstInt128 : public AstVarDec {
-public:
-	explicit AstInt128() { 
-		type = AstType::Int128;
-		dtype = DataType::Int128;
-	}
-};
-
-//The int-256 type
-//Tells the compiler to use AVX extensions (with integers)
-class AstInt256 : public AstVarDec {
-public:
-	explicit AstInt256() {
-		type = AstType::Int256;
-		dtype = DataType::Int256;
-	}
-};
-
-//The float-64 type
-//Holds two floating-point values
-class AstFloat64 : public AstVarDec {
-public:
-	explicit AstFloat64() { 
-		type = AstType::Float64;
-		dtype = DataType::Float64;
-	}
-};
-
-//The float-80 type
-//This tells the compiler to use the FPU unit, which handles
-// 80-bit types (hence the name)
-class AstFloat80: public AstFloat {
-public:
-	explicit AstFloat80() { type = AstType::Float80; }
-	explicit AstFloat80(double n) {
-		type = AstType::Float80;
-		no = n;
-	}
-};
-
-//The float-128 type
-//Tells the compiler to use SSE extensions
-class AstFloat128 : public AstVarDec {
-public:
-	explicit AstFloat128() { 
-		type = AstType::Float128;
-		dtype = DataType::Float128;
-	}
-};
-
-//The float-256 type
-//Tells the compiler to use AVX extensions
-class AstFloat256 : public AstVarDec {
-public:
-	explicit AstFloat256() {
-		type = AstType::Float256;
-		dtype = DataType::Float256;
-	}
-};
-
 //The string type
 class AstString : public AstNode {
 public:
@@ -528,16 +430,6 @@ public:
 	void set_val(std::string s) { val = s; }
 private:
 	std::string val = "";
-};
-
-//Mutli-variable assignment
-class AstMultiVarAssign : public AstNode {
-public:
-	explicit AstMultiVarAssign() { 
-		type = AstType::MultiVarAssign;
-	}
-	
-	std::vector<AstID *> vars;
 };
 
 //The array type

@@ -13,7 +13,6 @@ std::string ast2str(AstType type) {
 		case AstType::End: return "End";
 		case AstType::VarDec: return "VarDec";
 		case AstType::VarAssign: return "VarAssign";
-		case AstType::MultiVarAssign: return "MultiVarAssign";
 		case AstType::Math: return "Math";
 		case AstType::Int: return "Int";
 		case AstType::Hex: return "Hex";
@@ -31,14 +30,6 @@ std::string ast2str(AstType type) {
 		case AstType::StructDec: return "StructDec";
 		case AstType::StructAcc: return "StructAcc";
 		case AstType::StructMod: return "StructMod";
-		
-		case AstType::Int64: return "Int64";
-		case AstType::Int128: return "Int128";
-		case AstType::Int256: return "Int256";
-		
-		case AstType::Float64: return "Float64";
-		case AstType::Float128: return "Float128";
-		case AstType::Float256: return "Float256";
 		
 		case AstType::Double: return "Double";
 				
@@ -79,14 +70,6 @@ std::string type2str(DataType type) {
 		case DataType::Float: return "Float";
 		case DataType::Bool: return "Bool";
 		case DataType::Str: return "Str";
-		
-		case DataType::Int64: return "Int64";
-		case DataType::Int128: return "Int128";
-		case DataType::Int256: return "Int256";
-		
-		case DataType::Float64: return "Float64";
-		case DataType::Float128: return "Float128";
-		case DataType::Float256: return "Float256";
 		
 		case DataType::Double: return "Double";
 	}
@@ -165,15 +148,6 @@ void print_tree(AstNode *node, int indent, bool nl) {
 		if (vd->is_ptr) std::cout << " *";
 		std::cout << "[" << vd->get_name() << "] ("
 			<< type2str(vd->get_type()) << ")";
-			
-	} else if (node->type == AstType::MultiVarAssign) {
-		auto mva = static_cast<AstMultiVarAssign *>(node);
-		std::cout << " <";
-		for (auto id : mva->vars) {
-			auto aid = static_cast<AstID *>(id);
-			std::cout << "{" << aid->get_name() << "} ";
-		}
-		std::cout << ">";
 			
 	} else if (node->type == AstType::If || node->type == AstType::Elif 
 		|| node->type == AstType::While || node->type == AstType::For) {

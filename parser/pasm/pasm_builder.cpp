@@ -74,9 +74,6 @@ void PasmBuilder::assemble(AstNode *top) {
 	}
 }
 
-void PasmBuilder::buildCmp(AstNode *node) {
-}
-
 //Builds a string and adds to the data section
 std::string PasmBuilder::buildString(AstNode *node) {
 	auto str = static_cast<AstString *>(node);

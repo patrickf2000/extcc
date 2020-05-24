@@ -11,6 +11,7 @@ set(PARSER_SRC
 	parser/syntax.cpp
 
 	parser/pasm/pasm_builder.cpp
+	parser/pasm/pasm_flow.cpp
 	parser/pasm/pasm_func.cpp
 	parser/pasm/pasm_math.cpp
 	parser/pasm/pasm_var.cpp

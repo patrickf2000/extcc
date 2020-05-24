@@ -53,6 +53,12 @@ std::string unwrite(PasmFile *file) {
 			case pasm::Space: {
 				ret += "\n";
 			} break;
+			
+			//Labels
+			case pasm::Lbl: {
+				auto lbl = static_cast<Label *>(ln);
+				ret += "lbl " + lbl->name + "\n";
+			} break;
 		
 			//Functions
 			case pasm::Func: {

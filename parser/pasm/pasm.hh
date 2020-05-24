@@ -53,7 +53,10 @@ enum class pasm {
 	
 	//Branching
 	Br,
-	Jmp
+	
+	//Comparisons
+	ICmp,
+	ICmpVI,
 };
 
 //Represents operand type
@@ -361,6 +364,33 @@ public:
 	
 	JmpType jmp = JmpType::None;	//Unconditional by default
 	std::string label = "";
+};
+
+//Integer comparisons
+//Variable to variable
+class ICmp : public PasmNode {
+public:
+	explicit ICmp(int pos1, int pos2) {
+		type = pasm::ICmp;
+		this->pos1 = pos1;
+		this->pos2 = pos2;
+	}
+	
+	int pos1 = 0;
+	int pos2 = 0;
+	
+	Operand op1 = Operand::Var;
+	Operand op2 = Operand::Var;
+};
+
+//Variable to immediate
+class ICmpVI : public ICmp {
+public:
+	explicit ICmpVI(int pos, int c) : ICmp(pos, c) {
+		type = pasm::ICmpVI;
+		op1 = Operand::Var;
+		op2 = Operand::Const;
+	}
 };
 
 //Useful functions

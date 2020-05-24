@@ -219,6 +219,31 @@ std::string unwrite(PasmFile *file) {
 				
 				ret += br->label + "\n";
 			} break;
+			
+			//Integer comparisons
+			case pasm::ICmp:
+			case pasm::ICmpVI: {
+				auto cmp = static_cast<ICmp *>(ln);
+				std::string arg1 = "";
+				std::string arg2 = "";
+				
+				switch (cmp->op1) {
+					case Operand::Var: arg1 = "VAR"; break;
+					case Operand::Reg: arg1 = "r"; break;
+					case Operand::Const: break;
+				}
+				
+				switch (cmp->op2) {
+					case Operand::Var: arg2 = "VAR"; break;
+					case Operand::Reg: arg2 = "r"; break;
+					case Operand::Const: break;
+				}
+				
+				arg1 += std::to_string(cmp->pos1); break;
+				arg2 += std::to_string(cmp->pos2); break;
+				
+				ret += "\ti.cmp " + arg1 + " " + arg2 + "\n";
+			} break;
 		}
 	}
 	

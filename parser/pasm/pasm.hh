@@ -39,7 +39,7 @@ enum class pasm {
 	ILdRet,
 	IStrRet,
 	MoveVV,
-	LdrV,
+	ILdr,
 	Str,
 	
 	//Math stuff
@@ -225,11 +225,11 @@ public:
 	DType dType = DType::None;
 };
 
-//Load a variable from memory
-class LdrV : public PasmNode {
+//Load an integer register
+class ILdr : public PasmNode {
 public:
-	explicit LdrV(int reg, int pos) {
-		type = pasm::LdrV;
+	explicit ILdr(int reg, int pos) {
+		type = pasm::ILdr;
 		this->reg = reg;
 		this->pos = pos;
 	}
@@ -240,9 +240,9 @@ public:
 };
 
 //Store register value to memory
-class Str : public LdrV {
+class Str : public ILdr {
 public:
-	explicit Str(int reg, int pos) : LdrV(reg, pos) {
+	explicit Str(int reg, int pos) : ILdr(reg, pos) {
 		type = pasm::Str;
 	}
 };

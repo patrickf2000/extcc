@@ -16,9 +16,18 @@ void PasmBuilder::buildIMath(AstMath *math, VarInfo dest) {
 			auto id = static_cast<AstID *>(op1);
 			auto var = vars[id->get_name()];
 			
-			auto ldrv = new LdrV(1, var.pos);
-			ldrv->dType = var.type;
-			file->code.push_back(ldrv);
+			auto load = new ILdr(1, var.pos);
+			load->opType = Operand::Var;
+			file->code.push_back(load);
+		} break;
+		
+		//Constants
+		case AstType::Int: {
+			auto i = static_cast<AstInt *>(op1);
+			
+			auto load = new ILdr(1, i->get_val());
+			load->opType = Operand::Const;
+			file->code.push_back(load);
 		} break;
 		
 		//TODO: Add rest

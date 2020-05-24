@@ -25,7 +25,7 @@ public:
 	
 	void build_istorec(PasmNode *ln);
 	void build_move_vv(PasmNode *ln);
-	void build_ldrv(PasmNode *ln);
+	void build_ildr(PasmNode *ln);
 	void build_str(PasmNode *ln);
 	
 	void build_imath_ri(PasmNode *ln);

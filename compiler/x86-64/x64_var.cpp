@@ -29,21 +29,19 @@ void X64::build_move_vv(PasmNode *ln) {
 	writer << std::endl;
 }
 
-//Load register to variable
-void X64::build_ldrv(PasmNode *ln) {
-	auto ldrv = static_cast<LdrV *>(ln);
-	int reg = ldrv->reg;
-	std::string var = "[rbp-" + std::to_string(ldrv->pos) + "]";
+//Loads an integer register
+void X64::build_ildr(PasmNode *ln) {
+	auto load = static_cast<ILdr *>(ln);
+	auto reg = registers32[load->reg];
 	
-	switch (ldrv->dType) {
-		//Integers
-		case DType::Int: {
-			writer << "\tmov " << registers32[reg] << ", DWORD PTR ";
-			writer << var << std::endl;
-		} break;
-		
-		//TODO: Add rest
+	writer << "\tmov " << reg << ", ";
+	
+	switch (load->opType) {
+		case Operand::Var: writer << "DWORD PTR [rbp-" << load->pos << "]"; break;
+		case Operand::Const: writer << load->pos; break;
 	}
+	
+	writer << std::endl;
 }
 
 //Store register to variable

@@ -37,6 +37,12 @@ void X64::build_code(PasmFile *file) {
 		switch (ln->type) {
 			//Formatting
 			case pasm::Space: writer << std::endl; break;
+			
+			//Labels
+			case pasm::Lbl: {
+				auto lbl = static_cast<Label *>(ln);
+				writer << lbl->name << ":" << std::endl;
+			} break;
 		
 			//Functions
 			case pasm::Func: build_func(ln); break;

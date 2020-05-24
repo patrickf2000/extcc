@@ -2,6 +2,7 @@
 
 #include <string>
 #include <map>
+#include <stack>
 
 #include <ast.hh>
 #include <pasm/pasm.hh>
@@ -31,6 +32,8 @@ protected:
 	void buildVarAssign(AstVarAssign *node);
 	
 	void buildIMath(AstMath *math, VarInfo dest);
+	
+	void buildCmp(AstNode *node);
 private:
 	PasmFile *file;
 	
@@ -41,4 +44,9 @@ private:
 	
 	//String information
 	int strPos = 0;
+	
+	//Label stuff
+	int lbl_count = 0;
+	std::stack<std::string> labels;
+	std::stack<std::string> end_lbls;
 };

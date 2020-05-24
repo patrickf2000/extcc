@@ -39,8 +39,42 @@ void PasmBuilder::assemble(AstNode *top) {
 			
 			case AstType::VarDec: buildVarDec(node); break;
 			case AstType::VarAssign: buildVarAssign(node); break;
+			
+			//Comparisons
+			case AstType::If: 
+			case AstType::Elif: 
+			case AstType::Else: {
+				std::string name = "L" + std::to_string(lbl_count);
+				++lbl_count;
+				labels.push(name);
+				
+				if (node->type == AstType::If) {
+					std::string end_name = "L" + std::to_string(lbl_count);
+					++lbl_count;
+					end_lbls.push(end_name);	
+				}
+				
+				if (node->type != AstType::Else)
+					buildCmp(node);
+				else
+					assemble(node);
+				
+				auto lbl = new Label(name);
+				file->code.push_back(lbl);
+			} break;
+			
+			case AstType::EndIf: {
+				auto name = end_lbls.top();
+				end_lbls.pop();
+				
+				auto lbl = new Label(name);
+				file->code.push_back(lbl);
+			} break;
 		}
 	}
+}
+
+void PasmBuilder::buildCmp(AstNode *node) {
 }
 
 //Builds a string and adds to the data section

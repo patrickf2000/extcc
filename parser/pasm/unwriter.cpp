@@ -199,6 +199,26 @@ std::string unwrite(PasmFile *file) {
 			
 			//The syscall command
 			case pasm::Syscall: ret += "\tsyscall\n\n"; break;
+			
+			//Branch
+			case pasm::Br: {
+				auto br = static_cast<Branch *>(ln);
+				ret += "\t";
+				
+				switch (br->jmp) {
+					case JmpType::Eq: ret += "beq "; break;
+					case JmpType::Neq: ret += "bneq "; break;
+					case JmpType::Z: ret += "bz "; break;
+					case JmpType::Nz: ret += "bnz "; break;
+					case JmpType::G: ret += "bg "; break;
+					case JmpType::Ge: ret += "bge "; break;
+					case JmpType::L: ret += "bl "; break;
+					case JmpType::Le: ret += "ble "; break;
+					default: ret += "br ";
+				}
+				
+				ret += br->label + "\n";
+			} break;
 		}
 	}
 	

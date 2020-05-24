@@ -49,7 +49,11 @@ enum class pasm {
 	//System class stuff
 	ISysarg,
 	StrSysarg,
-	Syscall
+	Syscall,
+	
+	//Branching
+	Br,
+	Jmp
 };
 
 //Represents operand type
@@ -79,6 +83,19 @@ enum class MathType {
 	Sub,
 	Mul,
 	Div
+};
+
+//Represents a branch type
+enum class JmpType {
+	None,
+	Eq,
+	Neq,
+	Z,
+	Nz,
+	G,
+	Ge,
+	L,
+	Le
 };
 
 //The base of all PASM nodes
@@ -326,6 +343,24 @@ public:
 class SysCall : public PasmNode {
 public:
 	explicit SysCall() { type = pasm::Syscall; }
+};
+
+//Represents a branch
+class Branch : public PasmNode {
+public:
+	explicit Branch(std::string lbl) {
+		type = pasm::Br;
+		label = lbl;
+	}
+	
+	explicit Branch(JmpType jmp, std::string lbl) {
+		type = pasm::Br;
+		this->jmp = jmp;
+		label = lbl;
+	}
+	
+	JmpType jmp = JmpType::None;	//Unconditional by default
+	std::string label = "";
 };
 
 //Useful functions

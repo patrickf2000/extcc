@@ -34,6 +34,7 @@ protected:
 	void buildIMath(AstMath *math, VarInfo dest);
 	
 	void buildCmp(AstNode *node);
+	void buildCond(AstCond *cond);
 private:
 	PasmFile *file;
 	

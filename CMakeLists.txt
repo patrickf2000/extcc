@@ -41,10 +41,7 @@ set(COMPILER_SRC
 	compiler/compiler.cpp
 	compiler/main.cpp
 	compiler/utils.cpp
-)
-
-#TEMPORARY
-set(COMPILER2
+	
 	compiler/x86-64/asm_x64.cpp
 	compiler/x86-64/x64_func.cpp
 	compiler/x86-64/x64_math.cpp
@@ -62,9 +59,8 @@ add_executable(clex clang/test/c_lex_test.cpp)
 add_executable(ast parser/test/ast_test.cpp)
 add_executable(pasm parser/test/pasm_test.cpp)
 
-# Build the compilers
-add_executable(cc ${COMPILER_SRC} ${COMPILER2})
-set_target_properties(cc PROPERTIES COMPILE_FLAGS "-DBUILD_PASM -DBUILD_CLANG")
+# Build the compiler
+add_executable(cc ${COMPILER_SRC})
 
 # Link everything
 target_link_libraries(cparser parser)

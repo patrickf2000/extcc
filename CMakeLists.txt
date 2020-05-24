@@ -10,17 +10,7 @@ set(PARSER_SRC
 	parser/ast.cpp
 	parser/lex.cpp
 	parser/syntax.cpp
-	
-	parser/ltac/ltac.cpp
-	parser/ltac/ltac_array.cpp
-	parser/ltac/ltac_build.cpp
-	parser/ltac/ltac_flow.cpp
-	parser/ltac/ltac_func.cpp
-	parser/ltac/ltac_math.cpp
-	parser/ltac/ltac_struct.cpp
-	parser/ltac/ltac_vars.cpp
-	parser/ltac/ltac_writer.cpp
-	
+
 	parser/pasm/pasm_builder.cpp
 	parser/pasm/pasm_func.cpp
 	parser/pasm/pasm_math.cpp

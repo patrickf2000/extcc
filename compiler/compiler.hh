@@ -3,8 +3,6 @@
 #include <vector>
 #include <string>
 
-#include <ltac/ltac.hh>
-
 #include "config.hh"
 
 class Compiler {

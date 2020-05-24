@@ -37,20 +37,6 @@ set(C_SRC
 	clang/c_var.cpp
 )
 
-set(LASM_SRC
-	lasm/lasm_array.cpp
-	lasm/lasm_flow.cpp
-	lasm/lasm_funcs.cpp
-	lasm/lasm_lex.cpp
-	lasm/lasm_parser.cpp
-	lasm/lasm_register.cpp
-	lasm/lasm_store.cpp
-)
-
-set(QK_SRC
-	quik/qk_lex.cpp
-)
-
 set(COMPILER_SRC
 	compiler/compiler.cpp
 	compiler/main.cpp
@@ -93,15 +79,11 @@ set(COMPILER2
 # Build all the frontend libraries
 add_library(parser ${PARSER_SRC})
 add_library(cparser ${C_SRC})
-add_library(lasm_parser ${LASM_SRC})
-add_library(qkparser ${QK_SRC})
 
 # Build the utilities
 add_executable(clex clang/test/c_lex_test.cpp)
-add_executable(qklex quik/test/qk_lex_test.cpp)
 
 add_executable(ast parser/test/ast_test.cpp)
-add_executable(asm parser/test/ltac_test.cpp)
 add_executable(pasm parser/test/pasm_test.cpp)
 
 # Build the compilers
@@ -111,22 +93,14 @@ set_target_properties(cc PROPERTIES COMPILE_FLAGS "-DBUILD_CLANG")
 add_executable(cc2 ${COMPILER_SRC} ${COMPILER2})
 set_target_properties(cc2 PROPERTIES COMPILE_FLAGS "-DBUILD_PASM -DBUILD_CLANG")
 
-add_executable(ltasm ${COMPILER_SRC} ${COMPILER1})
-set_target_properties(ltasm PROPERTIES COMPILE_FLAGS "-DBUILD_ASM")
-
 # Link everything
-target_link_libraries(qkparser parser)
 target_link_libraries(cparser parser)
-target_link_libraries(lasm_parser parser)
 
 target_link_libraries(clex cparser)
-target_link_libraries(qklex qkparser)
 
-target_link_libraries(ast cparser qkparser)
-target_link_libraries(asm cparser qkparser lasm_parser)
+target_link_libraries(ast cparser)
 target_link_libraries(pasm cparser)
 
 target_link_libraries(cc cparser)
 target_link_libraries(cc2 cparser)
-target_link_libraries(ltasm lasm_parser)
 

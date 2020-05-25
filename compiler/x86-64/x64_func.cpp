@@ -86,7 +86,8 @@ void X64::build_ildret(PasmNode *ln) {
 		} break;
 		
 		case Operand::Reg: {
-			warning("i.stret_r not supported yet.");
+			auto reg = registers32[val];
+			writer << "\tmov eax, " << reg << std::endl;
 		} break;
 		
 		case Operand::Const: {

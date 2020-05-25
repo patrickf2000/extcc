@@ -36,6 +36,7 @@ enum class pasm {
 	StrPushArg,
 	FuncCall,
 	ILdArg,
+	F32_LdArg,
 	
 	//Load/store stuff
 	IStoreC,
@@ -252,6 +253,17 @@ class ILdArg : public PasmNode {
 public:
 	explicit ILdArg(int pos) {
 		type = pasm::ILdArg;
+		this->pos = pos;
+	}
+	
+	int pos = 0;
+};
+
+//Load a float-32 argument
+class F32_LdArg : public PasmNode {
+public:
+	explicit F32_LdArg(int pos) {
+		type = pasm::F32_LdArg;
 		this->pos = pos;
 	}
 	

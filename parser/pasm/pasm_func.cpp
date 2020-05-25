@@ -28,6 +28,21 @@ Func *PasmBuilder::buildFunc(AstNode *node) {
 				file->code.push_back(iarg);
 			} break;
 			
+			//Floats
+			case DataType::Float: {
+				stackPos += 4;
+				VarInfo v;
+				v.pos = stackPos;
+				v.type = DType::Float32;
+				v.size = 4;
+				
+				varPos[arg.name] = stackPos;
+				vars[arg.name] = v;
+				
+				auto farg = new F32_LdArg(stackPos);
+				file->code.push_back(farg);
+			} break;
+			
 			//TODO: Add rest
 		}
 	}

@@ -133,6 +133,12 @@ std::string unwrite(PasmFile *file) {
 				ret += "\ti.ldarg VAR" + std::to_string(arg->pos) + "\n";
 			} break;
 			
+			//Load float-32 function argument
+			case pasm::F32_LdArg: {
+				auto arg = static_cast<F32_LdArg *>(ln);
+				ret += "\tf32.ldarg VAR" + std::to_string(arg->pos) + "\n";
+			} break;
+			
 			//Load/Store
 			//Store constant (int)
 			case pasm::IStoreC: {

@@ -38,6 +38,7 @@ enum class pasm {
 	
 	//Load/store stuff
 	IStoreC,
+	F32_StoreC,
 	ILdRet,
 	IStrRet,
 	MoveVV,
@@ -249,6 +250,19 @@ public:
 	
 	int pos = 0;
 	int val = 0;
+};
+
+//Store a float constant to a variable
+class F32_StoreConst : public PasmNode {
+public:
+	explicit F32_StoreConst(int pos, std::string name) {
+		type = pasm::F32_StoreC;
+		this->pos = pos;
+		this->name = name;
+	}
+	
+	int pos = 0;
+	std::string name = "";
 };
 
 //Move on var to another

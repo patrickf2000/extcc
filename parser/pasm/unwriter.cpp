@@ -118,11 +118,18 @@ std::string unwrite(PasmFile *file) {
 			} break;
 			
 			//Load/Store
-			//Store constant
+			//Store constant (int)
 			case pasm::IStoreC: {
 				auto store = static_cast<IStoreConst *>(ln);
 				ret += "\ti.store_c VAR" + std::to_string(store->pos);
 				ret += " " + std::to_string(store->val) + "\n";
+			} break;
+			
+			//Store constant (float-32)
+			case pasm::F32_StoreC: {
+				auto store = static_cast<F32_StoreConst *>(ln);
+				ret += "\tf32.store_c VAR" + std::to_string(store->pos);
+				ret += " " + store->name + "\n";
 			} break;
 			
 			//Move one var to another

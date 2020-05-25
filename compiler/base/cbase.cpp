@@ -37,6 +37,7 @@ void CompilerBase::build_code(PasmFile *file) {
 			case pasm::IStoreC: build_istorec(ln); break;
 			case pasm::F32_StoreC: build_f32_storec(ln); break;
 			case pasm::F64_StoreC: build_f64_storec(ln); break;
+			case pasm::Str_StoreC: build_str_storec(ln); break;
 			case pasm::MoveVV: build_move_vv(ln); break;
 			case pasm::ILdr: build_ildr(ln); break;
 			case pasm::Str: build_str(ln); break;

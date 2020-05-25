@@ -123,6 +123,11 @@ public:
 	virtual void build_f64_storec(PasmNode *ln) {}
 	
 	/**
+	 * Store a string constant to a string variable (in C, char *)
+	 */
+	virtual void build_str_storec(PasmNode *ln) {}
+	
+	/**
 	 * Move the contents of one variable to another
 	 */
 	virtual void build_move_vv(PasmNode *ln) {}

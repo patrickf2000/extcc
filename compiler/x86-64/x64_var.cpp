@@ -29,6 +29,14 @@ void X64::build_f64_storec(PasmNode *ln) {
 	writer << "xmm1" << std::endl;
 }
 
+//Store a string constant to a memory location
+void X64::build_str_storec(PasmNode *ln) {
+	auto store = static_cast<Str_StoreConst *>(ln);
+	
+	writer << "\tmov QWORD PTR [rbp-" << store->pos << "], ";
+	writer << "OFFSET FLAT:" << store->name << std::endl;
+}
+
 //Move one variable to another
 void X64::build_move_vv(PasmNode *ln) {
 	auto move = static_cast<MoveVV *>(ln);

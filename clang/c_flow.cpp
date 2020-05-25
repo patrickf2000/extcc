@@ -147,6 +147,7 @@ void CParser::buildFor() {
 	//Regular assignment
 	if (next.type == CTokenType::Assign) {
 		auto *va = new AstVarAssign(id.id);
+		va->set_type(DataType::Int);
 		buildVarAssign(va, CTokenType::RightParen, true);
 		
 	//Increment

@@ -78,6 +78,9 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 		auto syscall = new SysCall;
 		file->code.push_back(syscall);
 	} else {
+		bool f32Promote = false;
+		if (fc->get_name() == "printf") f32Promote = true;
+	
 		for (auto arg : fc->children) {
 			if (arg_pos == 0)
 				file->code.push_back(new PasmSpace);
@@ -104,6 +107,7 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 					auto name = buildFloat(arg);
 					auto pusharg = new F32_PushArg(name);
 					pusharg->opType = Operand::Const;
+					pusharg->promote = f32Promote;
 					file->code.push_back(pusharg);
 				} break;
 				
@@ -122,6 +126,7 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 						case DType::Float32: {
 							auto pusharg = new F32_PushArg(var.pos);
 							pusharg->opType = Operand::Var;
+							pusharg->promote = f32Promote;
 							file->code.push_back(pusharg);
 						} break;
 						

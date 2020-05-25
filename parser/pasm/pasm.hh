@@ -222,6 +222,7 @@ public:
 	
 	std::string val = "";
 	int pos = 0;
+	bool promote = false;
 };
 
 //Push a string argument

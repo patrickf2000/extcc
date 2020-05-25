@@ -21,6 +21,7 @@ public:
 	void build_ret();
 	void build_str_pusharg(PasmNode *ln);
 	void build_ipusharg(PasmNode *ln);
+	void build_f32_pusharg(PasmNode *ln);
 	void build_call(PasmNode *ln);
 	
 	void build_istorec(PasmNode *ln);

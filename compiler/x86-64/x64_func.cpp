@@ -160,6 +160,41 @@ void X64::build_ipusharg(PasmNode *ln) {
 	}
 }
 
+//Push float-32 argument
+void X64::build_f32_pusharg(PasmNode *ln) {
+	auto pusharg = static_cast<F32_PushArg *>(ln);
+	
+	auto reg = call_regs_flt[flt_call_pos];
+	++flt_call_pos;
+	
+	switch (pusharg->opType) {
+		case Operand::Var: {
+			if (pusharg->promote)
+				writer << "\tcvtss2sd ";
+			else
+				writer << "\tmovss ";
+				
+			writer << reg << ", DWORD PTR [rbp-";
+			writer << pusharg->pos << "]" << std::endl;
+		} break;
+		
+		case Operand::Reg: {
+			warning("i.pusharg_r not supported yet.");
+		} break;
+		
+		case Operand::Const: {
+			if (pusharg->promote)
+				writer << "\tcvtss2sd ";
+			else
+				writer << "\tmovss ";
+				
+			writer << reg << ", " << pusharg->val << "[rip]" << std::endl;
+		} break;
+		
+		default: fatalError("Unknown command.");
+	}
+}
+
 //Call a function
 void X64::build_call(PasmNode *ln) {
 	auto fc = static_cast<FuncCall *>(ln);

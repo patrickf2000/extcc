@@ -100,6 +100,22 @@ std::string unwrite(PasmFile *file) {
 				ret += std::to_string(pusharg->val) + "\n";
 			} break;
 			
+			case pasm::F32_PushArg: {
+				auto pusharg = static_cast<F32_PushArg *>(ln);
+				ret += "\tf32.pusharg_";
+				
+				switch (pusharg->opType) {
+					case Operand::Var: ret += "v VAR"; break;
+					case Operand::Reg: ret += "r "; break;
+					case Operand::Const: ret += "c "; break;
+				}
+				
+				if (pusharg->opType == Operand::Const)
+					ret += pusharg->val + "\n";
+				else
+					ret += std::to_string(pusharg->pos) + "\n";
+			} break;
+			
 			case pasm::StrPushArg: {
 				auto pusharg = static_cast<StrPushArg *>(ln);
 				ret += "\tstr.pusharg " + pusharg->name + "\n";

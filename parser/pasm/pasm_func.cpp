@@ -99,6 +99,14 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 					file->code.push_back(pusharg);
 				} break;
 				
+				//Raw float-32
+				case AstType::Float: {
+					auto name = buildFloat(arg);
+					auto pusharg = new F32_PushArg(name);
+					pusharg->opType = Operand::Const;
+					file->code.push_back(pusharg);
+				} break;
+				
 				//Variables
 				case AstType::Id: {
 					auto id = static_cast<AstID *>(arg);
@@ -107,6 +115,12 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 					switch (var.type) {
 						case DType::Int: {
 							auto pusharg = new IPushArg(var.pos);
+							pusharg->opType = Operand::Var;
+							file->code.push_back(pusharg);
+						} break;
+						
+						case DType::Float32: {
+							auto pusharg = new F32_PushArg(var.pos);
 							pusharg->opType = Operand::Var;
 							file->code.push_back(pusharg);
 						} break;

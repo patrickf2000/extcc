@@ -22,6 +22,7 @@ void CParser::parse() {
 			
 			//Data type tokens- can be either function declarations or variables
 			case CTokenType::Void:
+			case CTokenType::Char:
 			case CTokenType::Int:
 			case CTokenType::Float: 
 			case CTokenType::Double: {

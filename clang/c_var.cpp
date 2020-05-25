@@ -25,6 +25,7 @@ void CParser::buildVarDec(int type, Token id, bool is_ptr, bool init_default) {
 		AstNode *dnode;
 		
 		switch (d_type) {
+			case DataType::Char: dnode = new AstChar(0); break;
 			case DataType::Int: dnode = new AstInt(0); break;
 			
 			case DataType::Float: dnode = new AstFloat(0); break;

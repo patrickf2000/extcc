@@ -4,15 +4,14 @@
 #include <fstream>
 
 #include <pasm/pasm.hh>
+#include <base/cbase.hh>
 
 using namespace PASM;
 
-class X64 {
+class X64 : public CompilerBase {
 public:
 	explicit X64(std::string name);
 	void build_data(PasmFile *file);
-	void build_code(PasmFile *file);
-	void write();
 	
 	void build_func(PasmNode *ln);
 	void build_ildarg(PasmNode *ln);
@@ -44,9 +43,4 @@ public:
 	void build_isysarg(PasmNode *ln);
 	void build_str_sysarg(PasmNode *ln);
 	void build_syscall(PasmNode *ln);
-protected:
-	void fatalError(std::string msg);
-	void warning(std::string msg);
-private:
-	std::ofstream writer;
 };

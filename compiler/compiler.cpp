@@ -8,6 +8,7 @@
 
 #include "compiler.hh"
 #include "utils.hh"
+#include "base/cbase.hh"
 #include "x86-64/asm_x64.hh"
 
 #include <c_parser.hh>
@@ -52,12 +53,15 @@ void Compiler::assemble() {
 		
 		file->name = asm_files[i];
 		
+		CompilerBase *cc;
+		
 		switch (config.arch) {
 			case CpuArch::Intel64: {
-				X64 asm_builder(file->name);
+				cc = new X64(file->name);
+				/*X64 asm_builder(file->name);
 				asm_builder.build_data(file);
 				asm_builder.build_code(file);
-				asm_builder.write();
+				asm_builder.write();*/
 
 				//if (config.out_type == BuildType::DynLib)
 				//	asm_builder.build_PIC();
@@ -88,6 +92,10 @@ void Compiler::assemble() {
 				llvm_builder.write(false, true);
 			} break;*/
 		}
+		
+		cc->build_data(file);
+		cc->build_code(file);
+		cc->write();
 
 		delete top;
 		delete builder;

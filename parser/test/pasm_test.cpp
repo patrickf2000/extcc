@@ -6,8 +6,6 @@
 #include <pasm/pasm.hh>
 #include <pasm/pasm_builder.hh>
 
-#include <x86-64/asm_x64.hh>
-
 using namespace PASM;
 
 int main(int argc, char *argv[]) {

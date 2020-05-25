@@ -34,5 +34,11 @@ void JVM::build_ret() {
 
 //Build function call
 void JVM::build_call(PasmNode *ln) {
-
+	auto call = static_cast<FuncCall *>(ln);
+	
+	if (call->name == "puts") {
+		
+	} else {
+		warning("[JVM] Non-puts not yet supported.");
+	}
 }

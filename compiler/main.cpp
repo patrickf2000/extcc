@@ -26,7 +26,6 @@ int main(int argc, char *argv[]) {
 	config.obj_only = false;				// -c
 	config.optimize = false;				// --optimize
 	
-	config.arch = CpuArch::Intel64;			// -m <x86_64, i386, armv7, llvm>
 	config.asm_type = Asm::Gas;					// -a <gas, nasm>
 	config.out_type = BuildType::Exe;		// (nothing for executable)
 											// --static (for static library)
@@ -38,22 +37,6 @@ int main(int argc, char *argv[]) {
 		if (arg == "-o") {
 			config.output = std::string(argv[i+1]);
 			++i;
-		} else if (arg == "-m") {
-			auto arch = std::string(argv[i+1]);
-			++i;
-			
-			if (arch == "x86_64") {
-				config.arch = CpuArch::Intel64;
-			} else if (arch == "i386") {
-				config.arch = CpuArch::Intel32;
-			} else if (arch == "armv7") {
-				config.arch = CpuArch::Arm7;
-			} else if (arch == "llvm") {
-				config.arch = CpuArch::LLVM;
-			} else {
-				std::cout << "Fatal: Unknown architecture: " << arch << std::endl;
-				return 1;
-			}
 		} else if (arg == "--shared") {
 			config.out_type = BuildType::DynLib;
 		} else if (arg == "-h") {
@@ -102,12 +85,6 @@ void help() {
 	std::cout << "\t-s\t\tOutput Assembly only." << std::endl;
 	std::cout << "\t-c\t\tOutput object code only." << std::endl;
 	std::cout << "\t--optimize\tProduce optimized code (experimental)." << std::endl;
-	std::cout << std::endl;
-	std::cout << "\t-m <TYPE>\tSpecify CPU architecture." << std::endl;
-	std::cout << "\t\tx86_64\tIntel x86 64-bit Assembly. (default)" << std::endl;
-	std::cout << "\t\ti386\tIntel x86 32-bit Assembly." << std::endl;
-	std::cout << "\t\tarmv7\tArm v7 Assembly." << std::endl;
-	std::cout << "\t\tllvm\tLLVM IR" << std::endl;
 	std::cout << std::endl;
 	std::cout << "\t-a <TYPE>\tSpecify which Assembler to use." << std::endl;
 	std::cout << "\t\tgas\tUse the GNU assembler (default)." << std::endl;

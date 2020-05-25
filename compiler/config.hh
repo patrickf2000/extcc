@@ -1,13 +1,5 @@
 #pragma once
 
-//CPU architecture
-enum CpuArch {
-	Intel64,
-	Intel32,
-	Arm7,
-	LLVM
-};
-
 //The Assembler to use
 enum Asm {
 	Gas,		//The default
@@ -29,7 +21,6 @@ struct Config {
 	bool obj_only;
 	bool optimize;
 	
-	CpuArch arch;
 	Asm asm_type;
 	BuildType out_type;
 };

@@ -44,6 +44,7 @@ enum class pasm {
 	IStoreC,
 	F32_StoreC,
 	F64_StoreC,
+	Str_StoreC,
 	ILdRet,
 	IStrRet,
 	MoveVV,
@@ -332,6 +333,19 @@ class F64_StoreConst : public PasmNode {
 public:
 	explicit F64_StoreConst(int pos, std::string name) {
 		type = pasm::F64_StoreC;
+		this->pos = pos;
+		this->name = name;
+	}
+	
+	int pos = 0;
+	std::string name = "";
+};
+
+//Store a string constant
+class Str_StoreConst : public PasmNode {
+public:
+	explicit Str_StoreConst(int pos, std::string name) {
+		type = pasm::Str_StoreC;
 		this->pos = pos;
 		this->name = name;
 	}

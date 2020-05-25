@@ -93,6 +93,13 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 			file->code.push_back(store);
 		} break;
 		
+		//String constants
+		case AstType::Str: {
+			std::string name = buildString(child);
+			auto store = new Str_StoreConst(pos, name);
+			file->code.push_back(store);
+		} break;
+		
 		//Variables
 		case AstType::Id: {
 			auto var2 = static_cast<AstID *>(child);

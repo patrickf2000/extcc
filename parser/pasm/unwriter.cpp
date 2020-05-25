@@ -183,6 +183,13 @@ std::string unwrite(PasmFile *file) {
 				ret += " " + store->name + "\n";
 			} break;
 			
+			//Store constant (string)
+			case pasm::Str_StoreC: {
+				auto store = static_cast<Str_StoreConst *>(ln);
+				ret += "\tstr.store_c VAR" + std::to_string(store->pos);
+				ret += " " + store->name + "\n";
+			} break;
+			
 			//Move one var to another
 			case pasm::MoveVV: {
 				auto move = static_cast<MoveVV *>(ln);

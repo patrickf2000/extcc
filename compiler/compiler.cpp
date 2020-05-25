@@ -71,6 +71,9 @@ void Compiler::assemble() {
 //Assemble the assembly
 //TODO: Update not to use system calls
 void Compiler::compile() {
+	if (config.jvm)
+		return;
+
 	for (int i = 0; i<asm_files.size(); i++) {
 		std::string cmd = "as -g " + asm_files[i] + " -o ";
 		cmd += obj_files[i];
@@ -82,6 +85,9 @@ void Compiler::compile() {
 //Link the object files
 //TODO: Do not use the system() function
 void Compiler::link() {
+	if (config.jvm)
+		return;
+
 	std::string ld_line = "ld ";
 
 	//Link an executable

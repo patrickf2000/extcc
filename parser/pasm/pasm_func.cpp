@@ -1,5 +1,4 @@
 #include "pasm_builder.hh"
-#include <iostream>
 
 using namespace PASM;
 
@@ -8,6 +7,8 @@ Func *PasmBuilder::buildFunc(AstNode *node) {
 	auto *fd = static_cast<AstFuncDec *>(node);
 	auto *func = new Func(fd->get_name());
 	file->code.push_back(func);
+	
+	retType = fd->rtype;
 	
 	//Arguments
 	for (auto arg : fd->args) {
@@ -147,6 +148,21 @@ void PasmBuilder::buildRet(AstNode *node) {
 					auto arg = new ILdRet(pos);
 					arg->opType = Operand::Var;
 					file->code.push_back(arg);
+				} break;
+				
+				//Math
+				case AstType::Math: {
+					if (retType == DataType::Int) {
+						auto math = static_cast<AstMath *>(child);
+						VarInfo info;
+						info.pos = -1;
+						info.type = DType::Int;
+						info.size = 4;
+						
+						buildIMath(math, info);
+					} else {
+						//TODO: Die
+					}
 				} break;
 				
 				//TODO: Add rest

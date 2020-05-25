@@ -10,7 +10,7 @@
 using namespace PASM;
 
 struct VarInfo {
-	int pos;
+	int pos;			//If -1, return register
 	DType type;
 	int size;
 };
@@ -42,6 +42,9 @@ protected:
 	void buildLoopCmp(AstCond *cond);
 private:
 	PasmFile *file;
+	
+	//Function stuff
+	DataType retType = DataType::Void;
 	
 	//Variable information
 	int stackPos = 0;

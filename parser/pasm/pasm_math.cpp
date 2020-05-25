@@ -66,9 +66,20 @@ void PasmBuilder::buildIMath(AstMath *math, VarInfo dest) {
 	}
 	
 	//Store back to the destination
-	auto str = new Str(1, dest.pos);
-	str->dType = dest.type;
-	file->code.push_back(str);
+	if (dest.pos == -1) {
+		if (dest.type == DType::Int) {
+			auto str = new ILdRet(1);
+			str->opType = Operand::Reg;
+			file->code.push_back(str);
+		} else {
+			//TODO
+		}
+	} else {
+		auto str = new Str(1, dest.pos);
+		str->dType = dest.type;
+		file->code.push_back(str);
+	}
+	
 	file->code.push_back(new PasmSpace);
 }
 

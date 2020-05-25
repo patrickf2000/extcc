@@ -137,6 +137,11 @@ std::string unwrite(PasmFile *file) {
 				ret += "\tstr.pusharg " + pusharg->name + "\n";
 			} break;
 			
+			case pasm::Ptr_PushArg: {
+				auto pusharg = static_cast<Ptr_PushArg *>(ln);
+				ret += "\tptr.pusharg VAR" + std::to_string(pusharg->pos) + "\n";
+			} break;
+			
 			//Function call
 			case pasm::FuncCall: {
 				auto call = static_cast<FuncCall *>(ln);

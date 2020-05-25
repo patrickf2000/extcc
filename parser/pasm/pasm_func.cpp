@@ -174,6 +174,11 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 							file->code.push_back(pusharg);
 						} break;
 						
+						case DType::Ptr: {
+							auto pusharg = new Ptr_PushArg(var.pos);
+							file->code.push_back(pusharg);
+						} break;
+						
 						//TODO: Add rest
 					}
 				} break;

@@ -35,6 +35,7 @@ enum class pasm {
 	F32_PushArg,
 	F64_PushArg,
 	StrPushArg,
+	Ptr_PushArg,
 	FuncCall,
 	ILdArg,
 	F32_LdArg,
@@ -256,6 +257,17 @@ public:
 	}
 	
 	std::string name = "";
+};
+
+//Push a pointer argument
+class Ptr_PushArg : public PasmNode {
+public:
+	explicit Ptr_PushArg(int pos) {
+		type = pasm::Ptr_PushArg;
+		this->pos = pos;
+	}
+	
+	int pos = 0;
 };
 
 //Function call

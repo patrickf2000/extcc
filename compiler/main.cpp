@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
 	config.asm_only = false;				// -s
 	config.obj_only = false;				// -c
 	config.optimize = false;				// --optimize
+	config.jvm = false;						// -j, --jvm
 	
 	config.asm_type = Asm::Gas;					// -a <gas, nasm>
 	config.out_type = BuildType::Exe;		// (nothing for executable)
@@ -37,6 +38,8 @@ int main(int argc, char *argv[]) {
 		if (arg == "-o") {
 			config.output = std::string(argv[i+1]);
 			++i;
+		} else if (arg == "-j" || arg == "--jvm") {
+			config.jvm = true;
 		} else if (arg == "--shared") {
 			config.out_type = BuildType::DynLib;
 		} else if (arg == "-h") {

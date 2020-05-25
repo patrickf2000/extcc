@@ -9,6 +9,7 @@
 #include "compiler.hh"
 #include "utils.hh"
 #include "base/cbase.hh"
+#include "jvm/jvm.hh"
 #include "x86-64/asm_x64.hh"
 
 #include <c_parser.hh>
@@ -25,11 +26,15 @@ void Compiler::set_inputs(std::vector<std::string> inputs) {
 		std::string path = get_path(in);
 		std::string base = get_basename(in);
 		
-		std::string asm_path = "/tmp/" + base + ".asm";
-		std::string obj_path = "/tmp/" + base + ".o";
-		
-		asm_files.push_back(asm_path);
-		obj_files.push_back(obj_path);
+		if (config.jvm) {
+			asm_files.push_back(base);
+		} else {
+			std::string asm_path = "/tmp/" + base + ".asm";
+			std::string obj_path = "/tmp/" + base + ".o";
+			
+			asm_files.push_back(asm_path);
+			obj_files.push_back(obj_path);
+		}
 	}
 }
 
@@ -47,7 +52,11 @@ void Compiler::assemble() {
 		file->name = asm_files[i];
 		
 		CompilerBase *cc;
-		cc = new X64(file->name);
+		
+		if (config.jvm)
+			cc = new JVM(file->name);
+		else
+			cc = new X64(file->name);
 		
 		cc->build_data(file);
 		cc->build_code(file);

@@ -5,19 +5,15 @@
 
 //The main loop to generate code for the text section
 void CompilerBase::build_code(PasmFile *file) {
-	writer << ".text" << std::endl;
-	writer << std::endl;
+	code_init();
 
 	for (auto ln : file->code) {
 		switch (ln->type) {
 			//Formatting
-			case pasm::Space: writer << std::endl; break;
+			case pasm::Space: build_space(); break;
 			
 			//Labels
-			case pasm::Lbl: {
-				auto lbl = static_cast<Label *>(ln);
-				writer << lbl->name << ":" << std::endl;
-			} break;
+			case pasm::Lbl: build_label(ln); break;
 		
 			//Functions
 			case pasm::Func: build_func(ln); break;
@@ -58,11 +54,6 @@ void CompilerBase::build_code(PasmFile *file) {
 			case pasm::Syscall: build_syscall(ln); break;
 		}
 	}
-}
-
-//Close out the file
-void CompilerBase::write() {
-	writer.close();
 }
 
 //Throws a fatal error

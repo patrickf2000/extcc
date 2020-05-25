@@ -34,6 +34,8 @@ set(COMPILER_SRC
 	
 	compiler/base/cbase.cpp
 	
+	compiler/jvm/jvm.cpp
+	
 	compiler/x86-64/asm_x64.cpp
 	compiler/x86-64/x64_flow.cpp
 	compiler/x86-64/x64_func.cpp

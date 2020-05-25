@@ -20,6 +20,7 @@ struct Config {
 	bool asm_only;
 	bool obj_only;
 	bool optimize;
+	bool jvm;
 	
 	Asm asm_type;
 	BuildType out_type;

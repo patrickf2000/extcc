@@ -15,6 +15,8 @@ using namespace PASM;
  */
 class CompilerBase {
 public:
+	CompilerBase() { }
+
 	/**
 	 * CompilerBase
 	 *
@@ -31,6 +33,11 @@ public:
 	 */
 	virtual void build_data(PasmFile *file) {}
 	
+	virtual void code_init() {
+		writer << ".text" << std::endl;
+		writer << std::endl;
+	}
+	
 	/**
 	 * Iterates through the PASM code vector and calls one of the functions below to
 	 * generate Assembly for that instruction. This will remain the same in all cases;
@@ -43,7 +50,18 @@ public:
 	/**
 	 * Write and close the Assembly file.
 	 */
-	void write();
+	virtual void write() {
+		writer.close();
+	}
+	
+	virtual void build_space() {
+		writer << std::endl;
+	}
+	
+	virtual void build_label(PasmNode *ln) {
+		auto lbl = static_cast<Label *>(ln);
+		writer << lbl->name << ":" << std::endl;
+	}
 	
 	/**
 	 * Builds a function declaration (note: this is distinct from a label)

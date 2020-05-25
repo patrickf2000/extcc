@@ -9,7 +9,12 @@
 #include "compiler.hh"
 #include "utils.hh"
 #include "base/cbase.hh"
+
+#include "arch.hh"
+
+#ifdef x64
 #include "x86-64/asm_x64.hh"
+#endif
 
 #include <c_parser.hh>
 
@@ -47,7 +52,10 @@ void Compiler::assemble() {
 		file->name = asm_files[i];
 		
 		CompilerBase *cc;
+		
+#ifdef x64
 		cc = new X64(file->name);
+#endif
 		
 		cc->build_data(file);
 		cc->build_code(file);
@@ -77,9 +85,11 @@ void Compiler::link() {
 
 	//Link an executable
 	if (config.out_type == BuildType::Exe) {
+#ifdef x64
 		ld_line += "/usr/lib/x86_64-linux-gnu/crti.o ";
 		ld_line += "/usr/lib/x86_64-linux-gnu/crtn.o ";
 		ld_line += "/usr/lib/x86_64-linux-gnu/crt1.o ";
+#endif
 		
 		ld_line += "-lc ";
 
@@ -87,7 +97,10 @@ void Compiler::link() {
 			ld_line += obj + " ";
 		}
 		
+#ifdef x64
 		ld_line += "-dynamic-linker /lib64/ld-linux-x86-64.so.2 ";
+#endif
+
 		ld_line += "-o " + config.output;
 		
 	//Link a dynamic library

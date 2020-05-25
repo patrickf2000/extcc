@@ -154,6 +154,13 @@ std::string unwrite(PasmFile *file) {
 				ret += " " + store->name + "\n";
 			} break;
 			
+			//Store constant (float-64)
+			case pasm::F64_StoreC: {
+				auto store = static_cast<F64_StoreConst *>(ln);
+				ret += "\tf64.store_c VAR" + std::to_string(store->pos);
+				ret += " " + store->name + "\n";
+			} break;
+			
 			//Move one var to another
 			case pasm::MoveVV: {
 				auto move = static_cast<MoveVV *>(ln);

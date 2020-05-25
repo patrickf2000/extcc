@@ -86,6 +86,13 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 			file->code.push_back(store);
 		} break;
 		
+		//Float-64 constants
+		case AstType::Double: {
+			std::string name = buildDouble(child);
+			auto store = new F64_StoreConst(pos, name);
+			file->code.push_back(store);
+		} break;
+		
 		//Variables
 		case AstType::Id: {
 			auto var2 = static_cast<AstID *>(child);

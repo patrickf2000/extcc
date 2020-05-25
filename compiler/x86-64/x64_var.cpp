@@ -19,6 +19,16 @@ void X64::build_f32_storec(PasmNode *ln) {
 	writer << "xmm1" << std::endl;
 }
 
+//Store a float-64 constant to a memory location
+void X64::build_f64_storec(PasmNode *ln) {
+	auto store = static_cast<F64_StoreConst *>(ln);
+	
+	writer << "\tmovsd xmm1, QWORD PTR " << store->name << "[rip]" << std::endl;
+	
+	writer << "\tmovsd QWORD PTR [rbp-" << store->pos << "], ";
+	writer << "xmm1" << std::endl;
+}
+
 //Move one variable to another
 void X64::build_move_vv(PasmNode *ln) {
 	auto move = static_cast<MoveVV *>(ln);

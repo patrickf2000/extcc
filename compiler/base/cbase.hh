@@ -67,6 +67,11 @@ public:
 	virtual void build_f64_ldarg(PasmNode *ln) {}
 	
 	/**
+	 * Store a pointer function parameter to a variable
+	 */
+	virtual void build_ptr_ldarg(PasmNode *ln) {}
+	
+	/**
 	 * Load an integer value to the return register
 	 */
 	virtual void build_ildret(PasmNode *ln) {}

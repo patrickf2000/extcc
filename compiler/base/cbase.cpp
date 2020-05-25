@@ -24,6 +24,7 @@ void CompilerBase::build_code(PasmFile *file) {
 			case pasm::ILdArg: build_ildarg(ln); break;
 			case pasm::F32_LdArg: build_f32_ldarg(ln); break;
 			case pasm::F64_LdArg: build_f64_ldarg(ln); break;
+			case pasm::Ptr_LdArg: build_ptr_ldarg(ln); break;
 			case pasm::ILdRet: build_ildret(ln); break;
 			case pasm::IStrRet: build_istret(ln); break;
 			case pasm::Ret: build_ret(); break;

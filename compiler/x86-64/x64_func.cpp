@@ -95,6 +95,16 @@ void X64::build_f64_ldarg(PasmNode *ln) {
 	++flt_arg_pos;
 }
 
+//Loads a pointer argument parameter
+void X64::build_ptr_ldarg(PasmNode *ln) {
+	auto ldarg = static_cast<Ptr_LdArg *>(ln);
+	
+	writer << "\tmov QWORD PTR [rbp-" << ldarg->pos << "], ";
+	writer << call_regs[arg_pos] << std::endl;
+	
+	++arg_pos;
+}
+
 //Load an integer value to a return register
 void X64::build_ildret(PasmNode *ln) {
 	auto store = static_cast<ILdRet *>(ln);

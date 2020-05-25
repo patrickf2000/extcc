@@ -55,8 +55,7 @@ enum class pasm {
 	Br,
 	
 	//Comparisons
-	ICmp,
-	ICmpVI,
+	ICmp
 };
 
 //Represents operand type
@@ -370,6 +369,8 @@ public:
 //Variable to variable
 class ICmp : public PasmNode {
 public:
+	explicit ICmp() { type = pasm::ICmp; }
+
 	explicit ICmp(int pos1, int pos2) {
 		type = pasm::ICmp;
 		this->pos1 = pos1;
@@ -381,16 +382,6 @@ public:
 	
 	Operand op1 = Operand::Var;
 	Operand op2 = Operand::Var;
-};
-
-//Variable to immediate
-class ICmpVI : public ICmp {
-public:
-	explicit ICmpVI(int pos, int c) : ICmp(pos, c) {
-		type = pasm::ICmpVI;
-		op1 = Operand::Var;
-		op2 = Operand::Const;
-	}
 };
 
 //Useful functions

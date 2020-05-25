@@ -1,4 +1,5 @@
 #include <pasm/pasm.hh>
+#include <iostream>
 
 namespace PASM {
 
@@ -221,8 +222,7 @@ std::string unwrite(PasmFile *file) {
 			} break;
 			
 			//Integer comparisons
-			case pasm::ICmp:
-			case pasm::ICmpVI: {
+			case pasm::ICmp: {
 				auto cmp = static_cast<ICmp *>(ln);
 				std::string arg1 = "";
 				std::string arg2 = "";
@@ -239,8 +239,8 @@ std::string unwrite(PasmFile *file) {
 					case Operand::Const: break;
 				}
 				
-				arg1 += std::to_string(cmp->pos1); break;
-				arg2 += std::to_string(cmp->pos2); break;
+				arg1 += std::to_string(cmp->pos1);
+				arg2 += std::to_string(cmp->pos2);
 				
 				ret += "\ti.cmp " + arg1 + " " + arg2 + "\n";
 			} break;

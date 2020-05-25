@@ -33,7 +33,10 @@ protected:
 	
 	void buildIMath(AstMath *math, VarInfo dest);
 	
+	Operand getOpType(AstNode *node);
+	int getOp(AstNode *node);
 	void buildCmp(AstNode *node);
+	void buildICmp(AstCond *cond);
 	void buildCond(AstCond *cond);
 private:
 	PasmFile *file;

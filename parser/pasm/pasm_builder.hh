@@ -35,9 +35,11 @@ protected:
 	
 	Operand getOpType(AstNode *node);
 	int getOp(AstNode *node);
-	void buildCmp(AstNode *node);
+	void buildCmp(AstNode *node, bool isLoop = false);
 	void buildICmp(AstCond *cond);
 	void buildCond(AstCond *cond);
+	void buildLoop(AstNode *node);
+	void buildLoopCmp(AstCond *cond);
 private:
 	PasmFile *file;
 	

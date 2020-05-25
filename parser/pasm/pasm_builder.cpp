@@ -70,6 +70,9 @@ void PasmBuilder::assemble(AstNode *top) {
 				auto lbl = new Label(name);
 				file->code.push_back(lbl);
 			} break;
+			
+			case AstType::While:
+			case AstType::For: buildLoop(node); break;
 		}
 	}
 }

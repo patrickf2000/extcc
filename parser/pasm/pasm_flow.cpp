@@ -33,7 +33,7 @@ int PasmBuilder::getOp(AstNode *node) {
 }
 
 //Builds a comparison statement
-void PasmBuilder::buildCmp(AstNode *node) {
+void PasmBuilder::buildCmp(AstNode *node, bool isLoop) {
 	auto cond = static_cast<AstCond *>(node);
 	
 	//First, determine type; this is done with l-val
@@ -54,7 +54,10 @@ void PasmBuilder::buildCmp(AstNode *node) {
 		//TODO: Add rest
 	}
 	
-	buildCond(cond);
+	if (isLoop)
+		buildLoopCmp(cond);
+	else
+		buildCond(cond);
 }
 
 //Build an integer comparsion
@@ -91,3 +94,50 @@ void PasmBuilder::buildCond(AstCond *cond) {
 	assemble(cond);
 	file->code.push_back(defaultJmp);
 }
+
+//Builds a loop
+void PasmBuilder::buildLoop(AstNode *node) {
+	//Generate the label names
+	std::string top_lbl = "L" + std::to_string(lbl_count);
+	++lbl_count;
+	labels.push(top_lbl);
+
+	std::string cmp_lbl = "L" + std::to_string(lbl_count);
+	++lbl_count;
+
+	//Jump to the comparison label
+	auto jmp = new Branch(cmp_lbl);
+	file->code.push_back(jmp);
+
+	auto lbl = new Label(top_lbl);
+	file->code.push_back(lbl);
+
+	//Assemble the body
+	assemble(node);
+
+	//Insert the comparison label
+	lbl = new Label(cmp_lbl);
+	file->code.push_back(lbl);
+
+	//Build the comparison
+	buildCmp(node, true);
+}
+
+//Builds the conditional statement for a loop
+void PasmBuilder::buildLoopCmp(AstCond *cond) {
+	auto jmp = new Branch(labels.top());
+	labels.pop();
+
+	switch (cond->get_op()) {
+		case CondOp::Equals: jmp->jmp = JmpType::Eq; break;
+		case CondOp::NotEquals: jmp->jmp = JmpType::Neq; break;
+		case CondOp::Greater: jmp->jmp = JmpType::G; break;
+		case CondOp::GreaterEq: jmp->jmp = JmpType::Ge; break;
+		case CondOp::Less: jmp->jmp = JmpType::L; break;
+		case CondOp::LessEq: jmp->jmp = JmpType::Le; break;
+	}
+	
+	file->code.push_back(jmp);
+}
+
+	

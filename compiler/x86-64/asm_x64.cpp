@@ -15,14 +15,23 @@ void X64::build_data(PasmFile *file) {
 	writer << ".data" << std::endl;
 	
 	for (auto ln : file->data) {
+		auto str = static_cast<PasmString *>(ln);
+		std::string type = "";
+		std::string dl = "";
+		
 		switch (ln->type) {
 			//Strings
-			case pasm::String: {
-				auto str = static_cast<PasmString *>(ln);
-				writer << "\t" << str->name << ": .string \"" << str->val;
-				writer << "\"" << std::endl;
-			} break;
+			case pasm::String: type = ".string"; dl = "\""; break;
+			
+			//Floats
+			case pasm::Float: type = ".long"; break;
+			
+			//Doubles
+			case pasm::Double: type = ".quad"; break;
 		}
+		
+		writer << "\t" << str->name << ": " << type << " " << dl << str->val;
+		writer << dl << std::endl;
 	}
 	
 	writer << std::endl;
@@ -94,3 +103,4 @@ void X64::fatalError(std::string msg) {
 void X64::warning(std::string msg) {
 	std::cout << "[Warning] " << msg << std::endl;
 }
+

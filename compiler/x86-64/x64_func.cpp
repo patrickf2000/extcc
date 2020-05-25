@@ -189,7 +189,7 @@ void X64::build_f32_pusharg(PasmNode *ln) {
 		} break;
 		
 		case Operand::Reg: {
-			warning("i.pusharg_r not supported yet.");
+			warning("f32.pusharg_r not supported yet.");
 		} break;
 		
 		case Operand::Const: {
@@ -204,6 +204,32 @@ void X64::build_f32_pusharg(PasmNode *ln) {
 		default: fatalError("Unknown command.");
 	}
 }
+
+//Push float-64 argument
+void X64::build_f64_pusharg(PasmNode *ln) {
+	auto pusharg = static_cast<F64_PushArg *>(ln);
+	
+	auto reg = call_regs_flt[flt_call_pos];
+	++flt_call_pos;
+	
+	switch (pusharg->opType) {
+		case Operand::Var: {
+			writer << "\tmovsd " << reg << ", QWORD PTR [rbp-";
+			writer << pusharg->pos << "]" << std::endl;
+		} break;
+		
+		case Operand::Reg: {
+			warning("f64.pusharg_r not supported yet.");
+		} break;
+		
+		case Operand::Const: {
+			writer << "\tmovsd " << reg << ", " << pusharg->val << "[rip]" << std::endl;
+		} break;
+		
+		default: fatalError("Unknown command.");
+	}
+}
+
 
 //Call a function
 void X64::build_call(PasmNode *ln) {

@@ -33,6 +33,7 @@ enum class pasm {
 	Ret,
 	IPushArg,
 	F32_PushArg,
+	F64_PushArg,
 	StrPushArg,
 	FuncCall,
 	ILdArg,
@@ -225,6 +226,23 @@ public:
 	std::string val = "";
 	int pos = 0;
 	bool promote = false;
+};
+
+//Push a float-64 argument
+class F64_PushArg : public PasmNode {
+public:
+	explicit F64_PushArg(std::string val) {
+		type = pasm::F64_PushArg;
+		this->val = val;
+	}
+	
+	explicit F64_PushArg(int pos) {
+		type = pasm::F64_PushArg;
+		this->pos = pos;
+	}
+	
+	std::string val = "";
+	int pos = 0;
 };
 
 //Push a string argument

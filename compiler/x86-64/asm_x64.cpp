@@ -63,6 +63,7 @@ void X64::build_code(PasmFile *file) {
 			//Math
 			case pasm::IMathRI: build_imath_ri(ln); break;
 			case pasm::IMathRV: build_imath_rv(ln); break;
+			case pasm::IMathVI: build_imath_vi(ln); break;
 			
 			//Flow
 			case pasm::ICmp: build_icmp(ln); break;

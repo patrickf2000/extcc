@@ -52,3 +52,52 @@ void X64::build_imath_rv(PasmNode *ln) {
 	}
 }
 
+//Integer math- variable <- immediate
+void X64::build_imath_vi(PasmNode *ln) {
+	auto math = static_cast<IMathVI *>(ln);
+	bool is_div = false;
+	bool single = false;
+	
+	switch (math->mType) {
+		case MathType::Add: {
+			if (math->val == 1) {
+				single = true;
+				writer << "\tinc ";
+			} else {
+				writer << "\tadd ";
+			}
+		} break;
+		
+		case MathType::Sub: {
+			if (math->val == 1) {
+				single = true;
+				writer << "\tdec ";
+			} else {
+				writer << "\tsub ";
+			}
+		} break;
+		
+		case MathType::Mul: writer << "\timul "; break;
+		case MathType::Div: is_div = true; break;
+	}
+	
+	if (is_div) {
+		writer << "\tcdq" << std::endl;
+		writer << "\tmov eax, DWORD PTR [rbp-" << math->pos << "]" << std::endl;
+		
+		writer << "\tmov r9d, " << math->val << std::endl;
+		
+		writer << "\tidiv r9d" << std::endl;
+		writer << "\tmov DWORD PTR [rbp-" << math->pos << "], eax" << std::endl;
+	} else {
+		writer << "DWORD PTR [rbp-" << math->pos << "]";
+		
+		if (single) {
+			writer << std::endl;
+		} else {
+			writer << ", " << math->val << std::endl;
+		}
+	}
+}
+
+

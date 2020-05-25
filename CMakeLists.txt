@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(extcc)
 
-include_directories(parser clang compiler)
+include_directories(parser clang compiler libjava)
 
 add_compile_options(-std=c++14 -g)
 
@@ -42,9 +42,20 @@ set(COMPILER_SRC
 	compiler/x86-64/x64_var.cpp
 )
 
+set(JAVA_SRC
+	libjava/javabuilder.cpp
+	libjava/javafile.cpp
+	libjava/javafunc.cpp
+	libjava/javapool.cpp
+	libjava/writer.cpp
+	libjava/builder/jfunccall.cpp
+	libjava/builder/jvar.cpp
+)
+
 # Build all the frontend libraries
 add_library(parser ${PARSER_SRC})
 add_library(cparser ${C_SRC})
+add_library(java ${JAVA_SRC})
 
 # Build the utilities
 add_executable(clex clang/test/c_lex_test.cpp)
@@ -63,5 +74,5 @@ target_link_libraries(clex cparser)
 target_link_libraries(ast cparser)
 target_link_libraries(pasm cparser)
 
-target_link_libraries(cc cparser)
+target_link_libraries(cc cparser java)
 

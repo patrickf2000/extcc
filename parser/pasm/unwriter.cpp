@@ -166,6 +166,12 @@ std::string unwrite(PasmFile *file) {
 				ret += "\tf64.ldarg VAR" + std::to_string(arg->pos) + "\n";
 			} break;
 			
+			//Load pointer function argument
+			case pasm::Ptr_LdArg: {
+				auto arg = static_cast<Ptr_LdArg *>(ln);
+				ret += "\tptr.ldarg VAR" + std::to_string(arg->pos) + "\n";
+			} break;
+			
 			//Load/Store
 			//Store constant (int)
 			case pasm::IStoreC: {

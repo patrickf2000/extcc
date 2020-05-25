@@ -13,6 +13,25 @@ Func *PasmBuilder::buildFunc(AstNode *node) {
 	//Arguments
 	for (auto arg : fd->args) {
 		switch (arg.type) {
+			//Chars
+			case DataType::Char: {
+				if (arg.is_ptr) {
+					stackPos += 8;
+					VarInfo v;
+					v.pos = stackPos;
+					v.type = DType::Ptr;
+					v.size = 8;
+					
+					varPos[arg.name] = stackPos;
+					vars[arg.name] = v;
+					
+					auto farg = new Ptr_LdArg(stackPos);
+					file->code.push_back(farg);
+				} else {
+					//TODO
+				}
+			} break;
+		
 			//Integers
 			case DataType::Int: {
 				stackPos += 4;

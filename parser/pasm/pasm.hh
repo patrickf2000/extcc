@@ -40,6 +40,7 @@ enum class pasm {
 	ILdArg,
 	F32_LdArg,
 	F64_LdArg,
+	Ptr_LdArg,
 	
 	//Load/store stuff
 	IStoreC,
@@ -308,6 +309,17 @@ class F64_LdArg : public PasmNode {
 public:
 	explicit F64_LdArg(int pos) {
 		type = pasm::F64_LdArg;
+		this->pos = pos;
+	}
+	
+	int pos = 0;
+};
+
+//Load a pointer argument
+class Ptr_LdArg : public PasmNode {
+public:
+	explicit Ptr_LdArg(int pos) {
+		type = pasm::Ptr_LdArg;
 		this->pos = pos;
 	}
 	

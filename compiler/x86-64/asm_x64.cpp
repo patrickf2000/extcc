@@ -64,6 +64,10 @@ void X64::build_code(PasmFile *file) {
 			case pasm::IMathRI: build_imath_ri(ln); break;
 			case pasm::IMathRV: build_imath_rv(ln); break;
 			
+			//Flow
+			case pasm::ICmp: build_icmp(ln); break;
+			case pasm::Br: build_br(ln); break;
+			
 			//Syscall arguments
 			case pasm::ISysarg: build_isysarg(ln); break;
 			case pasm::StrSysarg: build_str_sysarg(ln); break;

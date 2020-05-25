@@ -33,6 +33,7 @@ set(COMPILER_SRC
 	compiler/utils.cpp
 	
 	compiler/x86-64/asm_x64.cpp
+	compiler/x86-64/x64_flow.cpp
 	compiler/x86-64/x64_func.cpp
 	compiler/x86-64/x64_math.cpp
 	compiler/x86-64/x64_syscall.cpp

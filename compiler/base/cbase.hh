@@ -103,6 +103,11 @@ public:
 	virtual void build_f64_pusharg(PasmNode *ln) {}
 	
 	/**
+	 * Set a pointer to be used as a function argument
+	 */
+	virtual void build_ptr_pusharg(PasmNode *ln) {}
+	
+	/**
 	 * Call a function
 	 */
 	virtual void build_call(PasmNode *ln) {}

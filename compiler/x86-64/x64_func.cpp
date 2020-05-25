@@ -240,6 +240,15 @@ void X64::build_f64_pusharg(PasmNode *ln) {
 	}
 }
 
+//Push pointer argument
+void X64::build_ptr_pusharg(PasmNode *ln) {
+	auto pusharg = static_cast<Ptr_PushArg *>(ln);
+	
+	auto reg = call_regs[call_pos];
+	++call_pos;
+	
+	writer << "\tmov " << reg << ", QWORD PTR [rbp-" << pusharg->pos << "]" << std::endl;
+}
 
 //Call a function
 void X64::build_call(PasmNode *ln) {

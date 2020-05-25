@@ -1,0 +1,78 @@
+\hypertarget{classPasmBuilder}{}\section{Pasm\+Builder Class Reference}
+\label{classPasmBuilder}\index{Pasm\+Builder@{Pasm\+Builder}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a4f5c79c4b0847c36f5b0322ee42cf778}\label{classPasmBuilder_a4f5c79c4b0847c36f5b0322ee42cf778}} 
+{\bfseries Pasm\+Builder} (std\+::string file)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_abf8aa476dfa0fb6e8b0218747872f5c5}\label{classPasmBuilder_abf8aa476dfa0fb6e8b0218747872f5c5}} 
+\hyperlink{classPASM_1_1PasmFile}{Pasm\+File} $\ast$ {\bfseries build\+File} (\hyperlink{classAstNode}{Ast\+Node} $\ast$top)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a463abff1f78a43e9d54787b6ceeb9d7e}\label{classPasmBuilder_a463abff1f78a43e9d54787b6ceeb9d7e}} 
+void {\bfseries assemble} (\hyperlink{classAstNode}{Ast\+Node} $\ast$top)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_ab7ac4503150face7cd84a1d5d739440a}\label{classPasmBuilder_ab7ac4503150face7cd84a1d5d739440a}} 
+std\+::string {\bfseries build\+String} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a9cf25d3db0c124184763e844d597dbc8}\label{classPasmBuilder_a9cf25d3db0c124184763e844d597dbc8}} 
+std\+::string {\bfseries build\+Float} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a253a58ef8c8e73b7c9760b24946c92d0}\label{classPasmBuilder_a253a58ef8c8e73b7c9760b24946c92d0}} 
+std\+::string {\bfseries build\+Double} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_ac07da27699d37daf9760e8ad210062fe}\label{classPasmBuilder_ac07da27699d37daf9760e8ad210062fe}} 
+\hyperlink{classPASM_1_1Func}{Func} $\ast$ {\bfseries build\+Func} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a892d08067b9c943986cfe6675ac39864}\label{classPasmBuilder_a892d08067b9c943986cfe6675ac39864}} 
+void {\bfseries build\+Func\+Call} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a13b07fab1484d337937d528f055f4792}\label{classPasmBuilder_a13b07fab1484d337937d528f055f4792}} 
+void {\bfseries build\+Ret} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a0eb6ab75a59094ebdd9a00a1f52b41c0}\label{classPasmBuilder_a0eb6ab75a59094ebdd9a00a1f52b41c0}} 
+void {\bfseries build\+Var\+Dec} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a28e31fef2783a757145e7a1348f48a44}\label{classPasmBuilder_a28e31fef2783a757145e7a1348f48a44}} 
+void {\bfseries build\+Var\+Assign} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_af85a036d1002cc982d8f5f9110874723}\label{classPasmBuilder_af85a036d1002cc982d8f5f9110874723}} 
+void {\bfseries build\+Var\+Assign} (\hyperlink{classAstVarAssign}{Ast\+Var\+Assign} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a3f5427d54f868e12b599144322ceda54}\label{classPasmBuilder_a3f5427d54f868e12b599144322ceda54}} 
+void {\bfseries build\+I\+Math} (\hyperlink{classAstMath}{Ast\+Math} $\ast$math, \hyperlink{structVarInfo}{Var\+Info} dest)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_acce80b42508ef12b964707da5a8e42f6}\label{classPasmBuilder_acce80b42508ef12b964707da5a8e42f6}} 
+Operand {\bfseries get\+Op\+Type} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a7c14456727bec33c7830a00ca793c7cc}\label{classPasmBuilder_a7c14456727bec33c7830a00ca793c7cc}} 
+int {\bfseries get\+Op} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a7b7f3988c46f708dace0c9891b80f1c0}\label{classPasmBuilder_a7b7f3988c46f708dace0c9891b80f1c0}} 
+void {\bfseries build\+Cmp} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node, bool is\+Loop=false)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a4ad6d08a9fd145020e8efe1f7623bc03}\label{classPasmBuilder_a4ad6d08a9fd145020e8efe1f7623bc03}} 
+void {\bfseries build\+I\+Cmp} (\hyperlink{classAstCond}{Ast\+Cond} $\ast$cond)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a59d20a39e0eaa7581981830518ce1ad4}\label{classPasmBuilder_a59d20a39e0eaa7581981830518ce1ad4}} 
+void {\bfseries build\+Cond} (\hyperlink{classAstCond}{Ast\+Cond} $\ast$cond)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_a8f2ddcf13b863b48aaf3e604990b6705}\label{classPasmBuilder_a8f2ddcf13b863b48aaf3e604990b6705}} 
+void {\bfseries build\+Loop} (\hyperlink{classAstNode}{Ast\+Node} $\ast$node)
+\item 
+\mbox{\Hypertarget{classPasmBuilder_ab4c48a8292c77e8d00019d1c8b5c05c5}\label{classPasmBuilder_ab4c48a8292c77e8d00019d1c8b5c05c5}} 
+void {\bfseries build\+Loop\+Cmp} (\hyperlink{classAstCond}{Ast\+Cond} $\ast$cond)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+parser/pasm/pasm\+\_\+builder.\+hh\item 
+parser/pasm/pasm\+\_\+builder.\+cpp\item 
+parser/pasm/pasm\+\_\+flow.\+cpp\item 
+parser/pasm/pasm\+\_\+func.\+cpp\item 
+parser/pasm/pasm\+\_\+math.\+cpp\item 
+parser/pasm/pasm\+\_\+var.\+cpp\end{DoxyCompactItemize}

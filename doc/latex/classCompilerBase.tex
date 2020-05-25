@@ -1,0 +1,334 @@
+\hypertarget{classCompilerBase}{}\section{Compiler\+Base Class Reference}
+\label{classCompilerBase}\index{Compiler\+Base@{Compiler\+Base}}
+
+
+{\ttfamily \#include $<$cbase.\+hh$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classCompilerBase_aef84801d4117d64bc71a218de8f9ec41}{Compiler\+Base} (std\+::string name)
+\item 
+virtual void \hyperlink{classCompilerBase_a50e0a1c97a7b364e4a0051998c6c9f02}{build\+\_\+data} (\hyperlink{classPASM_1_1PasmFile}{Pasm\+File} $\ast$file)
+\item 
+void \hyperlink{classCompilerBase_a9a3e4e637e462ee907f8d472c5f3a582}{build\+\_\+code} (\hyperlink{classPASM_1_1PasmFile}{Pasm\+File} $\ast$file)
+\item 
+void \hyperlink{classCompilerBase_a064f1b7fae8680de3fa9bc5c2731c6c6}{write} ()
+\item 
+virtual void \hyperlink{classCompilerBase_a32f74fb5ba2d4c3385318d3362c589cc}{build\+\_\+func} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_adc22ab57615c0deeeeb53b3dcadda22a}{build\+\_\+ildarg} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_acb8c712aa20424ab1185173b523c58a5}{build\+\_\+f32\+\_\+ldarg} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a734800d1c4364161c92fc4c3b36fe975}{build\+\_\+f64\+\_\+ldarg} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a120c88795959157b98a0f896d153d6bc}{build\+\_\+ildret} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a1f870adf4c420832ed821c9aa38352af}{build\+\_\+istret} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_ac202164bbf4d7dfd7a9e2de67c476e17}{build\+\_\+ret} ()
+\item 
+virtual void \hyperlink{classCompilerBase_a1efd217d6d22c9919f5b99018ea3cf9f}{build\+\_\+str\+\_\+pusharg} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a288b6e90d5df00ce0238150795f401ec}{build\+\_\+ipusharg} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_ae6a4f495682ecf0a8761b87d71246f4b}{build\+\_\+f32\+\_\+pusharg} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_adb6cead8b6cdd9abbd3e8c180e38b26d}{build\+\_\+f64\+\_\+pusharg} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a275108caeb856f4a38e9d1e8ea7dd40f}{build\+\_\+call} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_ab7f9e8221e581c2cc26037c053eff5ee}{build\+\_\+istorec} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_ab01c7f8c014a79f5ce7a9bdf49e3cf11}{build\+\_\+f32\+\_\+storec} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a2b8edb7ea1e24aa0704183e46658a053}{build\+\_\+f64\+\_\+storec} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_aaf76df6d9e05d6781e44bdab767e9a2e}{build\+\_\+move\+\_\+vv} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a6c2b27c60d51e2ddb38f575280cd12e2}{build\+\_\+ildr} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_ae6a6d6b3617855835d44734698ac6201}{build\+\_\+str} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_aba05b29977578c55ce1f22995a2d44b9}{build\+\_\+imath\+\_\+ri} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a4523dc15837880ad2ab1a227a1ed2e06}{build\+\_\+imath\+\_\+rv} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a2cdb2c74057643900cf1ac3c14d128e6}{build\+\_\+imath\+\_\+vi} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a8d475131561c7058af580787e0170361}{build\+\_\+icmp} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a033c2be4ef91aaf7ac09e480440d1cd2}{build\+\_\+br} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_a6658db1533602d1c079d0590fb34e8d4}{build\+\_\+isysarg} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_ac48bd566e22943c58bcd743eca8ee262}{build\+\_\+str\+\_\+sysarg} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\item 
+virtual void \hyperlink{classCompilerBase_aa1eabf171523a3ed3b011dde48ec2fd7}{build\+\_\+syscall} (\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$ln)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classCompilerBase_adb63718f4b3bc51bc717b229d3c0151f}{fatal\+Error} (std\+::string msg)
+\item 
+void \hyperlink{classCompilerBase_a5071a080216879535460939393c59282}{warning} (std\+::string msg)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ofstream \hyperlink{classCompilerBase_a27c46d3aaf3505d4efa2183f05b906bb}{writer}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classCompilerBase}{Compiler\+Base}
+
+The base of all compiler backends. In order to generate complete code, the backends must override all the virtual functions here. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classCompilerBase_aef84801d4117d64bc71a218de8f9ec41}\label{classCompilerBase_aef84801d4117d64bc71a218de8f9ec41}} 
+\index{Compiler\+Base@{Compiler\+Base}!Compiler\+Base@{Compiler\+Base}}
+\index{Compiler\+Base@{Compiler\+Base}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{Compiler\+Base()}{CompilerBase()}}
+{\footnotesize\ttfamily Compiler\+Base\+::\+Compiler\+Base (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\hyperlink{classCompilerBase}{Compiler\+Base}
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The output name of the generated Assembly file. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classCompilerBase_a033c2be4ef91aaf7ac09e480440d1cd2}\label{classCompilerBase_a033c2be4ef91aaf7ac09e480440d1cd2}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+br@{build\+\_\+br}}
+\index{build\+\_\+br@{build\+\_\+br}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+br()}{build\_br()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+br (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Perform a branch operation \mbox{\Hypertarget{classCompilerBase_a275108caeb856f4a38e9d1e8ea7dd40f}\label{classCompilerBase_a275108caeb856f4a38e9d1e8ea7dd40f}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+call@{build\+\_\+call}}
+\index{build\+\_\+call@{build\+\_\+call}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+call()}{build\_call()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+call (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Call a function \mbox{\Hypertarget{classCompilerBase_a9a3e4e637e462ee907f8d472c5f3a582}\label{classCompilerBase_a9a3e4e637e462ee907f8d472c5f3a582}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+code@{build\+\_\+code}}
+\index{build\+\_\+code@{build\+\_\+code}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+code()}{build\_code()}}
+{\footnotesize\ttfamily void Compiler\+Base\+::build\+\_\+code (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmFile}{Pasm\+File} $\ast$}]{file }\end{DoxyParamCaption})}
+
+Iterates through the P\+A\+SM code vector and calls one of the functions below to generate Assembly for that instruction. This will remain the same in all cases; you only need to implement the functions below for code to be generated.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & The input file \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classCompilerBase_a50e0a1c97a7b364e4a0051998c6c9f02}\label{classCompilerBase_a50e0a1c97a7b364e4a0051998c6c9f02}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+data@{build\+\_\+data}}
+\index{build\+\_\+data@{build\+\_\+data}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+data()}{build\_data()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+data (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmFile}{Pasm\+File} $\ast$}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Generates the data section of an Assembly file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & The input file (you can use the data vector to generate) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classCompilerBase_acb8c712aa20424ab1185173b523c58a5}\label{classCompilerBase_acb8c712aa20424ab1185173b523c58a5}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+f32\+\_\+ldarg@{build\+\_\+f32\+\_\+ldarg}}
+\index{build\+\_\+f32\+\_\+ldarg@{build\+\_\+f32\+\_\+ldarg}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+f32\+\_\+ldarg()}{build\_f32\_ldarg()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+f32\+\_\+ldarg (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Store a 32-\/bit float function parameter to a variable \mbox{\Hypertarget{classCompilerBase_ae6a4f495682ecf0a8761b87d71246f4b}\label{classCompilerBase_ae6a4f495682ecf0a8761b87d71246f4b}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+f32\+\_\+pusharg@{build\+\_\+f32\+\_\+pusharg}}
+\index{build\+\_\+f32\+\_\+pusharg@{build\+\_\+f32\+\_\+pusharg}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+f32\+\_\+pusharg()}{build\_f32\_pusharg()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+f32\+\_\+pusharg (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Set a 32-\/bit floating point value to be used as a function argument \mbox{\Hypertarget{classCompilerBase_ab01c7f8c014a79f5ce7a9bdf49e3cf11}\label{classCompilerBase_ab01c7f8c014a79f5ce7a9bdf49e3cf11}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+f32\+\_\+storec@{build\+\_\+f32\+\_\+storec}}
+\index{build\+\_\+f32\+\_\+storec@{build\+\_\+f32\+\_\+storec}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+f32\+\_\+storec()}{build\_f32\_storec()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+f32\+\_\+storec (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Store a 32-\/bit float constant to a float-\/32 variable \mbox{\Hypertarget{classCompilerBase_a734800d1c4364161c92fc4c3b36fe975}\label{classCompilerBase_a734800d1c4364161c92fc4c3b36fe975}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+f64\+\_\+ldarg@{build\+\_\+f64\+\_\+ldarg}}
+\index{build\+\_\+f64\+\_\+ldarg@{build\+\_\+f64\+\_\+ldarg}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+f64\+\_\+ldarg()}{build\_f64\_ldarg()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+f64\+\_\+ldarg (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Store a 64-\/bit float function parameter to a variable (note that a double type in C and other languages corresponds to a 64-\/bit float). \mbox{\Hypertarget{classCompilerBase_adb6cead8b6cdd9abbd3e8c180e38b26d}\label{classCompilerBase_adb6cead8b6cdd9abbd3e8c180e38b26d}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+f64\+\_\+pusharg@{build\+\_\+f64\+\_\+pusharg}}
+\index{build\+\_\+f64\+\_\+pusharg@{build\+\_\+f64\+\_\+pusharg}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+f64\+\_\+pusharg()}{build\_f64\_pusharg()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+f64\+\_\+pusharg (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Set a 64-\/bit floating point value to be used as a function argument \mbox{\Hypertarget{classCompilerBase_a2b8edb7ea1e24aa0704183e46658a053}\label{classCompilerBase_a2b8edb7ea1e24aa0704183e46658a053}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+f64\+\_\+storec@{build\+\_\+f64\+\_\+storec}}
+\index{build\+\_\+f64\+\_\+storec@{build\+\_\+f64\+\_\+storec}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+f64\+\_\+storec()}{build\_f64\_storec()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+f64\+\_\+storec (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Store a 64-\/bit float constant to a float-\/64 variable \mbox{\Hypertarget{classCompilerBase_a32f74fb5ba2d4c3385318d3362c589cc}\label{classCompilerBase_a32f74fb5ba2d4c3385318d3362c589cc}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+func@{build\+\_\+func}}
+\index{build\+\_\+func@{build\+\_\+func}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+func()}{build\_func()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+func (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Builds a function declaration (note\+: this is distinct from a label) \mbox{\Hypertarget{classCompilerBase_a8d475131561c7058af580787e0170361}\label{classCompilerBase_a8d475131561c7058af580787e0170361}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+icmp@{build\+\_\+icmp}}
+\index{build\+\_\+icmp@{build\+\_\+icmp}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+icmp()}{build\_icmp()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+icmp (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Perform an integer comparison \mbox{\Hypertarget{classCompilerBase_adc22ab57615c0deeeeb53b3dcadda22a}\label{classCompilerBase_adc22ab57615c0deeeeb53b3dcadda22a}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+ildarg@{build\+\_\+ildarg}}
+\index{build\+\_\+ildarg@{build\+\_\+ildarg}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+ildarg()}{build\_ildarg()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+ildarg (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Store an integer function parameter to a variable \mbox{\Hypertarget{classCompilerBase_a6c2b27c60d51e2ddb38f575280cd12e2}\label{classCompilerBase_a6c2b27c60d51e2ddb38f575280cd12e2}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+ildr@{build\+\_\+ildr}}
+\index{build\+\_\+ildr@{build\+\_\+ildr}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+ildr()}{build\_ildr()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+ildr (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Load an integer variable to a register \mbox{\Hypertarget{classCompilerBase_a120c88795959157b98a0f896d153d6bc}\label{classCompilerBase_a120c88795959157b98a0f896d153d6bc}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+ildret@{build\+\_\+ildret}}
+\index{build\+\_\+ildret@{build\+\_\+ildret}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+ildret()}{build\_ildret()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+ildret (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Load an integer value to the return register \mbox{\Hypertarget{classCompilerBase_aba05b29977578c55ce1f22995a2d44b9}\label{classCompilerBase_aba05b29977578c55ce1f22995a2d44b9}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+imath\+\_\+ri@{build\+\_\+imath\+\_\+ri}}
+\index{build\+\_\+imath\+\_\+ri@{build\+\_\+imath\+\_\+ri}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+imath\+\_\+ri()}{build\_imath\_ri()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+imath\+\_\+ri (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Perform integer math between a register and an immediate value \mbox{\Hypertarget{classCompilerBase_a4523dc15837880ad2ab1a227a1ed2e06}\label{classCompilerBase_a4523dc15837880ad2ab1a227a1ed2e06}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+imath\+\_\+rv@{build\+\_\+imath\+\_\+rv}}
+\index{build\+\_\+imath\+\_\+rv@{build\+\_\+imath\+\_\+rv}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+imath\+\_\+rv()}{build\_imath\_rv()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+imath\+\_\+rv (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Perform integer math between a register and a variable (memory location) \mbox{\Hypertarget{classCompilerBase_a2cdb2c74057643900cf1ac3c14d128e6}\label{classCompilerBase_a2cdb2c74057643900cf1ac3c14d128e6}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+imath\+\_\+vi@{build\+\_\+imath\+\_\+vi}}
+\index{build\+\_\+imath\+\_\+vi@{build\+\_\+imath\+\_\+vi}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+imath\+\_\+vi()}{build\_imath\_vi()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+imath\+\_\+vi (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Perform integer math between a variable (memory location) and an immediate value \mbox{\Hypertarget{classCompilerBase_a288b6e90d5df00ce0238150795f401ec}\label{classCompilerBase_a288b6e90d5df00ce0238150795f401ec}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+ipusharg@{build\+\_\+ipusharg}}
+\index{build\+\_\+ipusharg@{build\+\_\+ipusharg}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+ipusharg()}{build\_ipusharg()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+ipusharg (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Set an integer value to be used as a function argument \mbox{\Hypertarget{classCompilerBase_ab7f9e8221e581c2cc26037c053eff5ee}\label{classCompilerBase_ab7f9e8221e581c2cc26037c053eff5ee}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+istorec@{build\+\_\+istorec}}
+\index{build\+\_\+istorec@{build\+\_\+istorec}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+istorec()}{build\_istorec()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+istorec (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Store an integer constant to an integer variable \mbox{\Hypertarget{classCompilerBase_a1f870adf4c420832ed821c9aa38352af}\label{classCompilerBase_a1f870adf4c420832ed821c9aa38352af}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+istret@{build\+\_\+istret}}
+\index{build\+\_\+istret@{build\+\_\+istret}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+istret()}{build\_istret()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+istret (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Store the value in the return register to an integer variable \mbox{\Hypertarget{classCompilerBase_a6658db1533602d1c079d0590fb34e8d4}\label{classCompilerBase_a6658db1533602d1c079d0590fb34e8d4}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+isysarg@{build\+\_\+isysarg}}
+\index{build\+\_\+isysarg@{build\+\_\+isysarg}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+isysarg()}{build\_isysarg()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+isysarg (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Load an integer as a system call parameter \mbox{\Hypertarget{classCompilerBase_aaf76df6d9e05d6781e44bdab767e9a2e}\label{classCompilerBase_aaf76df6d9e05d6781e44bdab767e9a2e}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+move\+\_\+vv@{build\+\_\+move\+\_\+vv}}
+\index{build\+\_\+move\+\_\+vv@{build\+\_\+move\+\_\+vv}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+move\+\_\+vv()}{build\_move\_vv()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+move\+\_\+vv (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Move the contents of one variable to another \mbox{\Hypertarget{classCompilerBase_ac202164bbf4d7dfd7a9e2de67c476e17}\label{classCompilerBase_ac202164bbf4d7dfd7a9e2de67c476e17}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+ret@{build\+\_\+ret}}
+\index{build\+\_\+ret@{build\+\_\+ret}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+ret()}{build\_ret()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+ret (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Return from a function (Note\+: If you are managing a stack, this is where you clean it up) \mbox{\Hypertarget{classCompilerBase_ae6a6d6b3617855835d44734698ac6201}\label{classCompilerBase_ae6a6d6b3617855835d44734698ac6201}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+str@{build\+\_\+str}}
+\index{build\+\_\+str@{build\+\_\+str}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+str()}{build\_str()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+str (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Store the value of a register to a variable \mbox{\Hypertarget{classCompilerBase_a1efd217d6d22c9919f5b99018ea3cf9f}\label{classCompilerBase_a1efd217d6d22c9919f5b99018ea3cf9f}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+str\+\_\+pusharg@{build\+\_\+str\+\_\+pusharg}}
+\index{build\+\_\+str\+\_\+pusharg@{build\+\_\+str\+\_\+pusharg}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+str\+\_\+pusharg()}{build\_str\_pusharg()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+str\+\_\+pusharg (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Set a string value to be used as a function argument \mbox{\Hypertarget{classCompilerBase_ac48bd566e22943c58bcd743eca8ee262}\label{classCompilerBase_ac48bd566e22943c58bcd743eca8ee262}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+str\+\_\+sysarg@{build\+\_\+str\+\_\+sysarg}}
+\index{build\+\_\+str\+\_\+sysarg@{build\+\_\+str\+\_\+sysarg}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+str\+\_\+sysarg()}{build\_str\_sysarg()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+str\+\_\+sysarg (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Load a string as a system call parameter \mbox{\Hypertarget{classCompilerBase_aa1eabf171523a3ed3b011dde48ec2fd7}\label{classCompilerBase_aa1eabf171523a3ed3b011dde48ec2fd7}} 
+\index{Compiler\+Base@{Compiler\+Base}!build\+\_\+syscall@{build\+\_\+syscall}}
+\index{build\+\_\+syscall@{build\+\_\+syscall}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{build\+\_\+syscall()}{build\_syscall()}}
+{\footnotesize\ttfamily virtual void Compiler\+Base\+::build\+\_\+syscall (\begin{DoxyParamCaption}\item[{\hyperlink{classPASM_1_1PasmNode}{Pasm\+Node} $\ast$}]{ln }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Call the kernel (system call-\/ some architectures have a single command for this) \mbox{\Hypertarget{classCompilerBase_adb63718f4b3bc51bc717b229d3c0151f}\label{classCompilerBase_adb63718f4b3bc51bc717b229d3c0151f}} 
+\index{Compiler\+Base@{Compiler\+Base}!fatal\+Error@{fatal\+Error}}
+\index{fatal\+Error@{fatal\+Error}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{fatal\+Error()}{fatalError()}}
+{\footnotesize\ttfamily void Compiler\+Base\+::fatal\+Error (\begin{DoxyParamCaption}\item[{std\+::string}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Generate a fatal error
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & The message to display \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classCompilerBase_a5071a080216879535460939393c59282}\label{classCompilerBase_a5071a080216879535460939393c59282}} 
+\index{Compiler\+Base@{Compiler\+Base}!warning@{warning}}
+\index{warning@{warning}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{warning()}{warning()}}
+{\footnotesize\ttfamily void Compiler\+Base\+::warning (\begin{DoxyParamCaption}\item[{std\+::string}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Generate a warning
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & The warning to display \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classCompilerBase_a064f1b7fae8680de3fa9bc5c2731c6c6}\label{classCompilerBase_a064f1b7fae8680de3fa9bc5c2731c6c6}} 
+\index{Compiler\+Base@{Compiler\+Base}!write@{write}}
+\index{write@{write}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Compiler\+Base\+::write (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Write and close the Assembly file. 
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classCompilerBase_a27c46d3aaf3505d4efa2183f05b906bb}\label{classCompilerBase_a27c46d3aaf3505d4efa2183f05b906bb}} 
+\index{Compiler\+Base@{Compiler\+Base}!writer@{writer}}
+\index{writer@{writer}!Compiler\+Base@{Compiler\+Base}}
+\subsubsection{\texorpdfstring{writer}{writer}}
+{\footnotesize\ttfamily std\+::ofstream Compiler\+Base\+::writer\hspace{0.3cm}{\ttfamily [protected]}}
+
+The output stream to write text to the Assembly file. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+compiler/base/cbase.\+hh\item 
+compiler/base/cbase.\+cpp\end{DoxyCompactItemize}

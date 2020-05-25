@@ -1,0 +1,86 @@
+\hypertarget{classScanner}{}\section{Scanner Class Reference}
+\label{classScanner}\index{Scanner@{Scanner}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classScanner_a627168541e621dc80b39d3b987ff57c4}\label{classScanner_a627168541e621dc80b39d3b987ff57c4}} 
+{\bfseries Scanner} (std\+::string in)
+\item 
+\mbox{\Hypertarget{classScanner_a5876373ad6798a36388fb54b9996bdf0}\label{classScanner_a5876373ad6798a36388fb54b9996bdf0}} 
+\hyperlink{structToken}{Token} {\bfseries get\+Next} ()
+\item 
+\mbox{\Hypertarget{classScanner_aaaef33175f2f8e9796b9eb84c9bc9b52}\label{classScanner_aaaef33175f2f8e9796b9eb84c9bc9b52}} 
+void {\bfseries unget} (\hyperlink{structToken}{Token} t)
+\item 
+\mbox{\Hypertarget{classScanner_a7133343a7e2025d13f6f235d1711e869}\label{classScanner_a7133343a7e2025d13f6f235d1711e869}} 
+void {\bfseries finish\+Line} ()
+\item 
+\mbox{\Hypertarget{classScanner_a909568ba92094a6104414d4191079341}\label{classScanner_a909568ba92094a6104414d4191079341}} 
+bool {\bfseries is\+Separator} (char c)
+\item 
+\mbox{\Hypertarget{classScanner_a3d5b3a25d09cd034e26d702d0a7385de}\label{classScanner_a3d5b3a25d09cd034e26d702d0a7385de}} 
+bool {\bfseries is\+Whitespace} (char c)
+\item 
+\mbox{\Hypertarget{classScanner_a2df697740c520c95f8a3822d6e79957d}\label{classScanner_a2df697740c520c95f8a3822d6e79957d}} 
+bool {\bfseries is\+Int} ()
+\item 
+\mbox{\Hypertarget{classScanner_a8519c211d841773a4bd15912ed7c4665}\label{classScanner_a8519c211d841773a4bd15912ed7c4665}} 
+bool {\bfseries is\+Float} ()
+\item 
+\mbox{\Hypertarget{classScanner_a43891b58145721059c10ce3842f5d79d}\label{classScanner_a43891b58145721059c10ce3842f5d79d}} 
+void {\bfseries close} ()
+\item 
+\mbox{\Hypertarget{classScanner_aa7e72d1d8444446248a5e010c0422a9b}\label{classScanner_aa7e72d1d8444446248a5e010c0422a9b}} 
+int {\bfseries get\+Ln\+No} ()
+\item 
+\mbox{\Hypertarget{classScanner_a514437c5e3fa46165c47e0790261ad5c}\label{classScanner_a514437c5e3fa46165c47e0790261ad5c}} 
+std\+::string {\bfseries get\+Current\+Ln} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classScanner_a488effb3d33811070936031ac5ba2db9}\label{classScanner_a488effb3d33811070936031ac5ba2db9}} 
+virtual void {\bfseries init\+Separators} ()
+\item 
+\mbox{\Hypertarget{classScanner_aa970e581e19054f2156669b18a92d769}\label{classScanner_aa970e581e19054f2156669b18a92d769}} 
+virtual void {\bfseries init\+Keywords} ()
+\item 
+\mbox{\Hypertarget{classScanner_a6843db363c3000a726deabfc2c2fafec}\label{classScanner_a6843db363c3000a726deabfc2c2fafec}} 
+virtual void {\bfseries init\+Tokens} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classScanner_a62fa91ba90ccaa4ce5b1689d9d655374}\label{classScanner_a62fa91ba90ccaa4ce5b1689d9d655374}} 
+std\+::vector$<$ char $>$ {\bfseries separators}
+\item 
+\mbox{\Hypertarget{classScanner_a34b919030a06f845b6e2b8f477b24fd7}\label{classScanner_a34b919030a06f845b6e2b8f477b24fd7}} 
+std\+::vector$<$ char $>$ {\bfseries whitespace}
+\item 
+\mbox{\Hypertarget{classScanner_a24ca77baaf91e647a6a923c654e98426}\label{classScanner_a24ca77baaf91e647a6a923c654e98426}} 
+std\+::vector$<$ std\+::string $>$ {\bfseries keywords}
+\item 
+\mbox{\Hypertarget{classScanner_acd5e5082f1b341bbd5ad527ab09e675a}\label{classScanner_acd5e5082f1b341bbd5ad527ab09e675a}} 
+std\+::map$<$ std\+::string, int $>$ {\bfseries tokens}
+\item 
+\mbox{\Hypertarget{classScanner_a9ec0066b29976ecc5ef37561f6dd29e3}\label{classScanner_a9ec0066b29976ecc5ef37561f6dd29e3}} 
+int {\bfseries id\+Token} = 0
+\item 
+\mbox{\Hypertarget{classScanner_abc83a5f0255d955190f0ed31e9e019f7}\label{classScanner_abc83a5f0255d955190f0ed31e9e019f7}} 
+int {\bfseries int\+Token} = 0
+\item 
+\mbox{\Hypertarget{classScanner_ae54fe4f587c2815953bbcb7a34fb9211}\label{classScanner_ae54fe4f587c2815953bbcb7a34fb9211}} 
+int {\bfseries flt\+Token} = 0
+\item 
+\mbox{\Hypertarget{classScanner_ad2d6d140773dd594dd28cf61666d657a}\label{classScanner_ad2d6d140773dd594dd28cf61666d657a}} 
+int {\bfseries char\+Token} = 0
+\item 
+\mbox{\Hypertarget{classScanner_a7b3c3be0cfd7aa37f8529249f1b7513c}\label{classScanner_a7b3c3be0cfd7aa37f8529249f1b7513c}} 
+int {\bfseries str\+Token} = 0
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+parser/lex.\+hh\item 
+parser/lex.\+cpp\end{DoxyCompactItemize}

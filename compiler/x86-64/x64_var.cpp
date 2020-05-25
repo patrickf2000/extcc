@@ -9,6 +9,16 @@ void X64::build_istorec(PasmNode *ln) {
 	writer << store->val << std::endl;
 }
 
+//Store a float constant to a memory location
+void X64::build_f32_storec(PasmNode *ln) {
+	auto store = static_cast<F32_StoreConst *>(ln);
+	
+	writer << "\tmovss xmm1, DWORD PTR " << store->name << "[rip]" << std::endl;
+	
+	writer << "\tmovss DWORD PTR [rbp-" << store->pos << "], ";
+	writer << "xmm1" << std::endl;
+}
+
 //Move one variable to another
 void X64::build_move_vv(PasmNode *ln) {
 	auto move = static_cast<MoveVV *>(ln);
@@ -21,6 +31,12 @@ void X64::build_move_vv(PasmNode *ln) {
 		case DType::Int: {
 			writer << "\tmov eax, DWORD PTR " << v2 << std::endl;
 			writer << "\tmov DWORD PTR " << v1 << ", eax" << std::endl;
+		} break;
+		
+		//Float-32
+		case DType::Float32: {
+			writer << "\tmovss xmm1, DWORD PTR " << v2 << std::endl;
+			writer << "\tmovss DWORD PTR " << v1 << ", xmm1" << std::endl;
 		} break;
 		
 		//TODO: Add rest

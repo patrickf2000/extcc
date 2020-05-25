@@ -187,6 +187,13 @@ std::string unwrite(PasmFile *file) {
 				ret += " VAR" + std::to_string(math->pos) + "\n";
 			} break;
 			
+			//Math- variable <- immediate
+			case pasm::IMathVI: {
+				auto math = static_cast<IMathVI *>(ln);
+				ret += "\ti." + getMath(math->mType) + "_vi VAR" + std::to_string(math->pos);
+				ret += " " + std::to_string(math->val) + "\n";
+			} break;
+			
 			//System call arguments
 			case pasm::ISysarg: {
 				auto arg = static_cast<ISysArg *>(ln);

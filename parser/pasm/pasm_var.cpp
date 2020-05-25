@@ -101,6 +101,21 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 			}
 		} break;
 		
+		//Increment operator
+		case AstType::Inc: {
+			auto info = vars[node->get_name()];
+			
+			switch (node->get_type()) {
+				//Integer increment
+				case DataType::Int: {
+					auto math = new IMathVI(MathType::Add, info.pos, 1);
+					file->code.push_back(math);
+				} break;
+				
+				//TODO: Add rest
+			}
+		} break;
+		
 		//Function call
 		case AstType::FuncCall: {
 			buildFuncCall(child);

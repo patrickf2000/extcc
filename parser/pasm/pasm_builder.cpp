@@ -89,4 +89,35 @@ std::string PasmBuilder::buildString(AstNode *node) {
 	return name;
 }
 
+//Builds a float variable (utility function)
+std::string PasmBuilder::buildFloat(AstNode *node) {
+	auto flt = static_cast<AstFloat *>(node);
+	float val = flt->get_val();
+	
+	std::string name = "FLT_" + std::to_string(fltPos);
+	++fltPos;
+	
+	char buf[32];
+	sprintf(buf, "%d", *(unsigned int*)&val);
+	
+	auto flt2 = new PasmFloat(name, std::string(buf));
+	file->data.push_back(flt2);
+	return name;
+}
+
+std::string PasmBuilder::buildDouble(AstNode *node) {
+	auto dbl = static_cast<AstDouble *>(node);
+	double val = dbl->get_val();
+	
+	std::string name = "DBL_" + std::to_string(fltPos);
+	++fltPos;
+	
+	char buf[64];
+	sprintf(buf, "%lu", *(uint64_t*)&val);
+	
+	auto dbl2 = new PasmDouble(name, std::string(buf));
+	file->data.push_back(dbl2);
+	return name;
+}
+
 

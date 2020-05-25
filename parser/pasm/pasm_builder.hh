@@ -22,6 +22,8 @@ public:
 protected:
 	void assemble(AstNode *top);
 	std::string buildString(AstNode *node);
+	std::string buildFloat(AstNode *node);
+	std::string buildDouble(AstNode *node);
 	
 	Func *buildFunc(AstNode *node);
 	void buildFuncCall(AstNode *node);
@@ -54,8 +56,12 @@ private:
 	//String information
 	int strPos = 0;
 	
+	//Float information
+	int fltPos = 0;
+	
 	//Label stuff
 	int lbl_count = 0;
 	std::stack<std::string> labels;
 	std::stack<std::string> end_lbls;
 };
+

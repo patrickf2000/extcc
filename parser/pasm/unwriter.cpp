@@ -36,11 +36,22 @@ std::string unwrite(PasmFile *file) {
 	ret += "section data\n";
 	
 	for (auto ln : file->data) {
+		auto str = static_cast<PasmString *>(ln);
+		
 		switch (ln->type) {
 			//Strings
 			case pasm::String: {
-				auto str = static_cast<PasmString *>(ln);
 				ret += "\tstring " + str->name + " \"" + str->val + "\"\n";
+			} break;
+			
+			//Floats
+			case pasm::Float: {
+				ret += "\tfloat " + str->name + " " + str->val + "\n";
+			} break;
+			
+			//Doubles
+			case pasm::Double: {
+				ret += "\tdouble " + str->name + " " + str->val + "\n";
 			} break;
 		}
 	}

@@ -24,6 +24,8 @@ enum class pasm {
 	
 	//Data elements
 	String,
+	Float,
+	Double,
 	
 	//Function stuff
 	Func,
@@ -134,6 +136,24 @@ public:
 	
 	std::string name = "";
 	std::string val = "";
+};
+
+//Represents a float data element
+class PasmFloat : public PasmString {
+public:
+	explicit PasmFloat(std::string name, std::string val)
+		: PasmString(name, val) {
+		type = pasm::Float;	
+	}
+};
+
+//Represents a double data element
+class PasmDouble : public PasmString {
+public:
+	explicit PasmDouble(std::string name, std::string val)
+		: PasmString(name, val) {
+		type = pasm::Double;
+	}
 };
 
 //Represents an empty line- for formatting purposes

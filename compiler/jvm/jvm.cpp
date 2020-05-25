@@ -18,12 +18,18 @@ void JVM::build_data(PasmFile *file) {
 
 //Build function declaration
 void JVM::build_func(PasmNode *ln) {
-
+	auto func = static_cast<Func *>(ln);
+	
+	if (func->name == "main") {
+		currentFunc = builder->createMain();
+	} else {
+		warning("[JVM] Non-main functions not supported.");
+	}
 }
 
 //Build function return
 void JVM::build_ret() {
-
+	currentFunc->addSingle(JavaCode::RetVoid);
 }
 
 //Build function call

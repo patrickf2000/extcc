@@ -26,4 +26,5 @@ public:
 	}
 private:
 	JavaBuilder *builder;
+	JavaFunc *currentFunc;
 };

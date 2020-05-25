@@ -155,6 +155,12 @@ std::string unwrite(PasmFile *file) {
 				ret += "\tf32.ldarg VAR" + std::to_string(arg->pos) + "\n";
 			} break;
 			
+			//Load float-64 function argument
+			case pasm::F64_LdArg: {
+				auto arg = static_cast<F64_LdArg *>(ln);
+				ret += "\tf64.ldarg VAR" + std::to_string(arg->pos) + "\n";
+			} break;
+			
 			//Load/Store
 			//Store constant (int)
 			case pasm::IStoreC: {

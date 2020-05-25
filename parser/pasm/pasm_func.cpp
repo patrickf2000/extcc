@@ -43,6 +43,21 @@ Func *PasmBuilder::buildFunc(AstNode *node) {
 				file->code.push_back(farg);
 			} break;
 			
+			//Doubles
+			case DataType::Double: {
+				stackPos += 8;
+				VarInfo v;
+				v.pos = stackPos;
+				v.type = DType::Float64;
+				v.size = 8;
+				
+				varPos[arg.name] = stackPos;
+				vars[arg.name] = v;
+				
+				auto farg = new F64_LdArg(stackPos);
+				file->code.push_back(farg);
+			} break;
+			
 			//TODO: Add rest
 		}
 	}

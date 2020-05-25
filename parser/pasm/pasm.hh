@@ -38,6 +38,7 @@ enum class pasm {
 	FuncCall,
 	ILdArg,
 	F32_LdArg,
+	F64_LdArg,
 	
 	//Load/store stuff
 	IStoreC,
@@ -283,6 +284,17 @@ class F32_LdArg : public PasmNode {
 public:
 	explicit F32_LdArg(int pos) {
 		type = pasm::F32_LdArg;
+		this->pos = pos;
+	}
+	
+	int pos = 0;
+};
+
+//Load a float-64 argument
+class F64_LdArg : public PasmNode {
+public:
+	explicit F64_LdArg(int pos) {
+		type = pasm::F64_LdArg;
 		this->pos = pos;
 	}
 	

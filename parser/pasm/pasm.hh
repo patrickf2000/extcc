@@ -49,6 +49,7 @@ enum class pasm {
 	Str_StoreC,
 	ILdRet,
 	IStrRet,
+	Ptr_StrRet,
 	MoveVV,
 	ILdr,
 	Str,
@@ -430,6 +431,17 @@ class IStrRet : public PasmNode {
 public:
 	explicit IStrRet(int val) {
 		type = pasm::IStrRet;
+		this->val = val;
+	}
+	
+	int val;
+};
+
+//Store pointer from return register
+class Ptr_StrRet : public PasmNode {
+public:
+	explicit Ptr_StrRet(int val) {
+		type = pasm::Ptr_StrRet;
 		this->val = val;
 	}
 	

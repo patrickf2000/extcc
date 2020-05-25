@@ -260,6 +260,19 @@ std::string unwrite(PasmFile *file) {
 				ret += std::to_string(store->val) + "\n";
 			} break;
 			
+			//Store pointer from return register
+			case pasm::Ptr_StrRet: {
+				auto store = static_cast<Ptr_StrRet *>(ln);
+				ret += "\tptr.stret_";
+				
+				switch (store->opType) {
+					case Operand::Var: ret += "v VAR"; break;
+					case Operand::Reg: ret += "r r"; break;
+				}
+				
+				ret += std::to_string(store->val) + "\n";
+			} break;
+			
 			//Math- register <- immediate
 			case pasm::IMathRI: {
 				auto math = static_cast<IMathRI *>(ln);

@@ -49,6 +49,12 @@ void X64::build_move_vv(PasmNode *ln) {
 			writer << "\tmovss DWORD PTR " << v1 << ", xmm1" << std::endl;
 		} break;
 		
+		//Float-64
+		case DType::Float64: {
+			writer << "\tmovsd xmm1, QWORD PTR " << v2 << std::endl;
+			writer << "\tmovsd QWORD PTR " << v1 << ", xmm1" << std::endl;
+		} break;
+		
 		//TODO: Add rest
 	}
 	

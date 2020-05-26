@@ -62,6 +62,14 @@ void PasmBuilder::buildIMath(AstMath *math, VarInfo dest) {
 				auto math = new IMathRV(mType, 1, pos);
 				file->code.push_back(math);
 			} break;
+			
+			//Array access
+			case AstType::ArrayAccess: {
+				buildArrayAcc(next);
+				
+				auto math = new IMathRR(mType, 1, -2);
+				file->code.push_back(math);
+			} break;
 		}
 	}
 	

@@ -60,6 +60,7 @@ enum class pasm {
 	//Math stuff
 	IMathRI,
 	IMathRV,
+	IMathRR,
 	IMathVI,
 	
 	//System class stuff
@@ -521,6 +522,23 @@ public:
 	MathType mType = MathType::None;
 	int reg = 0;
 	int pos = 0;
+};
+
+//Integer register-register math
+// If register == -1, return register
+// If register == -2, pointer access register
+class IMathRR : public PasmNode {
+public:
+	explicit IMathRR(MathType mType, int reg1, int reg2) {
+		type = pasm::IMathRR;
+		this->mType = mType;
+		this->reg1 = reg1;
+		this->reg2 = reg2;
+	}
+	
+	MathType mType = MathType::None;
+	int reg1 = 0;
+	int reg2 = 0;
 };
 
 //Integer variable - immediate math

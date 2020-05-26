@@ -336,6 +336,13 @@ std::string unwrite(PasmFile *file) {
 				ret += " VAR" + std::to_string(math->pos) + "\n";
 			} break;
 			
+			//Math- register <- register
+			case pasm::IMathRR: {
+				auto math = static_cast<IMathRR *>(ln);
+				ret += "\ti." + getMath(math->mType) + "_rr r" + std::to_string(math->reg1);
+				ret += " r" + std::to_string(math->reg2) + "\n";
+			} break;
+			
 			//Math- variable <- immediate
 			case pasm::IMathVI: {
 				auto math = static_cast<IMathVI *>(ln);

@@ -38,7 +38,7 @@ public:
 	void build_ildr(PasmNode *ln);
 	void build_str(PasmNode *ln);
 	void build_ldptr(PasmNode *ln);
-	void build_iptr_str(PasmNode *ln);
+	void build_ptr_str(PasmNode *ln);
 	
 	void build_imath_ri(PasmNode *ln);
 	void build_imath_rv(PasmNode *ln);

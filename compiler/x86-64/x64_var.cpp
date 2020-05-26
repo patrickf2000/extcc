@@ -127,9 +127,9 @@ void X64::build_ldptr(PasmNode *ln) {
 	}
 }
 
-//Store value to integer pointer
-void X64::build_iptr_str(PasmNode *ln) {
-	auto store = static_cast<IPtrStr *>(ln);
+//Store value to a pointer
+void X64::build_ptr_str(PasmNode *ln) {
+	auto store = static_cast<PtrStr *>(ln);
 	int pos = store->pos;
 	int src = store->src;
 	

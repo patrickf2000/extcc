@@ -254,7 +254,7 @@ void PasmBuilder::buildArraySet(AstNode *node) {
 		//TODO: Fatal error	
 	}
 	
-	auto load = new IPtrStr(ptrPos, dest, size);
+	auto load = new PtrStr(ptrPos, dest, size);
 	load->posType = posType;
 	
 	file->code.push_back(new PasmSpace);

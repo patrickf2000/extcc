@@ -55,7 +55,7 @@ enum class pasm {
 	ILdr,
 	PtrLd,
 	Str,
-	IPtrStr,
+	PtrStr,
 	
 	//Math stuff
 	IMathRI,
@@ -435,13 +435,13 @@ public:
 	}
 };
 
-//Store register value to integer pointer (ie, integer array)
+//Store register value to a pointer
 // opType will contain info about what we are storing
-class IPtrStr : public PtrLd {
+class PtrStr : public PtrLd {
 public:
-	explicit IPtrStr(int ptrPos, int pos, int size)
+	explicit PtrStr(int ptrPos, int pos, int size)
 		: PtrLd(ptrPos, pos, size) {
-		type = pasm::IPtrStr;
+		type = pasm::PtrStr;
 	}
 	
 	int src = 0;

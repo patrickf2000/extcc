@@ -87,6 +87,11 @@ public:
 	virtual void build_ptr_stret(PasmNode *ln) {}
 	
 	/**
+	 * Store the value of pointer access to integer variable
+	 */
+	virtual void build_istrptr(PasmNode *ln) {}
+	
+	/**
 	 * Return from a function (Note: If you are managing a stack, this is where you
 	 * clean it up)
 	 */

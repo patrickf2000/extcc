@@ -164,6 +164,25 @@ void X64::build_ptr_stret(PasmNode *ln) {
 	}
 }
 
+//Store pointer result to integer
+void X64::build_istrptr(PasmNode *ln) {
+	auto store = static_cast<IStrPtr *>(ln);
+	int val = store->val;
+	
+	switch (store->opType) {
+		case Operand::Var: {
+			writer << "\tmov DWORD PTR [rbp-" << val << "], eax" << std::endl;
+		} break;
+		
+		case Operand::Reg: {
+			auto reg = registers32[val];
+			writer << "\tmov " << reg << ", eax" << std::endl;
+		} break;
+		
+		default: fatalError("Unknown i.strptr instruction.");
+	}
+}
+
 //On x86, this is the simplest command :)
 void X64::build_ret() {
 	writer << "\tleave" << std::endl;

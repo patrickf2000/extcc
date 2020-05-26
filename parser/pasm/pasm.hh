@@ -301,59 +301,49 @@ public:
 	std::string name = "";
 };
 
-//Load a byte argument
-class BLdArg : public PasmNode {
+class LdArg : public PasmNode {
 public:
-	explicit BLdArg(int pos) {
-		type = pasm::BLdArg;
+	explicit LdArg(int pos, pasm type) {
+		this->type = type;
 		this->pos = pos;
 	}
 	
 	int pos = 0;
+};
+
+//Load a byte argument
+class BLdArg : public LdArg {
+public:
+	explicit BLdArg(int pos) : 
+		LdArg(pos,pasm::BLdArg) {}
 };
 
 //Load an integer argument
-class ILdArg : public PasmNode {
+class ILdArg : public LdArg {
 public:
-	explicit ILdArg(int pos) {
-		type = pasm::ILdArg;
-		this->pos = pos;
-	}
-	
-	int pos = 0;
+	explicit ILdArg(int pos) : 
+		LdArg(pos,pasm::ILdArg) {}
 };
 
 //Load a float-32 argument
-class F32_LdArg : public PasmNode {
+class F32_LdArg : public LdArg {
 public:
-	explicit F32_LdArg(int pos) {
-		type = pasm::F32_LdArg;
-		this->pos = pos;
-	}
-	
-	int pos = 0;
+	explicit F32_LdArg(int pos) : 
+		LdArg(pos,pasm::F32_LdArg) {}
 };
 
 //Load a float-64 argument
-class F64_LdArg : public PasmNode {
+class F64_LdArg : public LdArg {
 public:
-	explicit F64_LdArg(int pos) {
-		type = pasm::F64_LdArg;
-		this->pos = pos;
-	}
-	
-	int pos = 0;
+	explicit F64_LdArg(int pos) : 
+		LdArg(pos,pasm::F64_LdArg) {}
 };
 
 //Load a pointer argument
-class Ptr_LdArg : public PasmNode {
+class Ptr_LdArg : public LdArg {
 public:
-	explicit Ptr_LdArg(int pos) {
-		type = pasm::Ptr_LdArg;
-		this->pos = pos;
-	}
-	
-	int pos = 0;
+	explicit Ptr_LdArg(int pos) : 
+		LdArg(pos,pasm::Ptr_LdArg) {}
 };
 
 //Stores a byte/char constant to a variable

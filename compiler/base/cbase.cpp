@@ -31,6 +31,7 @@ void CompilerBase::build_code(PasmFile *file) {
 			case pasm::IStrPtr: build_istrptr(ln); break;
 			case pasm::Ret: build_ret(); break;
 			case pasm::StrPushArg: build_str_pusharg(ln); break;
+			case pasm::BPushArg: build_bpusharg(ln); break;
 			case pasm::IPushArg: build_ipusharg(ln); break;
 			case pasm::F32_PushArg: build_f32_pusharg(ln); break;
 			case pasm::F64_PushArg: build_f64_pusharg(ln); break;

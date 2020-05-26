@@ -103,6 +103,11 @@ public:
 	virtual void build_str_pusharg(PasmNode *ln) {}
 	
 	/**
+	 * Set a byte to be used as a function argument
+	 */
+	virtual void build_bpusharg(PasmNode *ln) {}
+	
+	/**
 	 * Set an integer value to be used as a function argument
 	 */
 	virtual void build_ipusharg(PasmNode *ln) {}

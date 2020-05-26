@@ -24,6 +24,7 @@ public:
 	void build_istrptr(PasmNode *ln);
 	void build_ret();
 	void build_str_pusharg(PasmNode *ln);
+	void build_bpusharg(PasmNode *ln);
 	void build_ipusharg(PasmNode *ln);
 	void build_f32_pusharg(PasmNode *ln);
 	void build_f64_pusharg(PasmNode *ln);

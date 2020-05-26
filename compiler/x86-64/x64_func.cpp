@@ -201,6 +201,32 @@ void X64::build_str_pusharg(PasmNode *ln) {
 	writer << std::endl;
 }
 
+//Push byte argument
+void X64::build_bpusharg(PasmNode *ln) {
+	auto pusharg = static_cast<BPushArg *>(ln);
+	int val = pusharg->val;
+		
+	auto reg = call_regs32[call_pos];
+	++call_pos;
+	
+	switch (pusharg->opType) {
+		case Operand::Var: {
+			writer << "\tmovsx " << reg << ", BYTE PTR [rbp-";
+			writer << val << "]" << std::endl;
+		} break;
+		
+		case Operand::Reg: {
+			warning("b.pusharg_r not yet supported.");
+		} break;
+		
+		case Operand::Const: {
+			writer << "\tmov " << reg << ", " << val << std::endl;
+		} break;
+		
+		default: fatalError("Unknown command.");
+	}
+}
+
 //Push integer argument
 void X64::build_ipusharg(PasmNode *ln) {
 	auto pusharg = static_cast<IPushArg *>(ln);

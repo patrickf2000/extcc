@@ -74,6 +74,8 @@ void PasmBuilder::buildIMath(AstMath *math, VarInfo dest) {
 		} else {
 			//TODO
 		}
+	} else if (dest.pos == -2) {
+		return;
 	} else {
 		auto str = new Str(1, dest.pos);
 		str->dType = dest.type;

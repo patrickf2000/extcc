@@ -257,10 +257,6 @@ void PasmBuilder::buildArraySet(AstNode *node) {
 	auto load = new PtrStr(ptrPos, dest, size);
 	load->posType = posType;
 	
-	file->code.push_back(new PasmSpace);
-	file->code.push_back(load);
-	file->code.push_back(new PasmSpace);
-	
 	//Now for the element being assigned
 	switch (child->type) {
 		//Integer constant
@@ -276,9 +272,29 @@ void PasmBuilder::buildArraySet(AstNode *node) {
 			load->src = varPos[id->get_name()];
 			load->opType = Operand::Var;
 		} break;
+		
+		//Math
+		case AstType::Math: {
+			load->src = 1;
+			load->opType = Operand::Reg;
+		
+			auto math = static_cast<AstMath *>(child);
+			auto info = vars[set->get_name()];
+			info.pos = -2;
+			
+			switch (set->get_type()) {
+				case DataType::Int: buildIMath(math, info); break;
+				
+				//TODO: Add rest
+			}
+		} break;
 	
 		//TODO: Add rest
 	}
+	
+	file->code.push_back(new PasmSpace);
+	file->code.push_back(load);
+	file->code.push_back(new PasmSpace);
 }
 
 

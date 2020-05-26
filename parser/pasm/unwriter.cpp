@@ -250,7 +250,7 @@ std::string unwrite(PasmFile *file) {
 			//Store value to integer pointer
 			case pasm::IPtrStr: {
 				auto store = static_cast<IPtrStr *>(ln);
-				ret += "\tptr.str_";
+				ret += "\ti.ptr_str_";
 				
 				switch (store->opType) {
 					case Operand::Var: ret += "v VAR"; break;

@@ -168,6 +168,11 @@ public:
 	virtual void build_ldptr(PasmNode *ln) {}
 	
 	/**
+	 * Store value to integer pointer (ie, an array)
+	 */
+	virtual void build_iptr_str(PasmNode *ln) {}
+	
+	/**
 	 * Perform integer math between a register and an immediate value
 	 */
 	virtual void build_imath_ri(PasmNode *ln) {}

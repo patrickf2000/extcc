@@ -120,4 +120,35 @@ void X64::build_ldptr(PasmNode *ln) {
 	}
 }
 
+//Store value to integer pointer
+void X64::build_iptr_str(PasmNode *ln) {
+	auto store = static_cast<IPtrStr *>(ln);
+	int pos = store->pos;
+	int src = store->src;
+	
+	writer << "\tmov rax, QWORD PTR [rbp-" << store->ptrPos << "]" << std::endl;
+	
+	switch (store->posType) {
+		case Operand::Var: /*TODO*/ break;
+		
+		case Operand::Const: {
+			pos = pos * store->size;
+			writer << "\tadd rax, " << pos << std::endl;
+		} break;
+	}
+	
+	switch (store->opType) {
+		case Operand::Var: warning("i.ptr_str_v not yet supported."); break;
+		
+		case Operand::Reg: {
+			auto reg = registers32[store->src];
+			writer << "\tmov DWORD PTR [rax], " << reg << std::endl;
+		} break;
+		
+		case Operand::Const: {
+			writer << "\tmov DWORD PTR [rax], " << store->src << std::endl;
+		} break;
+	}
+}
+
 

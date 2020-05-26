@@ -158,8 +158,44 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 			}
 		} break;
 		
+		//Array access
+		case AstType::ArrayAccess: {
+			buildArrayAcc(child);
+		} break;
+		
 		//TODO: Add the rest
 	}
 }
+
+//Build array access
+void PasmBuilder::buildArrayAcc(AstNode *node) {
+	auto acc = static_cast<AstArrayAcc *>(node);
+	auto index = acc->children[0];
+	
+	auto info = vars[acc->get_name()];
+	int dest = 0;
+	Operand posType;
+	
+	switch (index->type) {
+		case AstType::Int: {
+			auto i = static_cast<AstInt *>(index);
+			dest = i->get_val();
+			posType = Operand::Const;
+		} break;
+		
+		case AstType::Id: {
+			auto id = static_cast<AstID *>(index);
+			dest = varPos[id->get_name()];
+			posType = Operand::Var;
+		} break;
+		
+		//TODO: Fatal error	
+	}
+	
+	auto load = new PtrLd(info.pos, dest, info.type);
+	load->posType = posType;
+	file->code.push_back(load);
+}
+
 
 

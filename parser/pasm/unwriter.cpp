@@ -225,6 +225,20 @@ std::string unwrite(PasmFile *file) {
 				ret += std::to_string(load->pos) + "\n";
 			} break;
 			
+			//Loads a pointer element
+			case pasm::PtrLd: {
+				auto load = static_cast<PtrLd *>(ln);
+				ret += "\tptr.ld VAR";
+				ret += std::to_string(load->ptrPos) + "[";
+				
+				switch (load->posType) {
+					case Operand::Var: ret += "VAR"; break;
+					case Operand::Reg: ret += "r"; break;
+				}
+				
+				ret += std::to_string(load->pos) + "]\n";
+			} break;
+			
 			//Store a register to variable
 			case pasm::Str: {
 				auto str = static_cast<Str *>(ln);

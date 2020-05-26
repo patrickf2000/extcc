@@ -52,6 +52,7 @@ enum class pasm {
 	Ptr_StrRet,
 	MoveVV,
 	ILdr,
+	PtrLd,
 	Str,
 	
 	//Math stuff
@@ -405,6 +406,23 @@ public:
 	int reg = 0;
 	int pos = 0;
 	DType dType = DType::None;
+};
+
+//Load a pointer element to a register
+class PtrLd : public PasmNode {
+public:
+	explicit PtrLd(int ptrPos, int pos, DType dType) {
+		type = pasm::PtrLd;
+		this->ptrPos = ptrPos;
+		this->pos = pos;
+		this->dType = dType;
+	}
+	
+	int ptrPos = 0;
+	int pos = 0;
+	DType dType = DType::Int;
+	
+	Operand posType = Operand::None;
 };
 
 //Store register value to memory

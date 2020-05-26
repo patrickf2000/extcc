@@ -7,7 +7,7 @@ void X64::build_icmp(PasmNode *ln) {
 	//Var - var
 	if (cmp->op1 == Operand::Var && cmp->op2 == Operand::Var) {
 		writer << "\tmov eax, DWORD PTR [rbp-" << cmp->pos1 << "]" << std::endl;
-		writer << "\tcmp DWORD PTR [rbp-" << cmp->pos2 << "], eax" << std::endl;
+		writer << "\tcmp eax, DWORD PTR [rbp-" << cmp->pos2 << "]" << std::endl;
 	
 	// Var - immediate
 	} else if (cmp->op1 == Operand::Var && cmp->op2 == Operand::Const) {

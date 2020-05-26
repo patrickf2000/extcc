@@ -9,6 +9,7 @@ Func *PasmBuilder::buildFunc(AstNode *node) {
 	file->code.push_back(func);
 	
 	retType = fd->rtype;
+	bool isPtr = false;
 	
 	//Arguments
 	for (auto arg : fd->args) {
@@ -16,17 +17,7 @@ Func *PasmBuilder::buildFunc(AstNode *node) {
 			//Chars
 			case DataType::Char: {
 				if (arg.is_ptr) {
-					stackPos += 8;
-					VarInfo v;
-					v.pos = stackPos;
-					v.type = DType::Ptr;
-					v.size = 8;
-					
-					varPos[arg.name] = stackPos;
-					vars[arg.name] = v;
-					
-					auto farg = new Ptr_LdArg(stackPos);
-					file->code.push_back(farg);
+					isPtr = true;
 				} else {
 					//TODO
 				}
@@ -34,17 +25,21 @@ Func *PasmBuilder::buildFunc(AstNode *node) {
 		
 			//Integers
 			case DataType::Int: {
-				stackPos += 4;
-				VarInfo v;
-				v.pos = stackPos;
-				v.type = DType::Int;
-				v.size = 4;
-				
-				varPos[arg.name] = stackPos;
-				vars[arg.name] = v;
-				
-				auto iarg = new ILdArg(stackPos);
-				file->code.push_back(iarg);
+				if (arg.is_ptr) {
+					isPtr = true;
+				} else {
+					stackPos += 4;
+					VarInfo v;
+					v.pos = stackPos;
+					v.type = DType::Int;
+					v.size = 4;
+					
+					varPos[arg.name] = stackPos;
+					vars[arg.name] = v;
+					
+					auto iarg = new ILdArg(stackPos);
+					file->code.push_back(iarg);
+				}
 			} break;
 			
 			//Floats
@@ -78,6 +73,22 @@ Func *PasmBuilder::buildFunc(AstNode *node) {
 			} break;
 			
 			//TODO: Add rest
+		}
+		
+		if (isPtr) {
+			stackPos += 8;
+			VarInfo v;
+			v.pos = stackPos;
+			v.type = DType::Ptr;
+			v.size = 8;
+			
+			varPos[arg.name] = stackPos;
+			vars[arg.name] = v;
+			
+			auto farg = new Ptr_LdArg(stackPos);
+			file->code.push_back(farg);
+			
+			isPtr = false;
 		}
 	}
 	

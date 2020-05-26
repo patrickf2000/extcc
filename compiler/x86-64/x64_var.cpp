@@ -126,13 +126,19 @@ void X64::build_iptr_str(PasmNode *ln) {
 	int pos = store->pos;
 	int src = store->src;
 	
-	writer << "\tmov rax, QWORD PTR [rbp-" << store->ptrPos << "]" << std::endl;
-	
 	switch (store->posType) {
-		case Operand::Var: /*TODO*/ break;
+		case Operand::Var: {
+			writer << "\tmov eax, DWORD PTR [rbp-" << pos << "]" << std::endl;
+			writer << "\tcdqe" << std::endl;
+			writer << "\tlea rdx, [0+rax*4]" << std::endl;
+			writer << "\tmov rax, QWORD PTR [rbp-" << store->ptrPos << "]" << std::endl;
+			writer << "\tadd rax, rdx" << std::endl;
+		} break;
 		
 		case Operand::Const: {
 			pos = pos * store->size;
+			
+			writer << "\tmov rax, QWORD PTR [rbp-" << store->ptrPos << "]" << std::endl;
 			writer << "\tadd rax, " << pos << std::endl;
 		} break;
 	}

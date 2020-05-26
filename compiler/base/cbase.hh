@@ -82,6 +82,11 @@ public:
 	virtual void build_istret(PasmNode *ln) {}
 	
 	/**
+	 * Store the value in the return register to a pointer variable
+	 */
+	virtual void build_ptr_stret(PasmNode *ln) {}
+	
+	/**
 	 * Return from a function (Note: If you are managing a stack, this is where you
 	 * clean it up)
 	 */

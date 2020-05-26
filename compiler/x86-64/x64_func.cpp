@@ -146,6 +146,24 @@ void X64::build_istret(PasmNode *ln) {
 	}
 }
 
+//Store a return value to pointer
+void X64::build_ptr_stret(PasmNode *ln) {
+	auto store = static_cast<Ptr_StrRet *>(ln);
+	int val = store->val;
+	
+	switch (store->opType) {
+		case Operand::Var: {
+			writer << "\tmov QWORD PTR [rbp-" << val << "], rax" << std::endl;
+		} break;
+		
+		case Operand::Reg: {
+			writer << "\tmov " << registers[val] << ", rax" << std::endl;
+		} break;
+		
+		default: fatalError("Unknown ptr.stret instruction.");
+	}
+}
+
 //On x86, this is the simplest command :)
 void X64::build_ret() {
 	writer << "\tleave" << std::endl;

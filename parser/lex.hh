@@ -57,6 +57,7 @@ private:
 	std::string current = "";
 	bool ret_next = false;
 	bool in_quote = false;
+	bool in_squote = false;
 	Token tNext;
 	std::stack<Token> stored;
 	

@@ -57,10 +57,20 @@ Token Scanner::getNext() {
 		if (c == '\"' && !in_quote) {
 			in_quote = true;
 			continue;
+		} else if (c == '\'' && !in_squote) {
+			in_squote = true;
+			continue;
 		} else if (c == '\"' && in_quote) {
 			in_quote = false;
 			
 			next.type = strToken;
+			next.id = current;
+			current = "";
+			return next;
+		} else if (c == '\'' && in_squote) {
+			in_squote = false;
+			
+			next.type = charToken;
 			next.id = current;
 			current = "";
 			return next;

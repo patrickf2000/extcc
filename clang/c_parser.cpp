@@ -267,7 +267,7 @@ AstNode *CParser::buildNode(Token t, bool float2dbl, bool inMath) {
 	switch (t.type) {
 		//Chars
 		case CTokenType::CharL: {
-			auto *ci = new AstChar(t.id[1]);
+			auto *ci = new AstChar(t.id[0]);
 			return ci;
 		} break;
 	

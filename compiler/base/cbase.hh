@@ -178,6 +178,13 @@ public:
 	virtual void build_imath_ri(PasmNode *ln) {}
 	
 	/**
+	 * Perform integer math between two registers. If the register is denoted with -1, the value in the return
+	 * register will be used. If the register is -2, the value in the pointer operations (ie, array access) register
+	 * will be used.
+	 */
+	virtual void build_imath_rr(PasmNode *ln) {}
+	
+	/**
 	 * Perform integer math between a register and a variable (memory location)
 	 */
 	virtual void build_imath_rv(PasmNode *ln) {}

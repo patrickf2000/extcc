@@ -52,6 +52,7 @@ void CompilerBase::build_code(PasmFile *file) {
 			case pasm::IMathRI: build_imath_ri(ln); break;
 			case pasm::IMathRV: build_imath_rv(ln); break;
 			case pasm::IMathVI: build_imath_vi(ln); break;
+			case pasm::IMathRR: build_imath_rr(ln); break;
 			
 			//Flow
 			case pasm::ICmp: build_icmp(ln); break;

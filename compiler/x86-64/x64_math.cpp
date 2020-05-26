@@ -52,6 +52,45 @@ void X64::build_imath_rv(PasmNode *ln) {
 	}
 }
 
+//Integer math- register <- register
+// -1- Return register (eax)
+// -2- Pointer register (eax)
+void X64::build_imath_rr(PasmNode *ln) {
+	auto math = static_cast<IMathRR *>(ln);
+	bool is_div = false;
+	
+	auto reg1 = registers32[math->reg1];
+	auto reg2 = registers32[math->reg2];
+	
+	if (math->reg1 == -1 || math->reg1 == -2)
+		reg1 = "eax";
+	
+	if (math->reg2 == -1 || math->reg2 == -2)
+		reg2 = "eax";
+	
+	switch (math->mType) {
+		case MathType::Add: writer << "\tadd "; break;
+		case MathType::Sub: writer << "\tsub "; break;
+		case MathType::Mul: writer << "\timul "; break;
+		case MathType::Div: is_div = true; break;
+	}
+	
+	if (is_div) {
+		writer << "\tcdq" << std::endl;
+		
+		if (reg2 == "eax")
+			writer << "\tmov r9d, eax" << std::endl;
+		
+		if (reg1 != "eax")
+			writer << "\tmov eax, " << reg1 << std::endl;
+		
+		writer << "\tidiv " << reg2 << std::endl;
+		writer << "\tmov " << reg1 << ", eax" << std::endl;
+	} else {
+		writer << reg1 << ", " << reg2 << std::endl;
+	}
+}
+
 //Integer math- variable <- immediate
 void X64::build_imath_vi(PasmNode *ln) {
 	auto math = static_cast<IMathVI *>(ln);

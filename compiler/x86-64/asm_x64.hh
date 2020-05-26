@@ -43,6 +43,7 @@ public:
 	void build_imath_ri(PasmNode *ln);
 	void build_imath_rv(PasmNode *ln);
 	void build_imath_vi(PasmNode *ln);
+	void build_imath_rr(PasmNode *ln);
 	
 	void build_icmp(PasmNode *ln);
 	void build_br(PasmNode *ln);

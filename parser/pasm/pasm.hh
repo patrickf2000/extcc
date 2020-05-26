@@ -31,6 +31,7 @@ enum class pasm {
 	Func,
 	Lbl,
 	Ret,
+	BPushArg,
 	IPushArg,
 	F32_PushArg,
 	F64_PushArg,
@@ -207,6 +208,17 @@ public:
 class Ret : public PasmNode {
 public:
 	explicit Ret() { type = pasm::Ret; }
+};
+
+//Push a byte argument
+class BPushArg : public PasmNode {
+public:
+	explicit BPushArg(int val) {
+		type = pasm::BPushArg;
+		this->val = val;
+	}
+	
+	int val = 0;
 };
 
 //Push an integer argument

@@ -87,6 +87,19 @@ std::string unwrite(PasmFile *file) {
 			case pasm::Ret: ret += "\tret\n\n"; break;
 			
 			//Pusharg
+			case pasm::BPushArg: {
+				auto pusharg = static_cast<BPushArg *>(ln);
+				ret += "\tb.pusharg_";
+				
+				switch (pusharg->opType) {
+					case Operand::Var: ret += "v VAR"; break;
+					case Operand::Reg: ret += "r "; break;
+					case Operand::Const: ret += "c "; break;
+				}
+				
+				ret += std::to_string(pusharg->val) + "\n";
+			} break;
+			
 			case pasm::IPushArg: {
 				auto pusharg = static_cast<IPushArg *>(ln);
 				ret += "\ti.pusharg_";

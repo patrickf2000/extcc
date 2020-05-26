@@ -41,6 +41,13 @@ set(COMPILER_SRC
 	compiler/aarch64/aarch64_syscall.cpp
 	compiler/aarch64/aarch64_var.cpp
 	
+	compiler/ppc64/asm_ppc64.cpp
+	compiler/ppc64/ppc64_flow.cpp
+	compiler/ppc64/ppc64_func.cpp
+	compiler/ppc64/ppc64_math.cpp
+	compiler/ppc64/ppc64_syscall.cpp
+	compiler/ppc64/ppc64_var.cpp
+	
 	compiler/x86-64/asm_x64.cpp
 	compiler/x86-64/x64_flow.cpp
 	compiler/x86-64/x64_func.cpp

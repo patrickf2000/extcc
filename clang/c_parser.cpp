@@ -265,6 +265,12 @@ void CParser::addChildren(AstNode *parent, int stop) {
 //Builds a single node based on a token
 AstNode *CParser::buildNode(Token t, bool float2dbl, bool inMath) {
 	switch (t.type) {
+		//Chars
+		case CTokenType::CharL: {
+			auto *ci = new AstChar(t.id[1]);
+			return ci;
+		} break;
+	
 		//Integers
 		case CTokenType::No: {
 			int i = std::stoi(t.id);

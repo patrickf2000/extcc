@@ -173,6 +173,13 @@ std::string unwrite(PasmFile *file) {
 			} break;
 			
 			//Load/Store
+			//Store constant (byte)
+			case pasm::BStoreC: {
+				auto store = static_cast<BStoreConst *>(ln);
+				ret += "\tb.store_c VAR" + std::to_string(store->pos);
+				ret += " " + std::to_string(store->val) + "\n";
+			} break;
+			
 			//Store constant (int)
 			case pasm::IStoreC: {
 				auto store = static_cast<IStoreConst *>(ln);

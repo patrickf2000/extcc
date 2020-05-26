@@ -72,6 +72,13 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 	auto child = node->children[0];
 	
 	switch (child->type) {
+		//Character constants
+		case AstType::Char: {
+			auto c = static_cast<AstChar *>(child);
+			auto store = new BStoreConst(pos, c->get_val());
+			file->code.push_back(store);
+		} break;
+	
 		//Integer constants
 		case AstType::Int: {
 			auto i = static_cast<AstInt *>(child);

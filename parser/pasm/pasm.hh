@@ -43,6 +43,7 @@ enum class pasm {
 	Ptr_LdArg,
 	
 	//Load/store stuff
+	BStoreC,
 	IStoreC,
 	F32_StoreC,
 	F64_StoreC,
@@ -329,6 +330,19 @@ public:
 	}
 	
 	int pos = 0;
+};
+
+//Stores a byte/char constant to a variable
+class BStoreConst : public PasmNode {
+public:
+	explicit BStoreConst(int pos, unsigned char val) {
+		type = pasm::BStoreC;
+		this->pos = pos;
+		this->val = val;
+	}
+	
+	int pos = 0;
+	unsigned char val = 0;
 };
 
 //Stores a constant to a variable

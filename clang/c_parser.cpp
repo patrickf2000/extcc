@@ -263,7 +263,7 @@ void CParser::addChildren(AstNode *parent, int stop) {
 }
 
 //Builds a single node based on a token
-AstNode *CParser::buildNode(Token t, bool float2dbl) {
+AstNode *CParser::buildNode(Token t, bool float2dbl, bool inMath) {
 	switch (t.type) {
 		//Integers
 		case CTokenType::No: {
@@ -349,19 +349,22 @@ AstNode *CParser::buildNode(Token t, bool float2dbl) {
 		
 		//Multiplication or pointer
 		case CTokenType::Mul: {
-			Token next = scan->getNext();
-			
-			if (next.type == CTokenType::Id) {
-				Var v = vars[next.id];
+			if (!inMath) {
+				Token next = scan->getNext();
 				
-				if (v.is_ptr) {
-					auto *id = new AstID(next.id);
-					id->is_ptr = true;
-					return id;
+				if (next.type == CTokenType::Id) {
+					Var v = vars[next.id];
+					
+					if (v.is_ptr) {
+						auto *id = new AstID(next.id);
+						id->is_ptr = true;
+						return id;
+					}
 				}
+				
+				scan->unget(next);
 			}
 			
-			scan->unget(next);
 			return new AstNode(AstType::Mul);
 		} break;
 

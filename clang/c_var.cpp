@@ -70,7 +70,7 @@ void CParser::buildVarAssign(AstVarDec *vd, int stop, bool add_end) {
 	std::vector<AstNode *> nodes;
 	
 	while (next.type != stop) {
-		nodes.push_back(buildNode(next, float2dbl));
+		nodes.push_back(buildNode(next, float2dbl, true));
 		next = scan->getNext();
 	}
 	

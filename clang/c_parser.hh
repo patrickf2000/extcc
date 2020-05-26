@@ -64,5 +64,5 @@ private:
 	
 	//Utilities
 	void addChildren(AstNode *parent, int stop = CTokenType::SemiColon);
-	AstNode *buildNode(Token t, bool float2dbl = false);
+	AstNode *buildNode(Token t, bool float2dbl = false, bool inMath = false);
 };

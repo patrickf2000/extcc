@@ -111,7 +111,14 @@ void X64::build_ldptr(PasmNode *ln) {
 	writer << "\tmov rax, QWORD PTR [rbp-" << ptrPos << "]" << std::endl;
 	
 	switch (load->posType) {
-		case Operand::Var: /*TODO*/ break;
+		case Operand::Var: {
+			writer << "\tmov eax, DWORD PTR [rbp-" << pos << "]" << std::endl;
+			writer << "\tcdqe" << std::endl;
+			writer << "\tlea rdx, [0+rax*4]" << std::endl;
+			writer << "\tmov rax, QWORD PTR [rbp-" << ptrPos << "]" << std::endl;
+			writer << "\tadd rax, rdx" << std::endl;
+			writer << "\tmov eax, DWORD PTR [eax]" << std::endl;
+		} break;
 		
 		case Operand::Const: {
 			pos = pos * size;

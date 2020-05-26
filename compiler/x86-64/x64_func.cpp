@@ -65,6 +65,16 @@ void X64::build_func(PasmNode *ln) {
 	flt_arg_pos = 0;
 }
 
+//Loads an byte argument parameter
+void X64::build_bldarg(PasmNode *ln) {
+	auto ldarg = static_cast<BLdArg *>(ln);
+	
+	writer << "\tmov eax, " << call_regs32[arg_pos] << std::endl;
+	writer << "\tmov BYTE PTR [rbp-" << ldarg->pos << "], al" << std::endl;;
+	
+	++arg_pos;
+}
+
 //Loads an integer argument parameter
 void X64::build_ildarg(PasmNode *ln) {
 	auto ldarg = static_cast<ILdArg *>(ln);

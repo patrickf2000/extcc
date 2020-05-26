@@ -19,7 +19,17 @@ Func *PasmBuilder::buildFunc(AstNode *node) {
 				if (arg.is_ptr) {
 					isPtr = true;
 				} else {
-					//TODO
+					stackPos += 1;
+					VarInfo v;
+					v.pos = stackPos;
+					v.type = DType::Byte;
+					v.size = 1;
+					
+					varPos[arg.name] = stackPos;
+					vars[arg.name] = v;
+					
+					auto barg = new BLdArg(stackPos);
+					file->code.push_back(barg);
 				}
 			} break;
 		

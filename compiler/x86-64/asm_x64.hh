@@ -14,6 +14,7 @@ public:
 	void build_data(PasmFile *file);
 	
 	void build_func(PasmNode *ln);
+	void build_bldarg(PasmNode *ln);
 	void build_ildarg(PasmNode *ln);
 	void build_f32_ldarg(PasmNode *ln);
 	void build_f64_ldarg(PasmNode *ln);

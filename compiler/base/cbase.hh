@@ -51,6 +51,11 @@ public:
 	virtual void build_func(PasmNode *ln) {}
 	
 	/**
+	 * Store a byte function parameter to a variable
+	 */
+	virtual void build_bldarg(PasmNode *ln) {}
+	
+	/**
 	 * Store an integer function parameter to a variable
 	 */
 	virtual void build_ildarg(PasmNode *ln) {}

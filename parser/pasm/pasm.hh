@@ -38,6 +38,7 @@ enum class pasm {
 	StrPushArg,
 	Ptr_PushArg,
 	FuncCall,
+	BLdArg,
 	ILdArg,
 	F32_LdArg,
 	F64_LdArg,
@@ -298,6 +299,17 @@ public:
 	}
 	
 	std::string name = "";
+};
+
+//Load a byte argument
+class BLdArg : public PasmNode {
+public:
+	explicit BLdArg(int pos) {
+		type = pasm::BLdArg;
+		this->pos = pos;
+	}
+	
+	int pos = 0;
 };
 
 //Load an integer argument

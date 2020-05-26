@@ -161,6 +161,12 @@ std::string unwrite(PasmFile *file) {
 				ret += "\tcall " + call->name + "\n";
 			} break;
 			
+			//Load byte function argument
+			case pasm::BLdArg: {
+				auto arg = static_cast<BLdArg *>(ln);
+				ret += "\tb.ldarg VAR" + std::to_string(arg->pos) + "\n";
+			} break;
+			
 			//Load integer function argument
 			case pasm::ILdArg: {
 				auto arg = static_cast<ILdArg *>(ln);

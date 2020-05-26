@@ -213,6 +213,23 @@ void PasmBuilder::buildFuncCall(AstNode *node) {
 					}
 				} break;
 				
+				//Array access
+				case AstType::ArrayAccess: {
+					auto set = static_cast<AstArrayAcc *>(arg);
+					buildArrayAcc(arg);
+					
+					switch (set->get_type()) {
+						//Integer array
+						case DataType::Int: {
+							auto pusharg = new IPushArg(-2);
+							pusharg->opType = Operand::Reg;
+							file->code.push_back(pusharg);
+						} break;
+						
+						//TODO: Add rest
+					}
+				} break;
+				
 				//TODO: Add rest
 			}
 		}

@@ -216,7 +216,11 @@ void X64::build_ipusharg(PasmNode *ln) {
 		} break;
 		
 		case Operand::Reg: {
-			warning("i.pusharg_r not supported yet.");
+			if (val == -1 || val == -2) {
+				writer << "\tmov " << reg << ", eax" << std::endl;
+			} else {
+				writer << "\tmov " << reg << ", " << registers32[val] << std::endl;
+			}
 		} break;
 		
 		case Operand::Const: {

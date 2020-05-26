@@ -161,6 +161,16 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 		//Array access
 		case AstType::ArrayAccess: {
 			buildArrayAcc(child);
+			
+			switch (node->get_type()) {
+				case DataType::Int: {
+					auto store = new IStrPtr(pos);
+					store->opType = Operand::Var;
+					file->code.push_back(store);
+				} break;
+				
+				//TODO: Add rest
+			}
 		} break;
 		
 		//TODO: Add the rest

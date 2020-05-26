@@ -50,6 +50,7 @@ enum class pasm {
 	ILdRet,
 	IStrRet,
 	Ptr_StrRet,
+	IStrPtr,
 	MoveVV,
 	ILdr,
 	PtrLd,
@@ -460,6 +461,18 @@ class Ptr_StrRet : public PasmNode {
 public:
 	explicit Ptr_StrRet(int val) {
 		type = pasm::Ptr_StrRet;
+		this->val = val;
+	}
+	
+	int val;
+};
+
+//Stores value in register loaded from pointer
+// ie, if you access array value, it will be in register and you have to store
+class IStrPtr : public PasmNode {
+public:
+	explicit IStrPtr(int val) {
+		type = pasm::IStrPtr;
 		this->val = val;
 	}
 	

@@ -182,9 +182,18 @@ void PasmBuilder::buildArrayAcc(AstNode *node) {
 	auto acc = static_cast<AstArrayAcc *>(node);
 	auto index = acc->children[0];
 	
-	auto info = vars[acc->get_name()];
+	int ptrPos = varPos[acc->get_name()];
 	int dest = 0;
+	int size = 0;
 	Operand posType;
+	
+	switch (acc->get_type()) {
+		case DataType::Char: size = 1; break;
+		case DataType::Short: size = 2; break;
+		case DataType::Int:
+		case DataType::Float: size = 4; break;
+		case DataType::Double: size = 8; break;
+	}
 	
 	switch (index->type) {
 		case AstType::Int: {
@@ -202,7 +211,7 @@ void PasmBuilder::buildArrayAcc(AstNode *node) {
 		//TODO: Fatal error	
 	}
 	
-	auto load = new PtrLd(info.pos, dest, info.type);
+	auto load = new PtrLd(ptrPos, dest, size);
 	load->posType = posType;
 	file->code.push_back(load);
 }

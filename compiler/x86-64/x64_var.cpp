@@ -101,3 +101,23 @@ void X64::build_str(PasmNode *ln) {
 	}
 }
 
+//Load value from pointer
+void X64::build_ldptr(PasmNode *ln) {
+	auto load = static_cast<PtrLd *>(ln);
+	int ptrPos = load->ptrPos;
+	int pos = load->pos;
+	int size = load->size;
+	
+	writer << "\tmov rax, QWORD PTR [rbp-" << ptrPos << "]" << std::endl;
+	
+	switch (load->posType) {
+		case Operand::Var: /*TODO*/ break;
+		
+		case Operand::Const: {
+			pos = pos * size;
+			writer << "\tmov eax, DWORD PTR [rax+" << pos << "]" << std::endl;
+		} break;
+	}
+}
+
+

@@ -163,6 +163,11 @@ public:
 	virtual void build_str(PasmNode *ln) {}
 	
 	/**
+	 * Load value from location in pointer (ie, an array)
+	 */
+	virtual void build_ldptr(PasmNode *ln) {}
+	
+	/**
 	 * Perform integer math between a register and an immediate value
 	 */
 	virtual void build_imath_ri(PasmNode *ln) {}

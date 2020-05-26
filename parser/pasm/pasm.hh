@@ -412,16 +412,16 @@ public:
 //Load a pointer element to a register
 class PtrLd : public PasmNode {
 public:
-	explicit PtrLd(int ptrPos, int pos, DType dType) {
+	explicit PtrLd(int ptrPos, int pos, int size) {
 		type = pasm::PtrLd;
 		this->ptrPos = ptrPos;
 		this->pos = pos;
-		this->dType = dType;
+		this->size = size;
 	}
 	
 	int ptrPos = 0;
 	int pos = 0;
-	DType dType = DType::Int;
+	int size = 4;
 	
 	Operand posType = Operand::None;
 };

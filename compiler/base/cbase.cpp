@@ -45,6 +45,7 @@ void CompilerBase::build_code(PasmFile *file) {
 			case pasm::MoveVV: build_move_vv(ln); break;
 			case pasm::ILdr: build_ildr(ln); break;
 			case pasm::Str: build_str(ln); break;
+			case pasm::PtrLd: build_ldptr(ln); break;
 			
 			//Math
 			case pasm::IMathRI: build_imath_ri(ln); break;

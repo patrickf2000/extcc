@@ -38,6 +38,7 @@ void CompilerBase::build_code(PasmFile *file) {
 			case pasm::FuncCall: build_call(ln); break;
 			
 			//Store
+			case pasm::BStoreC: build_bstorec(ln); break;
 			case pasm::IStoreC: build_istorec(ln); break;
 			case pasm::F32_StoreC: build_f32_storec(ln); break;
 			case pasm::F64_StoreC: build_f64_storec(ln); break;

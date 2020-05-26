@@ -128,6 +128,11 @@ public:
 	virtual void build_call(PasmNode *ln) {}
 	
 	/**
+	 * Store a byte constant to byte variable
+	 */
+	virtual void build_bstorec(PasmNode *ln) {}
+	
+	/**
 	 * Store an integer constant to an integer variable
 	 */
 	virtual void build_istorec(PasmNode *ln) {}

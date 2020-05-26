@@ -1,6 +1,14 @@
 #include "asm_x64.hh"
 #include "x64_registers.hh"
 
+//Store a byte constant to a memory location
+void X64::build_bstorec(PasmNode *ln) {
+	auto store = static_cast<BStoreConst *>(ln);
+	
+	writer << "\tmov BYTE PTR [rbp-" << store->pos << "], ";
+	writer << (int)store->val << std::endl;
+}
+
 //Store an integer constant to a memory location
 void X64::build_istorec(PasmNode *ln) {
 	auto store = static_cast<IStoreConst *>(ln);

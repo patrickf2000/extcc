@@ -30,6 +30,7 @@ public:
 	void build_ptr_pusharg(PasmNode *ln);
 	void build_call(PasmNode *ln);
 	
+	void build_bstorec(PasmNode *ln);
 	void build_istorec(PasmNode *ln);
 	void build_f32_storec(PasmNode *ln);
 	void build_f64_storec(PasmNode *ln);

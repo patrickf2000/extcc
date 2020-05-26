@@ -160,6 +160,7 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 		
 		//Array access
 		case AstType::ArrayAccess: {
+			file->code.push_back(new PasmSpace);
 			buildArrayAcc(child);
 			
 			switch (node->get_type()) {
@@ -171,6 +172,8 @@ void PasmBuilder::buildVarAssign(AstVarAssign *node) {
 				
 				//TODO: Add rest
 			}
+			
+			file->code.push_back(new PasmSpace);
 		} break;
 		
 		//TODO: Add the rest

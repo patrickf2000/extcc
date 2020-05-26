@@ -33,6 +33,7 @@ protected:
 	void buildVarAssign(AstNode *node);
 	void buildVarAssign(AstVarAssign *node);
 	void buildArrayAcc(AstNode *node);
+	void buildArraySet(AstNode *node);
 	
 	void buildIMath(AstMath *math, VarInfo dest);
 	

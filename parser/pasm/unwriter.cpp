@@ -247,6 +247,28 @@ std::string unwrite(PasmFile *file) {
 				ret += "\n";
 			} break;
 			
+			//Store value to integer pointer
+			case pasm::IPtrStr: {
+				auto store = static_cast<IPtrStr *>(ln);
+				ret += "\tptr.str_";
+				
+				switch (store->opType) {
+					case Operand::Var: ret += "v VAR"; break;
+					case Operand::Reg: ret += "r r"; break;
+					case Operand::Const: ret += "c "; break;
+				}
+				
+				ret += std::to_string(store->src) + " VAR";
+				ret += std::to_string(store->ptrPos) + "[";
+				
+				switch (store->posType) {
+					case Operand::Var: ret += "VAR"; break;
+					case Operand::Reg: ret += "r"; break;
+				}
+				
+				ret += std::to_string(store->pos) + "]\n";
+			} break;
+			
 			//Load integer to return register
 			case pasm::ILdRet: {
 				auto store = static_cast<ILdRet *>(ln);

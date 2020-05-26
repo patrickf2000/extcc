@@ -39,6 +39,7 @@ void PasmBuilder::assemble(AstNode *top) {
 			
 			case AstType::VarDec: buildVarDec(node); break;
 			case AstType::VarAssign: buildVarAssign(node); break;
+			case AstType::ArrayAssign: buildArraySet(node); break;
 			
 			//Comparisons
 			case AstType::If: 

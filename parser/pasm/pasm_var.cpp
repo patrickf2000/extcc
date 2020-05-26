@@ -219,5 +219,59 @@ void PasmBuilder::buildArrayAcc(AstNode *node) {
 	file->code.push_back(load);
 }
 
+//Build array set
+void PasmBuilder::buildArraySet(AstNode *node) {
+	auto set = static_cast<AstArrayAssign *>(node);
+	auto index = set->index;
+	auto child = set->children[0];
+	
+	int ptrPos = varPos[set->get_name()];
+	int dest = 0;
+	int size = 0;
+	Operand posType;
+	
+	switch (set->get_type()) {
+		case DataType::Char: size = 1; break;
+		case DataType::Short: size = 2; break;
+		case DataType::Int:
+		case DataType::Float: size = 4; break;
+		case DataType::Double: size = 8; break;
+	}
+	
+	switch (index->type) {
+		case AstType::Int: {
+			auto i = static_cast<AstInt *>(index);
+			dest = i->get_val();
+			posType = Operand::Const;
+		} break;
+		
+		case AstType::Id: {
+			auto id = static_cast<AstID *>(index);
+			dest = varPos[id->get_name()];
+			posType = Operand::Var;
+		} break;
+		
+		//TODO: Fatal error	
+	}
+	
+	auto load = new IPtrStr(ptrPos, dest, size);
+	load->posType = posType;
+	
+	file->code.push_back(new PasmSpace);
+	file->code.push_back(load);
+	file->code.push_back(new PasmSpace);
+	
+	//Now for the element being assigned
+	switch (child->type) {
+		//Integer constant
+		case AstType::Int: {
+			auto i = static_cast<AstInt *>(child);
+			load->src = i->get_val();
+			load->opType = Operand::Const;
+		} break;
+	
+		//TODO: Add rest
+	}
+}
 
 

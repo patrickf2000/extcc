@@ -144,7 +144,10 @@ void X64::build_iptr_str(PasmNode *ln) {
 	}
 	
 	switch (store->opType) {
-		case Operand::Var: warning("i.ptr_str_v not yet supported."); break;
+		case Operand::Var: {
+			writer << "\tmov edx, DWORD PTR [rbp-" << store->src << "]" << std::endl;
+			writer << "\tmov DWORD PTR [rax], edx" << std::endl;
+		} break;
 		
 		case Operand::Reg: {
 			auto reg = registers32[store->src];

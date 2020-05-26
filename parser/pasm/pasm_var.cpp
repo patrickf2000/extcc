@@ -269,6 +269,13 @@ void PasmBuilder::buildArraySet(AstNode *node) {
 			load->src = i->get_val();
 			load->opType = Operand::Const;
 		} break;
+		
+		//Variables
+		case AstType::Id: {
+			auto id = static_cast<AstID *>(child);
+			load->src = varPos[id->get_name()];
+			load->opType = Operand::Var;
+		} break;
 	
 		//TODO: Add rest
 	}
